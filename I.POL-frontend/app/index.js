@@ -37,7 +37,7 @@ const Home = () => {
                 alignItems: "center",
               }}
             >
-              <ProfileHeaderBtn />
+              <ProfileHeaderBtn iconUrl={images.logo} dimension="100%"  />
               <Text
                 style={{
                   fontFamily: FONT.bold,
@@ -79,13 +79,14 @@ const Home = () => {
             height: 30,
             justifyContent: "center",
             alignItems: "center",
+            paddingBottom: 1,
             borderRadius: SIZES.small,
             backgroundColor: COLORS.primary,
           }}
         >
           <Text style={{ color: COLORS.lightWhite }}>Sign In</Text>
         </TouchableOpacity>
-        <View style={{ display: "flex", paddingTop: 80, paddingLeft: 100 }}>
+        <View style={{ width: "100%", display: "flex", paddingVertical: 80, justifyContent: "flex-end", alignItems: "flex-end" }}>
           <Image source={start} style={{ width: 200, height: 200 }} />
         </View>
       </View>
