@@ -3,7 +3,7 @@ import { TouchableOpacity, Image } from "react-native";
 
 import styles from "./profileHeaderBtn.style";
 
-const profileHeaderBtn = (iconUrl, dimension, handlePress) => {
+const profileHeaderBtn = ({ iconUrl, dimension, handlePress }) => {
   return (
     <TouchableOpacity style={styles.btnContainer} onPress={handlePress}>
       <Image
