@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-import styles from "./signin.style";
+import styles from "./signup.style";
 import { Stack, useRouter } from "expo-router";
 import { COLORS, SIZES, images, icons } from "../../../constants";
 
-const Signin = () => {
+const Signup = () => {
   const router = useRouter();
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -75,26 +75,29 @@ const Signin = () => {
             onFocus={handlePasswordFocus}
             onBlur={handlePasswordBlur}
           />
+          <TextInput
+            style={[styles.formInput, passwordFocus && styles.focusedInput]}
+            placeholder="Confirm Password"
+            secureTextEntry
+            onFocus={handlePasswordFocus}
+            onBlur={handlePasswordBlur}
+          />
 
           <Text style={styles.actionText}>
-            Forgot your{" "}
+            Already have an account{" "}
             <Text
               style={styles.cta}
               onPress={() => {
-                router.push(`/sign_up`);
+                router.push(`/sign_in`);
               }}
             >
-              Password?
+              Login
             </Text>
           </Text>
 
           <TouchableOpacity style={styles.authBtn}>
-            <Text style={styles.authBtnText}>Login</Text>
+            <Text style={styles.authBtnText}>Signup</Text>
           </TouchableOpacity>
-
-          <Text style={styles.actionText}>
-            Create new <Text style={styles.cta}>account?</Text>
-          </Text>
         </View>
 
         <Text style={styles.signupOptions}>Or sign up with</Text>
@@ -115,4 +118,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Signup;

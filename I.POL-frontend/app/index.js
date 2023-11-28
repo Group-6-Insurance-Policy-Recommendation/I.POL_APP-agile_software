@@ -72,7 +72,7 @@ const Home = () => {
         </Text>
         <TouchableOpacity
           onPress={() => {
-            router.push(`/signin`);
+            router.push(`/sign_in`);
           }}
           style={{
             width: 150,
