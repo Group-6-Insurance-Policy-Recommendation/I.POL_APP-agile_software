@@ -3,7 +3,7 @@ node_modules/
 dist/
 npm-debug.*
 serviceAccountKey.json
-*.env
+.env
 *.jks
 *.p8
 *.p12
