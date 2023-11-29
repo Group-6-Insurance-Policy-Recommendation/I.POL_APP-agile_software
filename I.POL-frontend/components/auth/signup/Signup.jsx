@@ -6,6 +6,9 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import auth from "@react-native-firebase/auth";
+// import database from "@react-native-firebase/database";
 import { useState } from "react";
 
 import styles from "./signup.style";
@@ -17,20 +20,49 @@ const Signup = () => {
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 
-  const handleEmailFocus = () => {
-    setEmailFocus(true);
-  };
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleEmailBlur = () => {
-    setEmailFocus(false);
-  };
+  const handleEmailFocus = () => setEmailFocus(true);
+  const handleEmailBlur = () => setEmailFocus(false);
+  const handlePasswordFocus = () => setPasswordFocus(true);
+  const handlePasswordBlur = () => setPasswordFocus(false);
 
-  const handlePasswordFocus = () => {
-    setPasswordFocus(true);
-  };
+  const handleSignup = async () => {
+    try {
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        username,
+        email,
+        password
+      );
+      const idToken = await userCredential.user.getIdToken();
+      const response = await axios.post(
+        "http://localhost:8800/api/auth/register",
+        { username: username, email: email, password: password },
+        {
+          headers: {
+            Authorization: idToken,
+          },
+        }
+      );
 
-  const handlePasswordBlur = () => {
-    setPasswordFocus(false);
+      console.log("Backend response:", response.data);
+
+      // // Store user data in Firebase Realtime Database
+      // await database().ref(`/users/${userCredential.user.uid}`).set({
+      //   email,
+      //   // Add other user details as needed
+      // });
+
+      // Save user email to AsyncStorage for persistent session management
+      await AsyncStorage.setItem("userEmail", email);
+
+      // Navigate to the home screen or any other screen
+      router.push(`/index`);
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
   };
 
   return (
@@ -63,8 +95,17 @@ const Signup = () => {
         <View style={styles.formArea}>
           <TextInput
             style={[styles.formInput, emailFocus && styles.focusedInput]}
+            placeholder="Username"
+            keyboardType="Text"
+            onChangeText={(text) => setUsername(text)}
+            onFocus={handleEmailFocus}
+            onBlur={handleEmailBlur}
+          />
+          <TextInput
+            style={[styles.formInput, emailFocus && styles.focusedInput]}
             placeholder="Email"
             keyboardType="email-address"
+            onChangeText={(text) => setEmail(text)}
             onFocus={handleEmailFocus}
             onBlur={handleEmailBlur}
           />
@@ -72,13 +113,7 @@ const Signup = () => {
             style={[styles.formInput, passwordFocus && styles.focusedInput]}
             placeholder="Password"
             secureTextEntry
-            onFocus={handlePasswordFocus}
-            onBlur={handlePasswordBlur}
-          />
-          <TextInput
-            style={[styles.formInput, passwordFocus && styles.focusedInput]}
-            placeholder="Confirm Password"
-            secureTextEntry
+            onChangeText={(text) => setPassword(text)}
             onFocus={handlePasswordFocus}
             onBlur={handlePasswordBlur}
           />
@@ -95,7 +130,7 @@ const Signup = () => {
             </Text>
           </Text>
 
-          <TouchableOpacity style={styles.authBtn}>
+          <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
             <Text style={styles.authBtnText}>Signup</Text>
           </TouchableOpacity>
         </View>
