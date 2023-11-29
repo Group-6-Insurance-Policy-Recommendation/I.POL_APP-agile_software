@@ -1,10 +1,12 @@
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, Platform } from "react-native";
 import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   welcomeContainer: {
     paddingVertical: SIZES.large,
@@ -14,9 +16,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    fontWeight: 700,
     fontStyle: "normal",
-    lineHeight: "normal",
   },
   preMsg: {
     color: "#000",
@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     fontSize: SIZES.small,
     fontStyle: "normal",
-    fontWeight: 500,
-    lineHeight: "normal",
   },
   logoArea: {
     justifyContent: "center",
@@ -42,14 +40,11 @@ const styles = StyleSheet.create({
     fontFamily: FONT.medium,
     fontSize: SIZES.medium,
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
   },
   formArea: {
     width: "100%",
     paddingHorizontal: 10,
     paddingVertical: 20,
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
@@ -60,15 +55,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.large,
     borderRadius: 10,
     borderWidth: 2,
-    borderStyle: "solid",
     borderColor: COLORS.primary,
     backgroundColor: COLORS.tertiary,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
   },
   focusedInput: {
-    borderWidth: 2,
-    borderStyle: "solid",
     borderColor: COLORS.active,
   },
   actionText: {
@@ -89,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   authBtnText: {
-    color: COLORS.White,
+    color: COLORS.white,
     fontFamily: FONT.medium,
   },
   signupOptions: {
@@ -100,29 +92,26 @@ const styles = StyleSheet.create({
     color: COLORS.gray,
   },
   authIconsArea: {
-    display: "flex",
     flexDirection: "row",
     width: "100%",
     paddingHorizontal: 10,
     paddingVertical: 20,
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    gap: 20,
   },
   authIcons: {
-    // width: 22,
-    // height: 22,
     padding: SIZES.small,
     borderRadius: SIZES.xSmall,
     // ...Platform.select({
     //   ios: {
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
     //   },
     //   android: {
-    //     elevation: 4,
+    //     elevation: 2,
     //   },
     // }),
   },

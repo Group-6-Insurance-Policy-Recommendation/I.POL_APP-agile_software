@@ -9,6 +9,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import auth from "@react-native-firebase/auth";
 // import database from "@react-native-firebase/database";
+import axios from "axios";
 import { useState } from "react";
 
 import styles from "./signup.style";
@@ -68,8 +69,8 @@ const Signup = () => {
   return (
     <SafeAreaView
       style={{
-        flex: 1,
-        backgroundColor: COLORS.White,
+        // flex: 1,
+        backgroundColor: COLORS.white,
         padding: SIZES.medium,
       }}
     >

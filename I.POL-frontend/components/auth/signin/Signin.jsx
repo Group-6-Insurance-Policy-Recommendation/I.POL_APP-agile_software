@@ -36,8 +36,8 @@ const Signin = () => {
   return (
     <SafeAreaView
       style={{
-        flex: 1,
-        backgroundColor: COLORS.White,
+        // flex: 1,
+        backgroundColor: COLORS.white,
         padding: SIZES.medium,
       }}
     >

@@ -62,10 +62,8 @@ const Home = () => {
             textAlign: "left",
             fontFamily: FONT.bold,
             fontSize: SIZES.xLarge,
-            fontWeight: 700,
             paddingTop: 60,
             paddingBottom: 30,
-            lineHeight: "normal",
           }}
         >
           Make a Quick Quote

@@ -8,7 +8,7 @@ const COLORS = {
   gray2: "#C1C0C8",
 
   active: "#0EACA3",
-  White: "#FFFFFF",
+  white: "#FFFFFF",
   lightWhite: "#FAFAFC",
 };
 
