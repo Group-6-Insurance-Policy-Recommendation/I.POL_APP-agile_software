@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import auth from "@react-native-firebase/auth";
+import auth from "firebase/auth";
 // import database from "@react-native-firebase/database";
 import axios from "axios";
 import { useState } from "react";
@@ -33,7 +33,6 @@ const Signup = () => {
   const handleSignup = async () => {
     try {
       const userCredential = await auth().createUserWithEmailAndPassword(
-        username,
         email,
         password
       );
