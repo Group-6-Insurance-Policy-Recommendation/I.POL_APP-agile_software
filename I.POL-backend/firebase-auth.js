@@ -4,7 +4,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 // Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://ipol-app.firebaseio.com",
+  // databaseURL: "https://ipol-app.firebaseio.com",
 });
 
 /**
