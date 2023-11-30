@@ -6,9 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import auth from "firebase/auth";
-// import database from "@react-native-firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../../../config/firebase-config";
+const auth = getAuth(firebaseApp);
+
 import axios from "axios";
 import { useState } from "react";
 
@@ -32,10 +33,12 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
         email,
         password
       );
+      console.log(userCredential.user.email);
       const idToken = await userCredential.user.getIdToken();
       const response = await axios.post(
         "http://localhost:8800/api/auth/register",
@@ -44,19 +47,11 @@ const Signup = () => {
           headers: {
             Authorization: idToken,
           },
+          // timeout: 5000,
         }
       );
 
       console.log("Backend response:", response.data);
-
-      // // Store user data in Firebase Realtime Database
-      // await database().ref(`/users/${userCredential.user.uid}`).set({
-      //   email,
-      //   // Add other user details as needed
-      // });
-
-      // Save user email to AsyncStorage for persistent session management
-      await AsyncStorage.setItem("userEmail", email);
 
       // Navigate to the home screen or any other screen
       router.push(`/index`);
