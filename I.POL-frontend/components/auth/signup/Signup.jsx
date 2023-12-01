@@ -63,18 +63,23 @@ const Signup = () => {
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         backgroundColor: COLORS.white,
         padding: SIZES.medium,
       }}
     >
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: COLORS.white,
+          padding: SIZES.medium,
+        }}
+      >
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeMsg}>Welcome Back</Text>
           <Text style={styles.preMsg}>
-            Log in to explore all existing insurances!!!
+            Register to explore all existing insurances!!!
           </Text>
         </View>
 
@@ -84,7 +89,7 @@ const Signup = () => {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.logoText}>I.POL</Text>
+          {/* <Text style={styles.logoText}>I.POL</Text> */}
         </View>
 
         <View style={styles.formArea}>
