@@ -107,7 +107,7 @@ export const updateProfile =
 
       // Make API request for updating a profile
       const response = await axios.put(
-        `http://localhost:8800/api/users/profile/${profileId}`,
+        `http://localhost:8800/api/users/profile/${user._id}`,
         { ...updatedProfileData, userId: user._id },
         {
           headers: {

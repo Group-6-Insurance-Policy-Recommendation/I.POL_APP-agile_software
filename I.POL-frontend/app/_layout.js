@@ -7,6 +7,9 @@ import { ProfileHeaderBtn } from "../components";
 
 SplashScreen.preventAutoHideAsync();
 
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
+
 const Layout = () => {
   const router = useRouter();
 
@@ -25,40 +28,42 @@ const Layout = () => {
   if (!fontsLoaded) return null;
 
   return (
-    <Stack onLayout={onLayoutRootView}>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.lightWhite,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          // headerLeft: () => (
-          //   <ProfileHeaderBtn iconUrl={images.logo} dimension="100%" />
-          // ),
-          headerRight: () => (
-            <ProfileHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={() => router.push(`/profile`)}
-            />
-          ),
-        }}
-      />
+    <Provider store={store}>
+      <Stack onLayout={onLayoutRootView}>
+        <Stack.Screen
+          name="index"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.lightWhite,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            // headerLeft: () => (
+            //   <ProfileHeaderBtn iconUrl={images.logo} dimension="100%" />
+            // ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`/profile`)}
+              />
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="profile/editInfo"
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          presentation: "modal",
-        }}
-      />
-    </Stack>
+        <Stack.Screen
+          name="profile/editInfo"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+          }}
+        />
+      </Stack>
+    </Provider>
   );
 };
 
