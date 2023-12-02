@@ -122,9 +122,13 @@ router.post("/profile", async (req, res) => {
 
     // Create a new profile
     user.profile = {
-      // Add profile fields based on your requirements
-      bio: req.body.bio,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      username: req.body.username,
+      nationality: req.body.nationality,
       address: req.body.address,
+      city: req.body.city,
+      dateOfBirth: req.body.dateOfBirth,
       // ... other profile fields
     };
 
@@ -139,7 +143,7 @@ router.post("/profile", async (req, res) => {
 });
 
 // UPDATE PROFILE
-router.put("/profile", async (req, res) => {
+router.put("/profile/:id", async (req, res) => {
   try {
     const userId = req.user._id; // Assuming you have a middleware that adds the user to the request object
 
@@ -152,8 +156,13 @@ router.put("/profile", async (req, res) => {
     }
 
     // Update profile fields
-    user.profile.bio = req.body.bio || user.profile.bio;
+    user.profile.firstname = req.body.firstname || user.profile.firstname;
+    user.profile.lastname = req.body.lastname || user.profile.lastname;
+    user.profile.username = req.body.username || user.profile.username;
+    user.profile.nationality = req.body.nationality || user.profile.nationality;
     user.profile.address = req.body.address || user.profile.address;
+    user.profile.city = req.body.city || user.profile.city;
+    user.profile.dateOfBirth = req.body.dateOfBirth || user.profile.dateOfBirth;
     // ... update other profile fields
 
     // Save the updated user

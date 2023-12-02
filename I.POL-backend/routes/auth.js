@@ -41,7 +41,12 @@ router.post("/login", async (req, res) => {
     const firebaseToken = await firebaseAuth.createCustomToken(
       user._id.toString()
     );
-    res.status(200).json({ user, firebaseToken });
+
+    // Update the User's Firebase token in the database
+    user.firebaseToken = firebaseToken;
+    await user.save();
+
+    res.status(200).json({ user });
   } catch (err) {
     res.status(500).json(err);
   }
