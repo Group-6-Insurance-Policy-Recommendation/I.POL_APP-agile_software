@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: COLORS.tertiary,
-    backgroundColor: COLORS.lightWhite,
+    backgroundColor: COLORS.tertiary,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
     color: COLORS.gray2,

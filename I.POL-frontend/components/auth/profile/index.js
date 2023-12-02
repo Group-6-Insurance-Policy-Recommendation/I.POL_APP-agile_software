@@ -21,7 +21,6 @@ const Profile = () => {
       style={{
         width: "100%",
         backgroundColor: COLORS.white,
-        padding: SIZES.medium,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
@@ -31,6 +30,7 @@ const Profile = () => {
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
+            padding: SIZES.medium,
             paddingVertical: SIZES.xxLarge,
           }}
         >
@@ -50,7 +50,7 @@ const Profile = () => {
               style={{
                 fontFamily: FONT.regular,
                 fontSize: SIZES.xLarge,
-                fontWeight: "500",
+                fontWeight: "600",
                 color: COLORS.text2,
               }}
             >
@@ -67,25 +67,25 @@ const Profile = () => {
               @PrinceStiles
             </Text>
           </View>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Text
               style={{
                 fontFamily: FONT.regular,
                 fontSize: SIZES.small,
                 fontWeight: "500",
-                color: COLORS.primary,
+                color: COLORS.secondary,
                 padding: 2,
               }}
             >
               Edit Profile
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View
             style={{
               width: "100%",
               paddingVertical: SIZES.large,
-              marginVertical: SIZES.xxLarge,
+              // marginVertical: SIZES.xxLarge,
               borderTopWidth: 1,
               borderBottomWidth: 1,
               borderTopColor: COLORS.lightWhite,
@@ -96,8 +96,10 @@ const Profile = () => {
               style={{
                 width: "100%",
                 paddingVertical: SIZES.small,
-                // borderTopWidth: 1,
-                // borderTopColor: COLORS.gray2,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
               }}
               onPress={() => router.push(`/profile/editInfo`)}
             >
@@ -106,8 +108,7 @@ const Profile = () => {
                   fontFamily: FONT.regular,
                   fontSize: SIZES.medium,
                   fontWeight: "100",
-                  textAlign: "center",
-                  color: COLORS.text2,
+                  color: COLORS.primary,
                   padding: 2,
                 }}
               >
@@ -118,8 +119,10 @@ const Profile = () => {
               style={{
                 width: "100%",
                 paddingVertical: SIZES.small,
-                // borderTopWidth: 1,
-                // borderTopColor: COLORS.gray2,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
               }}
             >
               <Text
@@ -127,8 +130,7 @@ const Profile = () => {
                   fontFamily: FONT.regular,
                   fontSize: SIZES.medium,
                   fontWeight: "100",
-                  textAlign: "center",
-                  color: COLORS.text2,
+                  color: COLORS.primary,
                   padding: 2,
                 }}
               >
@@ -139,8 +141,10 @@ const Profile = () => {
               style={{
                 width: "100%",
                 paddingVertical: SIZES.small,
-                // borderTopWidth: 1,
-                // borderTopColor: COLORS.gray2,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
               }}
             >
               <Text
@@ -148,8 +152,7 @@ const Profile = () => {
                   fontFamily: FONT.regular,
                   fontSize: SIZES.medium,
                   fontWeight: "100",
-                  textAlign: "center",
-                  color: COLORS.text2,
+                  color: COLORS.primary,
                   padding: 2,
                 }}
               >
@@ -160,10 +163,10 @@ const Profile = () => {
               style={{
                 width: "100%",
                 paddingVertical: SIZES.small,
-                // borderTopWidth: 1,
-                // borderBottomWidth: 1,
-                // borderTopColor: COLORS.gray2,
-                // borderBottomColor: COLORS.gray2,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
               }}
             >
               <Text
@@ -171,12 +174,112 @@ const Profile = () => {
                   fontFamily: FONT.regular,
                   fontSize: SIZES.medium,
                   fontWeight: "100",
-                  textAlign: "center",
-                  color: COLORS.text2,
+                  color: COLORS.primary,
                   padding: 2,
                 }}
               >
                 Security Settings
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              width: "100%",
+              paddingVertical: SIZES.large,
+              // marginVertical: SIZES.xxLarge,
+              borderTopWidth: 1,
+              borderBottomWidth: 1,
+              borderTopColor: COLORS.lightWhite,
+              borderBottomColor: COLORS.lightWhite,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.medium,
+                  fontWeight: "100",
+                  color: COLORS.primary,
+                  padding: 2,
+                }}
+              >
+                Notification
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.medium,
+                  fontWeight: "100",
+                  color: COLORS.primary,
+                  padding: 2,
+                }}
+              >
+                Feedback
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.medium,
+                  fontWeight: "100",
+                  color: COLORS.primary,
+                  padding: 2,
+                }}
+              >
+                FAQs
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.medium,
+                  fontWeight: "100",
+                  color: COLORS.primary,
+                  padding: 2,
+                }}
+              >
+                More Settings
               </Text>
             </TouchableOpacity>
           </View>

@@ -2,6 +2,7 @@ import {
   View,
   Text,
   SafeAreaView,
+  ScrollView,
   Image,
   TextInput,
   TouchableOpacity,
@@ -16,7 +17,7 @@ import { useState } from "react";
 
 import styles from "./signin.style";
 import { Stack, useRouter } from "expo-router";
-import { COLORS, SIZES, images, icons } from "../../../constants";
+import { COLORS, SIZES, images, icons, SHADOWS } from "../../../constants";
 
 const Signin = () => {
   const router = useRouter();
@@ -73,86 +74,101 @@ const Signin = () => {
     <SafeAreaView
       style={{
         backgroundColor: COLORS.white,
-        padding: SIZES.medium,
       }}
     >
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View
-        style={{
-          backgroundColor: COLORS.white,
-          paddingVertical: SIZES.xxLarge + 40,
-        }}
-      >
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeMsg}>Welcome Back</Text>
-          <Text style={styles.preMsg}>
-            Log in to explore all existing insurances!!!
-          </Text>
-        </View>
-
-        <View style={styles.logoArea}>
-          <Image
-            source={images.logo}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          {/* <Text style={styles.logoText}>I.POL</Text> */}
-        </View>
-
-        <KeyboardAvoidingView style={styles.formArea} behavior="padding">
-          <TextInput
-            style={[styles.formInput, emailFocus && styles.focusedInput]}
-            placeholder="Email"
-            keyboardType="email-address"
-            onChangeText={(text) => setEmail(text)}
-            onFocus={handleEmailFocus}
-            onBlur={handleEmailBlur}
-          />
-          <TextInput
-            style={[styles.formInput, passwordFocus && styles.focusedInput]}
-            placeholder="Password"
-            secureTextEntry
-            onChangeText={(text) => setPassword(text)}
-            onFocus={handlePasswordFocus}
-            onBlur={handlePasswordBlur}
-          />
-
-          <Text style={styles.actionText}>
-            Forgot your <Text style={styles.cta}>Password?</Text>
-          </Text>
-
-          <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
-            <Text style={styles.authBtnText}>Login</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.actionText}>
-            Create new{" "}
-            <Text
-              style={styles.cta}
-              onPress={() => {
-                router.push(`/sign_up`);
-              }}
-            >
-              account?
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            padding: SIZES.medium,
+            paddingTop: SIZES.xxLarge + 40,
+          }}
+        >
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.welcomeMsg}>Welcome Back</Text>
+            <Text style={styles.preMsg}>
+              Log in to explore all existing insurances!!!
             </Text>
-          </Text>
-        </KeyboardAvoidingView>
+          </View>
 
-        <Text style={styles.signupOptions}>Or sign up with</Text>
+          <View style={styles.logoArea}>
+            <Image
+              source={images.logo}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            {/* <Text style={styles.logoText}>I.POL</Text> */}
+          </View>
 
-        <View style={styles.authIconsArea}>
-          <TouchableOpacity style={styles.authIcons}>
-            <Image resizeMode="contain" source={icons.google} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.authIcons}>
-            <Image resizeMode="contain" source={icons.facebook} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.authIcons}>
-            <Image resizeMode="contain" source={icons.apple} />
-          </TouchableOpacity>
+          <KeyboardAvoidingView style={styles.formArea} behavior="padding">
+            <TextInput
+              style={[styles.formInput, emailFocus && styles.focusedInput]}
+              placeholder="Email"
+              keyboardType="email-address"
+              onChangeText={(text) => setEmail(text)}
+              onFocus={handleEmailFocus}
+              onBlur={handleEmailBlur}
+            />
+            <TextInput
+              style={[styles.formInput, passwordFocus && styles.focusedInput]}
+              placeholder="Password"
+              secureTextEntry
+              onChangeText={(text) => setPassword(text)}
+              onFocus={handlePasswordFocus}
+              onBlur={handlePasswordBlur}
+            />
+
+            <Text style={styles.actionText}>
+              Forgot your <Text style={styles.cta}>Password?</Text>
+            </Text>
+
+            <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
+              <Text style={styles.authBtnText}>Login</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.actionText}>
+              Create new{" "}
+              <Text
+                style={styles.cta}
+                onPress={() => {
+                  router.push(`/sign_up`);
+                }}
+              >
+                account?
+              </Text>
+            </Text>
+            <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
+              <Text style={styles.signupOptions}>Or sign up with</Text>
+
+              <View style={styles.authIconsArea}>
+                <TouchableOpacity style={styles.authIcons}>
+                  <Image
+                    resizeMode="contain"
+                    style={{ width: 35, height: 35 }}
+                    source={icons.google}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.authIcons}>
+                  <Image
+                    resizeMode="contain"
+                    style={{ width: 35, height: 35 }}
+                    source={icons.facebook}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.authIcons}>
+                  <Image
+                    resizeMode="contain"
+                    style={{ width: 35, height: 35 }}
+                    source={icons.apple}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

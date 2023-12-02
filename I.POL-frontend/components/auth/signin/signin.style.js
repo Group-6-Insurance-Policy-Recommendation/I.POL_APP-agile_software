@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, FONT, SIZES } from "../../../constants";
+import { COLORS, FONT, SHADOWS, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   authIconsArea: {
     flexDirection: "row",
     width: "100%",
-    paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingHorizontal: SIZES.xSmall,
+    paddingVertical: SIZES.medium,
     marginTop: SIZES.small,
     justifyContent: "center",
     alignItems: "center",
@@ -112,17 +112,7 @@ const styles = StyleSheet.create({
   authIcons: {
     padding: SIZES.small,
     borderRadius: SIZES.xSmall,
-    // ...Platform.select({
-    //   ios: {
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    //   },
-    //   android: {
-    //     elevation: 2,
-    //   },
-    // }),
+    ...SHADOWS.small,
   },
 });
 
