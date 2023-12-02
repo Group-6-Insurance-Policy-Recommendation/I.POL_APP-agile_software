@@ -3,7 +3,6 @@ import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -61,12 +60,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.tertiary,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
-    color: COLORS.primary,
+    color: COLORS.text,
     fontWeight: "medium",
   },
   focusedInput: {
     borderColor: COLORS.active,
-    color: COLORS.text,
+    color: COLORS.text2,
   },
   actionText: {
     padding: SIZES.small,

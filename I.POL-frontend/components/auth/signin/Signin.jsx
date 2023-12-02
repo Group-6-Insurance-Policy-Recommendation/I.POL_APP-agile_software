@@ -5,6 +5,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../../../config/firebase-config";
@@ -77,12 +78,12 @@ const Signin = () => {
     >
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View 
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.white,
-        padding: SIZES.medium,
-      }}>
+      <View
+        style={{
+          backgroundColor: COLORS.white,
+          paddingVertical: SIZES.xxLarge + 40,
+        }}
+      >
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeMsg}>Welcome Back</Text>
           <Text style={styles.preMsg}>
@@ -99,7 +100,7 @@ const Signin = () => {
           {/* <Text style={styles.logoText}>I.POL</Text> */}
         </View>
 
-        <View style={styles.formArea}>
+        <KeyboardAvoidingView style={styles.formArea} behavior="padding">
           <TextInput
             style={[styles.formInput, emailFocus && styles.focusedInput]}
             placeholder="Email"
@@ -136,19 +137,19 @@ const Signin = () => {
               account?
             </Text>
           </Text>
-        </View>
+        </KeyboardAvoidingView>
 
         <Text style={styles.signupOptions}>Or sign up with</Text>
 
         <View style={styles.authIconsArea}>
           <TouchableOpacity style={styles.authIcons}>
-            <Image source={icons.google} />
+            <Image resizeMode="contain" source={icons.google} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.authIcons}>
-            <Image source={icons.facebook} />
+            <Image resizeMode="contain" source={icons.facebook} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.authIcons}>
-            <Image source={icons.apple} />
+            <Image resizeMode="contain" source={icons.apple} />
           </TouchableOpacity>
         </View>
       </View>
