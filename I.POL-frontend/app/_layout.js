@@ -1,11 +1,15 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { COLORS, icons, images, SIZES, FONT } from "../constants";
+import { ProfileHeaderBtn } from "../components";
 
 SplashScreen.preventAutoHideAsync();
 
 const Layout = () => {
+  const router = useRouter();
+
   const [fontsLoaded] = useFonts({
     DMBold: require("../assets/fonts/DMSans-Bold.ttf"),
     DMMedium: require("../assets/fonts/DMSans-Medium.ttf"),
@@ -20,7 +24,42 @@ const Layout = () => {
 
   if (!fontsLoaded) return null;
 
-  return <Stack onLayout={onLayoutRootView} />;
+  return (
+    <Stack onLayout={onLayoutRootView}>
+      <Stack.Screen
+        name="index"
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.tertiary,
+          },
+          headerShadowVisible: false,
+          headerTitle: "",
+          // headerLeft: () => (
+          //   <ProfileHeaderBtn iconUrl={images.logo} dimension="100%" />
+          // ),
+          headerRight: () => (
+            <ProfileHeaderBtn
+              iconUrl={images.profile}
+              dimension="100%"
+              handlePress={() => router.push(`/profile`)}
+            />
+          ),
+        }}
+      />
+      
+      <Stack.Screen
+        name="profile/editInfo"
+        options={{
+          headerStyle: {
+            backgroundColor: COLORS.tertiary,
+          },
+          headerShadowVisible: false,
+          headerTitle: "",
+          presentation: "modal"
+        }}
+      />
+    </Stack>
+  );
 };
 
 export default Layout;

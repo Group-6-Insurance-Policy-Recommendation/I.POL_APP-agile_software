@@ -1,65 +1,32 @@
-import { Stack, useRouter } from "expo-router";
+import { Stack, router } from "expo-router";
 import {
   Text,
   View,
   SafeAreaView,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, icons, images, SIZES, FONT } from "../constants";
-import { ProfileHeaderBtn } from "../components";
 
 const Home = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
-    <LinearGradient
-      colors={[COLORS.tertiary, COLORS.lightWhite]}
-      style={{ flex: 1, width: "100%", borderRadius: 10 }}
+    // <LinearGradient
+    //   colors={[COLORS.tertiary, COLORS.lightWhite]}
+    //   style={{ flex: 1, width: "100%", borderRadius: 10 }}
+    // >
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.tertiary,
+        padding: SIZES.medium,
+      }}
     >
-      <SafeAreaView
-        style={{
-          flex: 1,
-          // backgroundColor: COLORS.white,
-          padding: SIZES.medium,
-        }}
-      >
-        <Stack.Screen
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.tertiary,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ProfileHeaderBtn iconUrl={images.logo} dimension="100%" />
-                <Text
-                  style={{
-                    fontFamily: FONT.bold,
-                    color: COLORS.primary,
-                    fontSize: SIZES.small,
-                  }}
-                >
-                  I.POL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn iconUrl={images.profile} dimension="100%" />
-            ),
-          }}
-        />
-
-        <View style={{ width: "100%" }}>
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <View style={{ width: "100%", paddingVertical: 50 }}>
           <View
             style={{
               width: "100%",
@@ -69,41 +36,48 @@ const Home = () => {
           >
             <View>
               <Image
-                source={require("../assets/images/splash.svg")}
-                style={{ width: 200, height: 200, alignSelf: "center" }}
+                source={require("../assets/logo.png")}
+                style={{ width: 150, height: 150, alignSelf: "center" }}
               />
             </View>
             <Text
               style={{
-                color: COLORS.primary,
-                fontSize: SIZES.xLarge,
+                color: COLORS.text2,
+                fontSize: SIZES.large,
                 fontFamily: FONT.medium,
                 fontWeight: "bold",
                 textAlign: "center",
-                marginHorizontal: 6,
               }}
             >
-              Keep all your insurance claims in one place
+              Looking for the best Insurance Policies? Don't worry.
             </Text>
             <Text
               style={{
-                color: COLORS.secondary,
+                color: COLORS.text2,
                 fontSize: SIZES.small,
+                fontFamily: FONT.regular,
                 textAlign: "center",
-                padding: 4,
-                // marginTop: SIZES.medium,
               }}
             >
-              At insurance pol we allow you to get your insurance claims through a system carefully designed to give you the best.
+              At IPOL we allow you to get your insurance claims through a system
+              carefully designed to give you the best.
             </Text>
-            <View style={{ width: "100%", marginTop: SIZES.xxLarge }}>
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: SIZES.xxLarge,
+              }}
+            >
               <TouchableOpacity
                 style={{
+                  width: "50%",
                   backgroundColor: COLORS.primary,
                   borderRadius: SIZES.xSmall,
                   paddingVertical: SIZES.small,
                   paddingHorizontal: SIZES.large,
-                  margin: 8,
+                  marginVertical: 10,
                 }}
               >
                 <Text
@@ -111,8 +85,8 @@ const Home = () => {
                     textAlign: "center",
                     color: "white",
                     fontFamily: FONT.regular,
+                    fontSize: SIZES.medium - 2,
                     fontWeight: "bold",
-                    fontSize: 16,
                   }}
                   onPress={() => router.push(`/sign_in`)}
                 >
@@ -121,11 +95,12 @@ const Home = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
+                  width: "50%",
                   backgroundColor: COLORS.primary,
                   borderRadius: SIZES.xSmall,
                   paddingVertical: SIZES.small,
                   paddingHorizontal: SIZES.large,
-                  margin: 8,
+                  marginVertical: 10,
                 }}
               >
                 <Text
@@ -133,8 +108,8 @@ const Home = () => {
                     textAlign: "center",
                     color: "white",
                     fontFamily: FONT.regular,
+                    fontSize: SIZES.medium - 2,
                     fontWeight: "bold",
-                    fontSize: 16,
                   }}
                   onPress={() => router.push(`/sign_up`)}
                 >
@@ -144,8 +119,9 @@ const Home = () => {
             </View>
           </View>
         </View>
-      </SafeAreaView>
-    </LinearGradient>
+      </ScrollView>
+    </SafeAreaView>
+    // </LinearGradient>
   );
 };
 
