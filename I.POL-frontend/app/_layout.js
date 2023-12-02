@@ -30,7 +30,7 @@ const Layout = () => {
         name="index"
         options={{
           headerStyle: {
-            backgroundColor: COLORS.tertiary,
+            backgroundColor: COLORS.lightWhite,
           },
           headerShadowVisible: false,
           headerTitle: "",
@@ -46,16 +46,16 @@ const Layout = () => {
           ),
         }}
       />
-      
+
       <Stack.Screen
         name="profile/editInfo"
         options={{
           headerStyle: {
-            backgroundColor: COLORS.tertiary,
+            backgroundColor: COLORS.white,
           },
           headerShadowVisible: false,
           headerTitle: "",
-          presentation: "modal"
+          presentation: "modal",
         }}
       />
     </Stack>

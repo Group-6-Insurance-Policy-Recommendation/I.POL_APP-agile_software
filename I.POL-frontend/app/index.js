@@ -11,8 +11,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, icons, images, SIZES, FONT } from "../constants";
 
 const Home = () => {
-  // const router = useRouter();
-
   return (
     // <LinearGradient
     //   colors={[COLORS.tertiary, COLORS.lightWhite]}
@@ -21,12 +19,11 @@ const Home = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: COLORS.tertiary,
-        padding: SIZES.medium,
+        backgroundColor: COLORS.lightWhite,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ width: "100%", paddingVertical: 50 }}>
+        <View style={{ width: "100%", paddingVertical: 20 }}>
           <View
             style={{
               width: "100%",
@@ -34,34 +31,6 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            <View>
-              <Image
-                source={require("../assets/logo.png")}
-                style={{ width: 150, height: 150, alignSelf: "center" }}
-              />
-            </View>
-            <Text
-              style={{
-                color: COLORS.text2,
-                fontSize: SIZES.large,
-                fontFamily: FONT.medium,
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            >
-              Looking for the best Insurance Policies? Don't worry.
-            </Text>
-            <Text
-              style={{
-                color: COLORS.text2,
-                fontSize: SIZES.small,
-                fontFamily: FONT.regular,
-                textAlign: "center",
-              }}
-            >
-              At IPOL we allow you to get your insurance claims through a system
-              carefully designed to give you the best.
-            </Text>
             <View
               style={{
                 width: "100%",
@@ -70,9 +39,51 @@ const Home = () => {
                 paddingVertical: SIZES.xxLarge,
               }}
             >
+              <Text
+                style={{
+                  color: COLORS.secondary,
+                  fontSize: SIZES.large,
+                  fontFamily: FONT.medium,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Looking for the best Insurance Policies? Don't worry.
+              </Text>
+              <View>
+                <Image
+                  source={images.welcome}
+                  style={{
+                    width: 200,
+                    height: 200,
+                    alignSelf: "center",
+                    marginVertical: SIZES.large,
+                  }}
+                />
+              </View>
+              <Text
+                style={{
+                  color: COLORS.text2,
+                  fontSize: SIZES.small,
+                  fontFamily: FONT.regular,
+                  textAlign: "center",
+                }}
+              >
+                At IPOL we allow you to get your insurance claims through a
+                system carefully designed to give you the best.
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: SIZES.small,
+              }}
+            >
               <TouchableOpacity
                 style={{
-                  width: "50%",
+                  width: "80%",
                   backgroundColor: COLORS.primary,
                   borderRadius: SIZES.xSmall,
                   paddingVertical: SIZES.small,
@@ -95,8 +106,8 @@ const Home = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  width: "50%",
-                  backgroundColor: COLORS.primary,
+                  width: "80%",
+                  backgroundColor: COLORS.secondary,
                   borderRadius: SIZES.xSmall,
                   paddingVertical: SIZES.small,
                   paddingHorizontal: SIZES.large,
@@ -116,6 +127,13 @@ const Home = () => {
                   Sign Up
                 </Text>
               </TouchableOpacity>
+            </View>
+
+            <View>
+              <Image
+                source={images.logo}
+                style={{ width: 80, height: 80, alignSelf: "center" }}
+              />
             </View>
           </View>
         </View>
