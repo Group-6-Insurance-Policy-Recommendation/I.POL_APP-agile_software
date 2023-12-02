@@ -10,11 +10,40 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONT, SIZES } from "../../../../constants";
-import { useRouter } from "expo-router";
+import { createProfile, updateProfile } from "../../../../redux/actions/authThunk";
+import { connect } from "react-redux";
 import styles from "./editInformation.style";
 
 const EditInformation = () => {
-  const router = useRouter();
+  const [name, setName] = useState(userProfile.firstname || "");
+  const [surname, setSurname] = useState(userProfile.lastname || "");
+  const [username, setUsername] = useState(userProfile.username || "");
+  const [nationality, setNationality] = useState(userProfile.nationality || "");
+  const [address, setAddress] = useState(userProfile.address || "");
+  const [city, setCity] = useState(userProfile.city || "");
+  const [dateOfBirth, setDateOfBirth] = useState(userProfile.dateOfBirth || "");
+
+  const handleSave = () => {
+    const profileData = {
+      firstname,
+      lastname,
+      username,
+      nationality,
+      address,
+      city,
+      dateOfBirth,
+    };
+
+    // Check if the user already has a profile
+    if (userProfile._id) {
+      // User has a profile, update the profile
+      updateProfile(profileData);
+    } else {
+      // User does not have a profile, create a new profile
+      createProfile(profileData);
+    }
+  };
+
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 
@@ -71,6 +100,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handleEmailFocus}
                 onBlur={handleEmailBlur}
+                value={name}
+                onChangeText={setName}
               />
 
               <Text style={styles.label}>Surname</Text>
@@ -80,6 +111,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={surname}
+                onChangeText={setSurname}
               />
 
               <Text style={styles.label}>Username</Text>
@@ -89,6 +122,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={username}
+                onChangeText={setUsername}
               />
 
               <Text style={styles.label}>Nationality</Text>
@@ -98,6 +133,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={nationality}
+                onChangeText={setNationality}
               />
 
               <Text style={styles.label}>Address</Text>
@@ -107,6 +144,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={address}
+                onChangeText={setAddress}
               />
 
               <Text style={styles.label}>City</Text>
@@ -116,6 +155,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={city}
+                onChangeText={setCity}
               />
 
               <Text style={styles.label}>Date of Birth</Text>
@@ -125,9 +166,11 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
+                value={dateOfBirth}
+                onChangeText={setDateOfBirth}
               />
 
-              <TouchableOpacity style={styles.editBtn} onPress>
+              <TouchableOpacity style={styles.editBtn} onPress={handleSave}>
                 <Text style={styles.editBtnText}>Save</Text>
               </TouchableOpacity>
             </View>
@@ -138,4 +181,13 @@ const EditInformation = () => {
   );
 };
 
-export default EditInformation;
+const mapStateToProps = (state) => ({
+  userProfile: state.user.profile, // Assuming you store the user profile in your Redux state
+});
+
+const mapDispatchToProps = {
+  createProfile,
+  updateProfile,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditInformation);

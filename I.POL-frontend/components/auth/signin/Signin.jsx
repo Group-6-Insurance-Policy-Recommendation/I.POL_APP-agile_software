@@ -13,14 +13,18 @@ import firebaseApp from "../../../config/firebase-config";
 const auth = getAuth(firebaseApp);
 
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./signin.style";
-import { Stack, useRouter } from "expo-router";
+import { router, Stack } from "expo-router";
 import { COLORS, SIZES, images, icons, SHADOWS } from "../../../constants";
+import { loginUser } from "../../../redux/actions/authThunk";
 
 const Signin = () => {
-  const router = useRouter();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 
@@ -31,6 +35,12 @@ const Signin = () => {
   const handleEmailBlur = () => setEmailFocus(false);
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      return alert("You're logged in.");
+    }
+  });
 
   const handleSignIn = async () => {
     try {
@@ -48,22 +58,14 @@ const Signin = () => {
       const idToken = await userCredential.user.getIdToken();
 
       // Send the ID token to the backend for further authentication
-      const response = await axios.post(
-        "http://localhost:8800/api/auth/login", // Assuming you have a login endpoint
-        { email: email, password: password },
-        {
-          headers: {
-            Authorization: idToken,
-          },
-          // timeout: 5000,
-        }
-      );
+      const credentials = { email, password };
+      dispatch(loginUser(credentials, idToken));
 
       // Log backend response to the console
       console.log("Backend response:", response.data);
 
       // Navigate to the home screen or any other screen
-      router.push(`/index`);
+      router.push(`/home`);
     } catch (error) {
       // Handle sign-in error
       console.error("Sign-in error:", error);

@@ -16,11 +16,13 @@ import axios from "axios";
 import { useState } from "react";
 
 import styles from "./signup.style";
-import { Stack, useRouter } from "expo-router";
+import { router, Stack, useRouter } from "expo-router";
 import { COLORS, SIZES, images, icons } from "../../../constants";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../../redux/actions/authThunk";
 
 const Signup = () => {
-  const router = useRouter();
+  const dispatch = useDispatch();
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 
@@ -52,11 +54,17 @@ const Signup = () => {
           // timeout: 5000,
         }
       );
+      const credentials = {
+        username: username,
+        email: email,
+        password: password,
+      };
+      dispatch(signUp(credentials, idToken));
 
       console.log("Backend response:", response.data);
 
-      // Navigate to the home screen or any other screen
-      router.push(`/index`);
+      // Navigate to the login screen or any other screen
+      router.push(`/sign_in`);
     } catch (error) {
       console.error("Signup error:", error);
     }
