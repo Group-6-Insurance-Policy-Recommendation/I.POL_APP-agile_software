@@ -36,10 +36,6 @@ const UserSchema = mongoose.Schema(
       type: String,
       max: 50,
     },
-    city: {
-      type: String,
-      max: 50,
-    },
     from: {
       type: String,
       max: 50,
@@ -47,7 +43,44 @@ const UserSchema = mongoose.Schema(
     relationship: {
       type: Number,
       enum: [1, 2, 3],
-    }
+    },
+    firebaseToken: { type: String },
+    profile: {
+      firstname: {
+        type: String,
+        required: true,
+        max: 50,
+        unique: true,
+      },
+      lastname: {
+        type: String,
+        required: true,
+        max: 50,
+        unique: true,
+      },
+      username: {
+        type: String,
+        required: true,
+        max: 20,
+        unique: true,
+      },
+      nationality: {
+        type: String,
+        max: 100,
+      },
+      address: {
+        type: String,
+        max: 100,
+      },
+      city: {
+        type: String,
+        max: 50,
+      },
+      dateOfBirth: {
+        type: Date,
+      },
+      // Add other profile details as needed
+    },
   },
   { timestamps: true }
 );
