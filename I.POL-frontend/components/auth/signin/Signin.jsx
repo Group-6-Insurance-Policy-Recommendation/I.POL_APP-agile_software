@@ -12,7 +12,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../../../config/firebase-config";
 const auth = getAuth(firebaseApp);
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,6 +23,7 @@ import { loginUser } from "../../../redux/actions/authThunk";
 const Signin = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const user = useSelector((state) => state.user);
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -38,6 +38,8 @@ const Signin = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      console.log(user);
+      console.log(isAuthenticated);
       return alert("You're logged in.");
     }
   });
@@ -60,9 +62,6 @@ const Signin = () => {
       // Send the ID token to the backend for further authentication
       const credentials = { email, password };
       dispatch(loginUser(credentials, idToken));
-
-      // Log backend response to the console
-      console.log("Backend response:", response.data);
 
       // Navigate to the home screen or any other screen
       router.push(`/home`);

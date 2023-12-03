@@ -23,10 +23,15 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
       }
     );
 
-    const data = await response.data;
+    if (response.status === 200) {
+      console.log("Backend response:", response.data);
 
-    // Dispatch the login success action
-    dispatch(loginSuccess(data.user));
+      // Dispatch the login success action
+      dispatch(loginSuccess(response.data));
+    } else {
+      // Dispatch the login failure action
+      dispatch(loginFailure(response.response.data.error));
+    }
   } catch (error) {
     console.error("Login failed:", error);
     // Handle error and dispatch appropriate actions
@@ -35,6 +40,10 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
 
 export const signUp = (credentials, idToken) => async (dispatch) => {
   try {
+    console.log("Signup. Request Body:", {
+      ...credentials,
+      idToken: idToken,
+    });
     // Make API request for sign-up
     const response = await axios.post(
       "http://localhost:8800/api/auth/register",
@@ -46,14 +55,13 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
       }
     );
 
-    const data = await response.data;
-
-    if (response.ok) {
+    if (response.status === 200) {
       // Dispatch the sign-up success action
-      dispatch(signUpSuccess(data.user));
+      console.log("Backend response:", response.data);
+      dispatch(signUpSuccess(response.data));
     } else {
       // Dispatch the sign-up failure action
-      dispatch(signUpFailure(data.error));
+      dispatch(signUpFailure(response.response.data.error));
     }
   } catch (error) {
     console.error("Sign-up failed:", error);
@@ -62,43 +70,51 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
   }
 };
 
-export const createProfile = (profileData, user_id) => async (dispatch) => {
-  try {
-    console.log("Creating profile. Request Body:", {
-      ...profileData,
-      userId: user_id,
-    });
+export const createProfile =
+  (profileData, user_id, idToken) => async (dispatch) => {
+    try {
+      console.log("Creating profile. Request Body:", {
+        ...profileData,
+        userId: user_id,
+      });
 
-    // Make API request for creating a profile
-    const response = await axios.post(
-      "http://localhost:8800/api/users/profile",
-      { ...profileData, userId: user_id },
-      {
-        headers: {
-          Authorization: idToken,
-        },
+      // Make API request for creating a profile
+      const response = await axios.post(
+        "http://localhost:8800/api/users/profile",
+        { ...profileData, userId: user_id },
+        {
+          headers: {
+            Authorization: idToken,
+          },
+        }
+      );
+      console.log("Profile created-):", response.data);
+
+      if (response.status === 201) {
+        // Dispatch the create profile success action
+        console.log("Profile created:", response.data);
+        dispatch(createProfileSuccess(response.data));
+      } else {
+        // Dispatch the create profile failure action
+        dispatch(createProfileFailure(response.data.error));
       }
-    );
-
-    const data = await response.data;
-
-    if (response.ok) {
-      // Dispatch the create profile success action
-      dispatch(createProfileSuccess(data.profile));
-    } else {
-      // Dispatch the create profile failure action
-      dispatch(createProfileFailure(data.error));
+    } catch (error) {
+      console.error("Create profile failed:", error);
+      // Dispatch the create profile failure action with an appropriate error message
+      dispatch(
+        createProfileFailure("Create profile failed. Please try again.")
+      );
     }
-  } catch (error) {
-    console.error("Create profile failed:", error);
-    // Dispatch the create profile failure action with an appropriate error message
-    dispatch(createProfileFailure("Create profile failed. Please try again."));
-  }
-};
+  };
 
 export const updateProfile =
-  (updatedProfileData, user_id) => async (dispatch) => {
+  (updatedProfileData, user_id, idToken) => async (dispatch) => {
     try {
+      console.log("Updating profile. Request Body:", {
+        ...updatedProfileData,
+        userId: user_id,
+      });
+
       // Make API request for updating a profile
       const response = await axios.put(
         `http://localhost:8800/api/users/profile/${user_id}`,
@@ -109,15 +125,15 @@ export const updateProfile =
           },
         }
       );
+      console.log("Profile updated-):", response.data);
 
-      const data = await response.data;
-
-      if (response.ok) {
+      if (response.status === 200) {
         // Dispatch the update profile success action
-        dispatch(updateProfileSuccess(data.updatedProfile));
+        console.log("Profile updated:", response.data);
+        dispatch(updateProfileSuccess(response.data));
       } else {
         // Dispatch the update profile failure action
-        dispatch(updateProfileFailure(data.error));
+        dispatch(updateProfileFailure(response.data.error));
       }
     } catch (error) {
       console.error("Update profile failed:", error);

@@ -19,6 +19,7 @@ import styles from "./editInformation.style";
 
 const EditInformation = () => {
   // Access Redux store state using useSelector
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const user = useSelector((state) => state.user);
 
   // Access Redux store dispatch function using useDispatch
@@ -33,7 +34,7 @@ const EditInformation = () => {
   const [city, setCity] = useState(userProfile.city || "");
   const [dateOfBirth, setDateOfBirth] = useState(userProfile.dateOfBirth || "");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const profileData = {
       firstname,
       lastname,
@@ -44,16 +45,29 @@ const EditInformation = () => {
       dateOfBirth,
     };
 
-    const userProfile = user.profile;
-    const userId = user._id;
-
     // Check if the user already has a profile
-    if (userProfile._id) {
-      // User has a profile, update the profile
-      dispatch(updateProfile(profileData, userId));
+    if (isAuthenticated) {
+      console.log(isAuthenticated);
+      console.log(userProfile);
+      alert("You're authenticated.");
+      if (
+        username &&
+        !firstname &&
+        !lastname &&
+        !nationality &&
+        !address &&
+        !city &&
+        !dateOfBirth
+      ) {
+        // User does not have a profile, create a new profile
+        dispatch(createProfile(profileData, user._id, user.firebaseToken));
+      } else {
+        // User has a profile, update the profile
+        dispatch(updateProfile(profileData, user._id, user.firebaseToken));
+      }
     } else {
-      // User does not have a profile, create a new profile
-      dispatch(createProfile(profileData, userId));
+      console.log(isAuthenticated);
+      alert("You're not authenticated.");
     }
   };
 

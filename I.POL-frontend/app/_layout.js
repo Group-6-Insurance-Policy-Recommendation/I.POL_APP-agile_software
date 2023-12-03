@@ -52,6 +52,17 @@ const Layout = () => {
         />
 
         <Stack.Screen
+          name="profile/index"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+          }}
+        />
+
+        <Stack.Screen
           name="profile/editInfo"
           options={{
             headerStyle: {

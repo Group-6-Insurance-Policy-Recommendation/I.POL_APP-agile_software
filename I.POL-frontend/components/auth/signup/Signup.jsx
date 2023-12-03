@@ -12,7 +12,6 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../../../config/firebase-config";
 const auth = getAuth(firebaseApp);
 
-import axios from "axios";
 import { useState } from "react";
 
 import styles from "./signup.style";
@@ -42,26 +41,18 @@ const Signup = () => {
         email,
         password
       );
-      console.log(userCredential.user.email);
+      
       const idToken = await userCredential.user.getIdToken();
-      const response = await axios.post(
-        "http://localhost:8800/api/auth/register",
-        { username: username, email: email, password: password },
-        {
-          headers: {
-            Authorization: idToken,
-          },
-          // timeout: 5000,
-        }
-      );
+
+      // Log user email to the console
+      console.log(userCredential.user.email);
+
       const credentials = {
         username: username,
         email: email,
         password: password,
       };
       dispatch(signUp(credentials, idToken));
-
-      console.log("Backend response:", response.data);
 
       // Navigate to the login screen or any other screen
       router.push(`/sign_in`);

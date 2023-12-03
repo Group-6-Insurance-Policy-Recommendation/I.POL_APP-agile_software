@@ -11,7 +11,7 @@ export const loginFailure = (error) => ({
 
 export const signUpSuccess = (user) => ({
   type: "SIGN_UP_SUCCESS",
-  payload: { user },
+  payload: user,
 });
 
 export const signUpFailure = (error) => ({
@@ -19,9 +19,9 @@ export const signUpFailure = (error) => ({
   payload: { error },
 });
 
-export const createProfileSuccess = (profile) => ({
+export const createProfileSuccess = (user) => ({
   type: "CREATE_PROFILE_SUCCESS",
-  payload: { profile },
+  payload: user,
 });
 
 export const createProfileFailure = (error) => ({
@@ -29,9 +29,9 @@ export const createProfileFailure = (error) => ({
   payload: { error },
 });
 
-export const updateProfileSuccess = (updatedProfile) => ({
+export const updateProfileSuccess = (user) => ({
   type: "UPDATE_PROFILE_SUCCESS",
-  payload: { updatedProfile },
+  payload: user,
 });
 
 export const updateProfileFailure = (error) => ({

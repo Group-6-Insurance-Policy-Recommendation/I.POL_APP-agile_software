@@ -20,7 +20,7 @@ const index = () => {
             <ProfileHeaderBtn
               iconUrl={images.profile}
               dimension="100%"
-              handlePress={() => router.push(`/_sitemap`)}
+              handlePress={() => router.push(`/profile`)}
             />
           ),
         }}
