@@ -1,8 +1,8 @@
 # example netlify.toml
 [build]
   command = "npm run build"
-  functions = "C:\Users\Otumfuo Prince\Desktop\My Career Desk\ReactJS_Native\I.POL_APP-agile_software\I.POL-backend\functions"
-  publish = ""
+  functions = "functions"
+  publish = "/opt/build/repo/I.POL-backend"
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
