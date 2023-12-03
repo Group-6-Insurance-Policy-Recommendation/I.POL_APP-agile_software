@@ -2,13 +2,6 @@ const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      min: 3,
-      max: 20,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
@@ -20,67 +13,33 @@ const UserSchema = mongoose.Schema(
       required: true,
       min: 6,
     },
-    profilePicture: {
-      type: String,
-      default: "",
-    },
-    coverPicture: {
-      type: String,
-      default: "",
-    },
     isAdmin: {
       type: Boolean,
       default: false,
     },
-    desc: {
-      type: String,
-      max: 50,
-    },
-    from: {
-      type: String,
-      max: 50,
-    },
-    relationship: {
-      type: Number,
-      enum: [1, 2, 3],
-    },
     firebaseToken: { type: String },
     profile: {
-      firstname: {
+      profilePicture: {
         type: String,
-        required: true,
-        max: 50,
-        unique: true,
+        default: "",
       },
-      lastname: {
-        type: String,
-        required: true,
-        max: 50,
-        unique: true,
-      },
-      username: {
-        type: String,
-        required: true,
-        max: 20,
-        unique: true,
-      },
-      nationality: {
-        type: String,
-        max: 100,
-      },
-      address: {
-        type: String,
-        max: 100,
-      },
-      city: {
-        type: String,
-        max: 50,
-      },
-      dateOfBirth: {
-        type: Date,
-      },
-      // Add other profile details as needed
+      coverPicture: { type: String, default: "" },
+      desc: { type: String, default: "" },
+      relationship: { type: String, default: null },
+      firstname: { type: String, default: "" },
+      lastname: { type: String, default: "" },
+      username: { type: String, default: "", unique: true, required: true },
+      nationality: { type: String, default: "" },
+      address: { type: String, default: "" },
+      city: { type: String, default: "" },
+      dateOfBirth: { type: Date, default: null },
     },
+    policies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Policy",
+      },
+    ],
   },
   { timestamps: true }
 );

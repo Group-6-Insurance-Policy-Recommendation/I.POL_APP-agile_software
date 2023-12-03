@@ -110,32 +110,40 @@ router.get("/:id", async (req, res) => {
 // CREATE PROFILE
 router.post("/profile", async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming you have a middleware that adds the user to the request object
-
-    // Fetch the user from the database
-    const user = await User.findById(userId);
-
-    // Check if the user already has a profile
-    if (user.profile) {
-      return res.status(400).json({ error: "User profile already exists" });
-    }
-
     // Create a new profile
-    user.profile = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      nationality: req.body.nationality,
-      address: req.body.address,
-      city: req.body.city,
-      dateOfBirth: req.body.dateOfBirth,
+    const profileData = {
+      profilePicture: req.body.profilePicture || "",
+      coverPicture: req.body.coverPicture || "",
+      desc: req.body.desc || "",
+      relationship: req.body.relationship || null,
+      firstname: req.body.firstname || "",
+      lastname: req.body.lastname || "",
+      username: req.body.username || "",
+      nationality: req.body.nationality || "",
+      address: req.body.address || "",
+      city: req.body.city || "",
+      dateOfBirth: req.body.dateOfBirth || null,
       // ... other profile fields
     };
 
-    // Save the updated user
-    await user.save();
+    const createdUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          profile: profileData,
+        },
+      },
+      {
+        new: true, // Return the updated document
+        populate: "profile", // Populate the profile reference
+      }
+    );
 
-    res.status(201).json(user.profile);
+    if (!createdUser) {
+      return res.status(404).json({ error: "User or profile not found" });
+    }
+
+    res.status(201).json(createdUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to create profile" });
@@ -145,30 +153,34 @@ router.post("/profile", async (req, res) => {
 // UPDATE PROFILE
 router.put("/profile/:id", async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming you have a middleware that adds the user to the request object
+    const userId = req.params.id;
 
-    // Fetch the user from the database
-    const user = await User.findById(userId);
+    const updatedProfileData = {
+      profilePicture: req.body.profilePicture || "",
+      coverPicture: req.body.coverPicture || "",
+      desc: req.body.desc || "",
+      relationship: req.body.relationship || null,
+      firstname: req.body.firstname || "",
+      lastname: req.body.lastname || "",
+      username: req.body.username || "",
+      nationality: req.body.nationality || "",
+      address: req.body.address || "",
+      city: req.body.city || "",
+      dateOfBirth: req.body.dateOfBirth || null,
+      // ... update other profile fields
+    };
 
-    // Check if the user has a profile
-    if (!user.profile) {
-      return res.status(404).json({ error: "User profile not found" });
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { profile: updatedProfileData } },
+      { new: true, populate: "profile" }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User or profile not found" });
     }
 
-    // Update profile fields
-    user.profile.firstname = req.body.firstname || user.profile.firstname;
-    user.profile.lastname = req.body.lastname || user.profile.lastname;
-    user.profile.username = req.body.username || user.profile.username;
-    user.profile.nationality = req.body.nationality || user.profile.nationality;
-    user.profile.address = req.body.address || user.profile.address;
-    user.profile.city = req.body.city || user.profile.city;
-    user.profile.dateOfBirth = req.body.dateOfBirth || user.profile.dateOfBirth;
-    // ... update other profile fields
-
-    // Save the updated user
-    await user.save();
-
-    res.status(200).json(user.profile);
+    res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update profile" });

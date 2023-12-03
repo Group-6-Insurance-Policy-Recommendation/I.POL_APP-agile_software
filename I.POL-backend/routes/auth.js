@@ -6,22 +6,37 @@ const firebaseAuth = require("../firebase-auth"); // Import your Firebase authen
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
+    // Check if a user with the provided username already exists
+    const existingUser = await User.findOne({
+      "profile.username": req.body.username,
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "Username already exists" });
+    }
+
     // bcrypt user password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     // create new user
     const newUser = new User({
-      username: req.body.username,
+      profile: { username: req.body.username },
       email: req.body.email,
       password: hashedPassword,
     });
 
-    // save user and post req
     const user = await newUser.save();
+
+    // Generate Firebase custom token and send it to the client
+    const firebaseToken = req.headers.authorization;
+
+    // Update the User's Firebase token in the database
+    user.firebaseToken = firebaseToken;
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 
@@ -38,15 +53,13 @@ router.post("/login", async (req, res) => {
     !isValidPassword && res.status(404).send("wrong password");
 
     // Generate Firebase custom token and send it to the client
-    const firebaseToken = await firebaseAuth.createCustomToken(
-      user._id.toString()
-    );
+    const firebaseToken = req.headers.authorization;
 
     // Update the User's Firebase token in the database
     user.firebaseToken = firebaseToken;
     await user.save();
 
-    res.status(200).json({ user });
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
