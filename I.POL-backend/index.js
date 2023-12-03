@@ -1,13 +1,16 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const cors = require('cors');
+const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
-const firebaseAuth = require("./firebase-auth"); // Import your Firebase authentication module
+const firebaseAuth = require("./firebase-auth");
+const serverless = require("serverless-http");
+
+const app = express();
+const router = express.Router();
 
 dotenv.config();
 
@@ -21,7 +24,6 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
-
 
 // Firebase authentication middleware
 app.use(async (req, res, next) => {
@@ -40,9 +42,19 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.use("/api/users", userRoute);
-app.use("/api/auth", authRoute);
+router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 
-app.listen(8800, () => {
-  console.log("Backend Server Is Running...");
-});
+router.use("/api/users", userRoute);
+router.use("/api/auth", authRoute);
+
+app.use("./netlify/functions/api", router);
+
+// app.listen(8800, () => {
+//   console.log("Backend Server Is Running...");
+// });
+
+// Export the router for Netlify Functions
+module.exports = {
+  handler: serverless(app),
+  app, // Export the app for local testing
+};

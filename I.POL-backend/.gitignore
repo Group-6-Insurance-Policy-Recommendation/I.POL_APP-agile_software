@@ -1,6 +1,7 @@
 node_modules/
 .expo/
 dist/
+# functions/
 npm-debug.*
 serviceAccountKey.json
 .env
