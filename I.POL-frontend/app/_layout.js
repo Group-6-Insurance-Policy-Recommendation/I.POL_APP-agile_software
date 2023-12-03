@@ -8,7 +8,7 @@ import { ProfileHeaderBtn } from "../components";
 SplashScreen.preventAutoHideAsync();
 
 import { Provider } from "react-redux";
-import { store } from "../redux/store";
+import store from "../redux/store";
 
 const Layout = () => {
   const router = useRouter();

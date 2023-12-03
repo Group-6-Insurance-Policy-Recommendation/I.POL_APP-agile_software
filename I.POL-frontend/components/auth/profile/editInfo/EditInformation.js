@@ -19,11 +19,12 @@ import styles from "./editInformation.style";
 
 const EditInformation = () => {
   // Access Redux store state using useSelector
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user);
 
   // Access Redux store dispatch function using useDispatch
   const dispatch = useDispatch();
 
+  const userProfile = user?.profile || {};
   const [firstname, setFirstname] = useState(userProfile.firstname || "");
   const [lastname, setLastname] = useState(userProfile.lastname || "");
   const [username, setUsername] = useState(userProfile.username || "");

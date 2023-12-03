@@ -23,7 +23,7 @@ import { loginUser } from "../../../redux/actions/authThunk";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
