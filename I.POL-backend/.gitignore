@@ -2,6 +2,9 @@ node_modules/
 .expo/
 dist/
 # functions/
+# Local Netlify folder
+.netlify
+
 npm-debug.*
 serviceAccountKey.json
 .env
