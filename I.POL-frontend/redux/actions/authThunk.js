@@ -62,20 +62,17 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
   }
 };
 
-export const createProfile = (profileData) => async (dispatch, getState) => {
+export const createProfile = (profileData, user_id) => async (dispatch) => {
   try {
-    // Get user information from the Redux state
-    const user = getState().auth.user;
-
     console.log("Creating profile. Request Body:", {
       ...profileData,
-      userId: user._id,
+      userId: user_id,
     });
 
     // Make API request for creating a profile
     const response = await axios.post(
       "http://localhost:8800/api/users/profile",
-      { ...profileData, userId: user._id },
+      { ...profileData, userId: user_id },
       {
         headers: {
           Authorization: idToken,
@@ -100,15 +97,12 @@ export const createProfile = (profileData) => async (dispatch, getState) => {
 };
 
 export const updateProfile =
-  (profileId, updatedProfileData) => async (dispatch, getState) => {
+  (updatedProfileData, user_id) => async (dispatch) => {
     try {
-      // Get user information from the Redux state
-      const user = getState().auth.user;
-
       // Make API request for updating a profile
       const response = await axios.put(
-        `http://localhost:8800/api/users/profile/${user._id}`,
-        { ...updatedProfileData, userId: user._id },
+        `http://localhost:8800/api/users/profile/${user_id}`,
+        { ...updatedProfileData, userId: user_id },
         {
           headers: {
             Authorization: idToken,

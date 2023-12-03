@@ -34,7 +34,7 @@ const Layout = () => {
           name="index"
           options={{
             headerStyle: {
-              backgroundColor: COLORS.lightWhite,
+              backgroundColor: COLORS.white,
             },
             headerShadowVisible: false,
             headerTitle: "",

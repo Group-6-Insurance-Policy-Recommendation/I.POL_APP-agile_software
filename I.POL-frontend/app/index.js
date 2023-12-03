@@ -19,7 +19,7 @@ const Home = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: COLORS.lightWhite,
+        backgroundColor: COLORS.white,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>

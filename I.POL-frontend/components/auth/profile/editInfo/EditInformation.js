@@ -10,13 +10,22 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONT, SIZES } from "../../../../constants";
-import { createProfile, updateProfile } from "../../../../redux/actions/authThunk";
-import { connect } from "react-redux";
+import {
+  createProfile,
+  updateProfile,
+} from "../../../../redux/actions/authThunk";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./editInformation.style";
 
 const EditInformation = () => {
-  const [name, setName] = useState(userProfile.firstname || "");
-  const [surname, setSurname] = useState(userProfile.lastname || "");
+  // Access Redux store state using useSelector
+  const user = useSelector((state) => state.auth.user);
+
+  // Access Redux store dispatch function using useDispatch
+  const dispatch = useDispatch();
+
+  const [firstname, setFirstname] = useState(userProfile.firstname || "");
+  const [lastname, setLastname] = useState(userProfile.lastname || "");
   const [username, setUsername] = useState(userProfile.username || "");
   const [nationality, setNationality] = useState(userProfile.nationality || "");
   const [address, setAddress] = useState(userProfile.address || "");
@@ -34,13 +43,16 @@ const EditInformation = () => {
       dateOfBirth,
     };
 
+    const userProfile = user.profile;
+    const userId = user._id;
+
     // Check if the user already has a profile
     if (userProfile._id) {
       // User has a profile, update the profile
-      updateProfile(profileData);
+      dispatch(updateProfile(profileData, userId));
     } else {
       // User does not have a profile, create a new profile
-      createProfile(profileData);
+      dispatch(createProfile(profileData, userId));
     }
   };
 
@@ -100,8 +112,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handleEmailFocus}
                 onBlur={handleEmailBlur}
-                value={name}
-                onChangeText={setName}
+                value={firstname}
+                onChangeText={setFirstname}
               />
 
               <Text style={styles.label}>Surname</Text>
@@ -111,8 +123,8 @@ const EditInformation = () => {
                 keyboardType="text"
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
-                value={surname}
-                onChangeText={setSurname}
+                value={lastname}
+                onChangeText={setLastname}
               />
 
               <Text style={styles.label}>Username</Text>
@@ -181,13 +193,4 @@ const EditInformation = () => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  userProfile: state.user.profile, // Assuming you store the user profile in your Redux state
-});
-
-const mapDispatchToProps = {
-  createProfile,
-  updateProfile,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditInformation);
+export default EditInformation;
