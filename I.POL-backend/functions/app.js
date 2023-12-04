@@ -47,7 +47,7 @@ router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 router.use("/api/users", userRoute);
 router.use("/api/auth", authRoute);
 
-app.use("./netlify/functions/api", router);
+app.use("/.netlify/functions/api", router);
 
 // app.listen(8800, () => {
 //   console.log("Backend Server Is Running...");
