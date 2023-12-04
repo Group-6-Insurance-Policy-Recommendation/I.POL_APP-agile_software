@@ -7,8 +7,8 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { COLORS, icons, images, SIZES, FONT } from "../constants";
+// import { LinearGradient } from "expo-linear-gradient";
+import { COLORS, images, SIZES, FONT } from "../constants";
 
 const Home = () => {
   return (

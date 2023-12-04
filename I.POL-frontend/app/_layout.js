@@ -38,16 +38,28 @@ const Layout = () => {
             },
             headerShadowVisible: false,
             headerTitle: "",
-            // headerLeft: () => (
-            //   <ProfileHeaderBtn iconUrl={images.logo} dimension="100%" />
-            // ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`/profile`)}
-              />
-            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="sign_in"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+          }}
+        />
+
+        <Stack.Screen
+          name="sign_up"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
           }}
         />
 
