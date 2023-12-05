@@ -2,12 +2,59 @@
   "expo": {
     "scheme": "acme",
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
     ],
-    "name": "I.POL-frontend",
-    "slug": "I.POL-frontend"
+    "name": "IPOL APP",
+    "slug": "I.POL-frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ipol.insuranceapp",
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need access to your camera for document scanning."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.ipol.insuranceapp",
+      "permissions": [
+        "CAMERA",
+        "INTERNET"
+      ]
+    },
+    "description": "A comprehensive insurance app to manage policies and claims.",
+    "keywords": [
+      "insurance",
+      "finance",
+      "claims",
+      "policy"
+    ],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "dependencies": {},
+    "scripts": {}
   }
 }
