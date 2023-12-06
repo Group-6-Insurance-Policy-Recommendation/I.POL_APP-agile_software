@@ -2,8 +2,7 @@ import { Stack, useRouter } from "expo-router";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { COLORS, icons, images, SIZES, FONT } from "../constants";
-import { ProfileHeaderBtn } from "../components";
+import { COLORS } from "../constants";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,7 +41,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="sign_in"
+          name="auth/sign_in"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,
@@ -53,7 +52,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="sign_up"
+          name="auth/sign_up"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,

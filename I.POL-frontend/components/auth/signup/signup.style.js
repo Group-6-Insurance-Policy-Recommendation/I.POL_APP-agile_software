@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: FONT.medium,
     fontSize: SIZES.xLarge,
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   preMsg: {
     color: "#000",
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontFamily: FONT.regular,
     fontSize: SIZES.medium,
-    fontWeight: "bold",
+    fontWeight: "400",
   },
   signupOptions: {
     fontSize: SIZES.small,

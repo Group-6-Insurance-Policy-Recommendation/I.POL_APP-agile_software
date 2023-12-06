@@ -1,4 +1,4 @@
-import { Stack, router } from "expo-router";
+import { router } from "expo-router";
 import {
   Text,
   View,
@@ -23,12 +23,17 @@ const Home = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ width: "100%", paddingVertical: 20 }}>
+        <View
+          style={{
+            marginHorizontal: SIZES.xxLarge,
+          }}
+        >
           <View
             style={{
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
+              paddingVertical: 20,
             }}
           >
             <View
@@ -44,7 +49,7 @@ const Home = () => {
                   color: COLORS.secondary,
                   fontSize: SIZES.large,
                   fontFamily: FONT.medium,
-                  fontWeight: "bold",
+                  fontWeight: "600",
                   textAlign: "center",
                 }}
               >
@@ -83,30 +88,7 @@ const Home = () => {
             >
               <TouchableOpacity
                 style={{
-                  width: "80%",
-                  backgroundColor: COLORS.primary,
-                  borderRadius: SIZES.xSmall,
-                  paddingVertical: SIZES.small,
-                  paddingHorizontal: SIZES.large,
-                  marginVertical: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium - 2,
-                    fontWeight: "bold",
-                  }}
-                  onPress={() => router.push(`/sign_in`)}
-                >
-                  Sign In
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "80%",
+                  width: "100%",
                   backgroundColor: COLORS.secondary,
                   borderRadius: SIZES.xSmall,
                   paddingVertical: SIZES.small,
@@ -120,9 +102,32 @@ const Home = () => {
                     color: "white",
                     fontFamily: FONT.regular,
                     fontSize: SIZES.medium - 2,
-                    fontWeight: "bold",
+                    fontWeight: "400",
                   }}
-                  onPress={() => router.push(`/sign_up`)}
+                  onPress={() => router.push(`/auth/sign_in`)}
+                >
+                  Sign In
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: "100%",
+                  backgroundColor: COLORS.secondary,
+                  borderRadius: SIZES.xSmall,
+                  paddingVertical: SIZES.small,
+                  paddingHorizontal: SIZES.large,
+                  marginVertical: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium - 2,
+                    fontWeight: "400",
+                  }}
+                  onPress={() => router.push(`/auth/sign_up`)}
                 >
                   Sign Up
                 </Text>

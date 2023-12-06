@@ -8,15 +8,10 @@ import {
 } from "react-native";
 import React from "react";
 import { COLORS, FONT, SIZES } from "../../../constants";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
 const Profile = () => {
   return (
-    // <LinearGradient
-    //   colors={[COLORS.tertiary, COLORS.white]}
-    //   style={{ width: "100%", borderRadius: SIZES.xSmall }}
-    // >
     <SafeAreaView
       style={{
         width: "100%",
@@ -24,50 +19,51 @@ const Profile = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: SIZES.medium,
-            paddingVertical: SIZES.xxLarge,
-          }}
-        >
-          <Image
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={require("../../../assets/images/PrinceStiles.jpg")}
-            resizeMode="center"
-          />
+        <View style={{ marginHorizontal: SIZES.small }}>
           <View
             style={{
+              flex: 1,
+              width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              paddingVertical: SIZES.medium,
+              padding: SIZES.medium,
+              paddingVertical: SIZES.xxLarge,
             }}
           >
-            <Text
+            <Image
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              source={require("../../../assets/images/PrinceStiles.jpg")}
+              resizeMode="center"
+            />
+            <View
               style={{
-                fontFamily: FONT.regular,
-                fontSize: SIZES.xLarge,
-                fontWeight: "600",
-                color: COLORS.text2,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: SIZES.medium,
               }}
             >
-              Otumfuo Prince
-            </Text>
-            <Text
-              style={{
-                fontFamily: FONT.regular,
-                fontSize: SIZES.xSmall,
-                fontWeight: "100",
-                color: COLORS.gray,
-              }}
-            >
-              @PrinceStiles
-            </Text>
-          </View>
-          {/* <TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.xLarge,
+                  fontWeight: "600",
+                  color: COLORS.text2,
+                }}
+              >
+                Otumfuo Prince
+              </Text>
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.xSmall,
+                  fontWeight: "100",
+                  color: COLORS.gray,
+                }}
+              >
+                @PrinceStiles
+              </Text>
+            </View>
+            {/* <TouchableOpacity>
             <Text
               style={{
                 fontFamily: FONT.regular,
@@ -81,212 +77,212 @@ const Profile = () => {
             </Text>
           </TouchableOpacity> */}
 
-          <View
-            style={{
-              width: "100%",
-              paddingVertical: SIZES.large,
-              // marginVertical: SIZES.xxLarge,
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-              borderTopColor: COLORS.lightWhite,
-              borderBottomColor: COLORS.lightWhite,
-            }}
-          >
-            <TouchableOpacity
+            <View
               style={{
                 width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-              onPress={() => router.push(`/profile/editInfo`)}
-            >
-              <Text
-                style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
-                }}
-              >
-                Profile Information
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
+                paddingVertical: SIZES.large,
+                // marginVertical: SIZES.xxLarge,
+                borderTopWidth: 1,
+                borderBottomWidth: 1,
+                borderTopColor: COLORS.lightWhite,
+                borderBottomColor: COLORS.lightWhite,
               }}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
+                }}
+                onPress={() => router.push(`/profile/editInfo`)}
+              >
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Profile Information
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                Insurance Policies
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Insurance Policies
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                Claim History
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Claim History
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                Security Settings
-              </Text>
-            </TouchableOpacity>
-          </View>
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Security Settings
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-          <View
-            style={{
-              width: "100%",
-              paddingVertical: SIZES.large,
-              // marginVertical: SIZES.xxLarge,
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-              borderTopColor: COLORS.lightWhite,
-              borderBottomColor: COLORS.lightWhite,
-            }}
-          >
-            <TouchableOpacity
+            <View
               style={{
                 width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
+                paddingVertical: SIZES.large,
+                // marginVertical: SIZES.xxLarge,
+                borderTopWidth: 1,
+                borderBottomWidth: 1,
+                borderTopColor: COLORS.lightWhite,
+                borderBottomColor: COLORS.lightWhite,
               }}
             >
-              <Text
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                Notification
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Notification
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                Feedback
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  Feedback
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                FAQs
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
-            >
-              <Text
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  FAQs
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.medium,
-                  fontWeight: "100",
-                  color: COLORS.primary,
-                  padding: 2,
+                  width: "100%",
+                  paddingVertical: SIZES.small,
+                  backgroundColor: COLORS.tertiary,
+                  borderRadius: SIZES.xSmall,
+                  marginVertical: 2,
+                  paddingHorizontal: SIZES.xxLarge,
                 }}
               >
-                More Settings
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontFamily: FONT.regular,
+                    fontSize: SIZES.medium,
+                    fontWeight: "100",
+                    color: COLORS.primary,
+                    padding: 2,
+                  }}
+                >
+                  More Settings
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
-    // </LinearGradient>
   );
 };
 

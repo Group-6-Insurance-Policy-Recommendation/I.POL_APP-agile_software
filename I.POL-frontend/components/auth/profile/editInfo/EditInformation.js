@@ -71,13 +71,28 @@ const EditInformation = () => {
     }
   };
 
-  const [emailFocus, setEmailFocus] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
+  const [surnameFocus, setSurnameFocus] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
+  const [nationalFocus, setNationalFocus] = useState(false);
+  const [addressFocus, setAddressFocus] = useState(false);
+  const [cityFocus, setCityFocus] = useState(false);
+  const [dobFocus, setDobFocus] = useState(false);
 
-  const handleEmailFocus = () => setEmailFocus(true);
-  const handleEmailBlur = () => setEmailFocus(false);
-  const handlePasswordFocus = () => setPasswordFocus(true);
-  const handlePasswordBlur = () => setPasswordFocus(false);
+  const handleNameFocus = () => setNameFocus(true);
+  const handleNameBlur = () => setNameFocus(false);
+  const handleSurnameFocus = () => setSurnameFocus(true);
+  const handleSurnameBlur = () => setSurnameFocus(false);
+  const handleUsernameFocus = () => setUsernameFocus(true);
+  const handleUsernameBlur = () => setUsernameFocus(false);
+  const handleNationalFocus = () => setNationalFocus(true);
+  const handleNationalBlur = () => setNationalFocus(false);
+  const handleAddressFocus = () => setAddressFocus(true);
+  const handleAddressBlur = () => setAddressFocus(false);
+  const handleCityFocus = () => setCityFocus(true);
+  const handleCityBlur = () => setCityFocus(false);
+  const handleDobFocus = () => setDobFocus(true);
+  const handleDobBlur = () => setDobFocus(false);
 
   return (
     <SafeAreaView
@@ -87,121 +102,135 @@ const EditInformation = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: SIZES.medium,
-          }}
-        >
-          <Image
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-            source={require("../../../../assets/images/PrinceStiles.jpg")}
-            resizeMode="center"
-          />
+        <View style={{ marginHorizontal: SIZES.small }}>
           <View
             style={{
+              width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              paddingVertical: SIZES.medium,
+              padding: SIZES.medium,
             }}
           >
-            <Text
+            <Image
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              source={require("../../../../assets/images/PrinceStiles.jpg")}
+              resizeMode="center"
+            />
+            <View
               style={{
-                fontFamily: FONT.regular,
-                fontSize: SIZES.xSmall,
-                fontWeight: "100",
-                color: COLORS.gray,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: SIZES.medium,
               }}
             >
-              @PrinceStiles
-            </Text>
-          </View>
-          <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
-            <View>
-              <Text style={styles.label}>Name</Text>
-              <TextInput
-                style={[styles.editInput, emailFocus && styles.focusedInput]}
-                placeholder="Name"
-                keyboardType="text"
-                onFocus={handleEmailFocus}
-                onBlur={handleEmailBlur}
-                value={firstname}
-                onChangeText={setFirstname}
-              />
-
-              <Text style={styles.label}>Surname</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="Surname"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={lastname}
-                onChangeText={setLastname}
-              />
-
-              <Text style={styles.label}>Username</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="Username"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={username}
-                onChangeText={setUsername}
-              />
-
-              <Text style={styles.label}>Nationality</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="Nationality"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={nationality}
-                onChangeText={setNationality}
-              />
-
-              <Text style={styles.label}>Address</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="Address"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={address}
-                onChangeText={setAddress}
-              />
-
-              <Text style={styles.label}>City</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="City"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={city}
-                onChangeText={setCity}
-              />
-
-              <Text style={styles.label}>Date of Birth</Text>
-              <TextInput
-                style={[styles.editInput, passwordFocus && styles.focusedInput]}
-                placeholder="Date of Birth"
-                keyboardType="text"
-                onFocus={handlePasswordFocus}
-                onBlur={handlePasswordBlur}
-                value={dateOfBirth}
-                onChangeText={setDateOfBirth}
-              />
-
-              <TouchableOpacity style={styles.editBtn} onPress={handleSave}>
-                <Text style={styles.editBtnText}>Save</Text>
-              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: FONT.regular,
+                  fontSize: SIZES.xSmall,
+                  fontWeight: "100",
+                  color: COLORS.gray,
+                }}
+              >
+                @PrinceStiles
+              </Text>
             </View>
-          </KeyboardAvoidingView>
+            <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
+              <View>
+                <Text style={styles.label}>Name</Text>
+                <TextInput
+                  style={[styles.editInput, nameFocus && styles.focusedInput]}
+                  placeholder="Name"
+                  keyboardType="default"
+                  onFocus={handleNameFocus}
+                  onBlur={handleNameBlur}
+                  value={firstname}
+                  onChangeText={setFirstname}
+                />
+
+                <Text style={styles.label}>Surname</Text>
+                <TextInput
+                  style={[
+                    styles.editInput,
+                    surnameFocus && styles.focusedInput,
+                  ]}
+                  placeholder="Surname"
+                  keyboardType="default"
+                  onFocus={handleSurnameFocus}
+                  onBlur={handleSurnameBlur}
+                  value={lastname}
+                  onChangeText={setLastname}
+                />
+
+                <Text style={styles.label}>Username</Text>
+                <TextInput
+                  style={[
+                    styles.editInput,
+                    usernameFocus && styles.focusedInput,
+                  ]}
+                  placeholder="Username"
+                  keyboardType="default"
+                  onFocus={handleUsernameFocus}
+                  onBlur={handleUsernameBlur}
+                  value={username}
+                  onChangeText={setUsername}
+                />
+
+                <Text style={styles.label}>Nationality</Text>
+                <TextInput
+                  style={[
+                    styles.editInput,
+                    nationalFocus && styles.focusedInput,
+                  ]}
+                  placeholder="Nationality"
+                  keyboardType="default"
+                  onFocus={handleNationalFocus}
+                  onBlur={handleNationalBlur}
+                  value={nationality}
+                  onChangeText={setNationality}
+                />
+
+                <Text style={styles.label}>Address</Text>
+                <TextInput
+                  style={[
+                    styles.editInput,
+                    addressFocus && styles.focusedInput,
+                  ]}
+                  placeholder="Address"
+                  keyboardType="default"
+                  onFocus={handleAddressFocus}
+                  onBlur={handleAddressBlur}
+                  value={address}
+                  onChangeText={setAddress}
+                />
+
+                <Text style={styles.label}>City</Text>
+                <TextInput
+                  style={[styles.editInput, cityFocus && styles.focusedInput]}
+                  placeholder="City"
+                  keyboardType="default"
+                  onFocus={handleCityFocus}
+                  onBlur={handleCityBlur}
+                  value={city}
+                  onChangeText={setCity}
+                />
+
+                <Text style={styles.label}>Date of Birth</Text>
+                <TextInput
+                  style={[styles.editInput, dobFocus && styles.focusedInput]}
+                  placeholder="Date of Birth"
+                  keyboardType="default"
+                  onFocus={handleDobFocus}
+                  onBlur={handleDobBlur}
+                  value={dateOfBirth}
+                  onChangeText={setDateOfBirth}
+                />
+
+                <TouchableOpacity style={styles.editBtn} onPress={handleSave}>
+                  <Text style={styles.editBtnText}>Save</Text>
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

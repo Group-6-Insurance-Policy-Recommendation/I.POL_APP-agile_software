@@ -3,40 +3,39 @@
     "scheme": "acme",
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logo.png"
     },
     "plugins": [
       "expo-router"
     ],
-    "name": "IPOL APP",
-    "slug": "I.POL-frontend",
+    "name": "ipol-app",
+    "slug": "ipol-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/f9bf3e29-7e5b-453e-ac6a-c9e2c90a5786"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ipol.insuranceapp",
       "infoPlist": {
         "NSCameraUsageDescription": "We need access to your camera for document scanning."
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ipol.insuranceapp",
       "permissions": [
         "CAMERA",
         "INTERNET"
@@ -54,7 +53,25 @@
       "android",
       "web"
     ],
-    "dependencies": {},
-    "scripts": {}
+    "dependencies": [
+      "expo",
+      "expo-constants",
+      "expo-font",
+      "expo-router",
+      "expo-splash-screen",
+      "expo-status-bar"
+    ],
+    "scripts": {},
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f9bf3e29-7e5b-453e-ac6a-c9e2c90a5786"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }

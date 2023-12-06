@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   welcomeMessage: {
     fontFamily: FONT.bold,
     fontSize: SIZES.xLarge,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: COLORS.primary,
     marginTop: 2,
   },

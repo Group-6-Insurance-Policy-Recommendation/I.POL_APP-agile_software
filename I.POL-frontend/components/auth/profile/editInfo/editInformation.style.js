@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.tertiary,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
-    color: COLORS.gray2,
+    color: COLORS.text,
     fontWeight: "normal",
   },
   focusedInput: {

@@ -13,22 +13,34 @@ import axios from "axios";
 export const loginUser = (credentials, idToken) => async (dispatch) => {
   // Make API request for login
   try {
-    const response = await axios.post(
-      "http://localhost:8800/api/auth/login",
-      credentials,
-      {
-        headers: {
-          Authorization: idToken,
-        },
-      }
-    );
+    // const response = await axios.post(
+    //   `${process.env.BASE_URL}auth/login`,
+    //   credentials,
+    //   {
+    //     headers: {
+    //       Authorization: idToken,
+    //     },
+    //   }
+    // );
+    const response = await fetch(`${process.env.BASE_URL}auth/login`, {
+      method: "POST",
+      headers: {
+        Authorization: idToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
 
     if (response.status === 200) {
-      console.log("Backend response:", response.data);
+      const responseData = await response.json();
+      console.log("Backend response:", responseData);
+      // console.log("Backend response:", response.data);
 
       // Dispatch the login success action
       dispatch(loginSuccess(response.data));
     } else {
+      const error = await response.json();
+      console.error("Login failed:", error);
       // Dispatch the login failure action
       dispatch(loginFailure(response.response.data.error));
     }
@@ -46,7 +58,7 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
     });
     // Make API request for sign-up
     const response = await axios.post(
-      "http://localhost:8800/api/auth/register",
+      `${process.env.BASE_URL}auth/register`,
       credentials,
       {
         headers: {
@@ -80,7 +92,7 @@ export const createProfile =
 
       // Make API request for creating a profile
       const response = await axios.post(
-        "http://localhost:8800/api/users/profile",
+        `${process.env.BASE_URL}users/profile`,
         { ...profileData, userId: user_id },
         {
           headers: {
@@ -117,7 +129,7 @@ export const updateProfile =
 
       // Make API request for updating a profile
       const response = await axios.put(
-        `http://localhost:8800/api/users/profile/${user_id}`,
+        `${process.env.BASE_URL}users/profile/${user_id}`,
         { ...updatedProfileData, userId: user_id },
         {
           headers: {

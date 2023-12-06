@@ -1,9 +1,8 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import React from "react";
-import UserDashboard from "../../components/home";
 import { router, Stack } from "expo-router";
 import { COLORS, images } from "../../constants";
-import { ProfileHeaderBtn } from "../../components";
+import { Dashboard, ProfileHeaderBtn } from "../../components";
 
 const index = () => {
   return (
@@ -25,9 +24,9 @@ const index = () => {
           ),
         }}
       />
-      <ScrollView showsHorizontalScrollIndicator={false}>
-        <UserDashboard />
-      </ScrollView>
+      {/* <ScrollView showsHorizontalScrollIndicator={false}> */}
+      <Dashboard />
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
