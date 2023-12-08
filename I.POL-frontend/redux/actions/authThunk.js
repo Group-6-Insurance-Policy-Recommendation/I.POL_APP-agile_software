@@ -13,28 +13,21 @@ import axios from "axios";
 export const loginUser = (credentials, idToken) => async (dispatch) => {
   // Make API request for login
   try {
-    // const response = await axios.post(
-    //   `${process.env.BASE_URL}auth/login`,
-    //   credentials,
-    //   {
-    //     headers: {
-    //       Authorization: idToken,
-    //     },
-    //   }
-    // );
-    const response = await fetch(`${process.env.BASE_URL}auth/login`, {
+    const options = {
       method: "POST",
+      url: `https://ipol.netlify.app/.netlify/functions/api/auth/login`,
+      body: JSON.stringify(credentials),
       headers: {
         Authorization: idToken,
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
-    });
+    };
+
+    // Make API request for sign-up
+
+    const response = await axios.request(options);
 
     if (response.status === 200) {
-      const responseData = await response.json();
-      console.log("Backend response:", responseData);
-      // console.log("Backend response:", response.data);
+      console.log("Backend response:", response.data);
 
       // Dispatch the login success action
       dispatch(loginSuccess(response.data));
@@ -45,7 +38,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
       dispatch(loginFailure(response.response.data.error));
     }
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error("Login failed:", error.response);
     // Handle error and dispatch appropriate actions
   }
 };
@@ -56,16 +49,28 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
       ...credentials,
       idToken: idToken,
     });
+
+    const options = {
+      method: "POST",
+      url: `https://ipol.netlify.app/.netlify/functions/api/auth/register`,
+      data: JSON.stringify(credentials),
+      headers: {
+        Authorization: idToken,
+      },
+    };
+
     // Make API request for sign-up
-    const response = await axios.post(
-      `${process.env.BASE_URL}auth/register`,
-      credentials,
-      {
-        headers: {
-          Authorization: idToken,
-        },
-      }
-    );
+
+    const response = await axios.request(options);
+    // const response = await axios.post(
+    //   `${process.env.BASE_URL}auth/register`,
+    //   credentials,
+    //   {
+    //     headers: {
+    //       Authorization: idToken,
+    //     },
+    //   }
+    // );
 
     if (response.status === 200) {
       // Dispatch the sign-up success action
@@ -90,16 +95,27 @@ export const createProfile =
         userId: user_id,
       });
 
-      // Make API request for creating a profile
-      const response = await axios.post(
-        `${process.env.BASE_URL}users/profile`,
-        { ...profileData, userId: user_id },
-        {
-          headers: {
-            Authorization: idToken,
-          },
-        }
-      );
+      const options = {
+        method: "POST",
+        url: `https://ipol.netlify.app/.netlify/functions/api/users/profile`,
+        data: { ...profileData, userId: user_id },
+        headers: {
+          Authorization: idToken,
+        },
+      };
+
+      // Make API request for sign-up
+
+      const response = await axios.request(options);
+      // const response = await axios.post(
+      //   `${process.env.BASE_URL}users/profile`,
+      //   { ...profileData, userId: user_id },
+      //   {
+      //     headers: {
+      //       Authorization: idToken,
+      //     },
+      //   }
+      // );
       console.log("Profile created-):", response.data);
 
       if (response.status === 201) {
@@ -129,7 +145,7 @@ export const updateProfile =
 
       // Make API request for updating a profile
       const response = await axios.put(
-        `${process.env.BASE_URL}users/profile/${user_id}`,
+        `https://ipol.netlify.app/.netlify/functions/api/users/profile/${user_id}`,
         { ...updatedProfileData, userId: user_id },
         {
           headers: {
