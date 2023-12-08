@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
-const firebaseAuth = require("./firebase-auth");
+// const firebaseAuth = require("./firebase-auth");
 
 const app = express();
 const router = express.Router();
@@ -33,21 +33,21 @@ app.use(
 app.options("*", cors());
 
 // Firebase authentication middleware
-app.use(async (req, res, next) => {
-  try {
-    const token = req.headers.authorization;
-    if (!token) {
-      throw new Error("Authorization token missing");
-    }
+// app.use(async (req, res, next) => {
+//   try {
+//     const token = req.headers.authorization;
+//     if (!token) {
+//       throw new Error("Authorization token missing");
+//     }
 
-    const decodedToken = await firebaseAuth.verifyIdToken(token);
-    req.user = decodedToken; // Add the authenticated user to the request object
-    next();
-  } catch (err) {
-    console.error(err);
-    res.status(401).json({ error: "Authentication failed" });
-  }
-});
+//     const decodedToken = await firebaseAuth.verifyIdToken(token);
+//     req.user = decodedToken; // Add the authenticated user to the request object
+//     next();
+//   } catch (err) {
+//     console.error(err);
+//     res.status(401).json({ error: "Authentication failed" });
+//   }
+// });
 
 router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 
