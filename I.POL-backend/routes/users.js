@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require("../modules/User");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const firebaseAuth = require("../firebase-auth");
 
 // UPDATE USER
