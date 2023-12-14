@@ -11,6 +11,10 @@ import share from "../assets/icons/share.png";
 import location from "../assets/icons/location.png";
 import chevronLeft from "../assets/icons/chevron-left.png";
 import chevronRight from "../assets/icons/chevron-right.png";
+import plan from "../assets/icons/plan.png";
+import corporate from "../assets/icons/corporate.png";
+import family from "../assets/icons/family.png";
+import insure from "../assets/icons/insure.png";
 
 export default {
   google,
@@ -26,4 +30,8 @@ export default {
   location,
   chevronLeft,
   chevronRight,
+  plan,
+  corporate,
+  family,
+  insure,
 };
