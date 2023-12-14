@@ -2,12 +2,14 @@ import { Stack, useRouter } from "expo-router";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { COLORS } from "../constants";
+import { COLORS, FONT, SIZES, images } from "../constants";
 
 SplashScreen.preventAutoHideAsync();
 
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import { ProfileHeaderBtn } from "../components";
+import { View, Text } from "react-native";
 
 const Layout = () => {
   const router = useRouter();
@@ -37,11 +39,18 @@ const Layout = () => {
             },
             headerShadowVisible: false,
             headerTitle: "",
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`/_sitemap`)}
+              />
+            ),
           }}
         />
 
         <Stack.Screen
-          name="auth/sign_in"
+          name="auth/signIn_"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,
@@ -52,7 +61,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="auth/sign_up"
+          name="auth/signUp_"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,
@@ -70,11 +79,37 @@ const Layout = () => {
             },
             headerShadowVisible: false,
             headerTitle: "",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
           }}
         />
 
         <Stack.Screen
-          name="profile/editInfo"
+          name="profile/editProfile_"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,
@@ -82,6 +117,170 @@ const Layout = () => {
             headerShadowVisible: false,
             headerTitle: "",
             presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/quotas/index"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/quotas/recommendedPolicyScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/quotas/categoryScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/quotas/budgetScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+          }}
+        />
+
+        <Stack.Screen
+          name="home/recommendation_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`profile`)}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="home/specialPackage_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`profile`)}
+              />
+            ),
           }}
         />
       </Stack>

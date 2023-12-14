@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import React from "react";
-import { Signin } from "../../components";
+import { Signup } from "../../components";
 
-const Sign_in = () => {
+const signUp_ = () => {
   return (
     <View>
-      <Signin />
+      <Signup />
     </View>
   );
 };
 
-export default Sign_in;
+export default signUp_;

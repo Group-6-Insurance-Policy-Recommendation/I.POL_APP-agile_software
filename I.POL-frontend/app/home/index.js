@@ -1,7 +1,7 @@
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import React from "react";
 import { router, Stack } from "expo-router";
-import { COLORS, images } from "../../constants";
+import { COLORS, FONT, images, SIZES } from "../../constants";
 import { Dashboard, ProfileHeaderBtn } from "../../components";
 
 const index = () => {
@@ -15,18 +15,42 @@ const index = () => {
           },
           headerShadowVisible: false,
           headerTitle: "",
+          headerLeft: () => (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ProfileHeaderBtn
+                iconUrl={images.logo}
+                dimension="100%"
+                handlePress={() => router.push(`home`)}
+              />
+              <Text
+                style={{
+                  fontFamily: FONT.bold,
+                  fontWeight: "600",
+                  color: COLORS.primary,
+                  fontSize: SIZES.xSmall,
+                }}
+              >
+                IPOL
+              </Text>
+            </View>
+          ),
           headerRight: () => (
             <ProfileHeaderBtn
               iconUrl={images.profile}
               dimension="100%"
-              handlePress={() => router.push(`/profile`)}
+              handlePress={() => router.push(`profile`)}
             />
           ),
         }}
       />
-      {/* <ScrollView showsHorizontalScrollIndicator={false}> */}
       <Dashboard />
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };

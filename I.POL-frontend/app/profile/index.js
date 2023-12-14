@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native";
 import React from "react";
-import Profile from "../../components/auth/profile";
+import { Profile } from "../../components";
 
 const ProfilePage = () => {
   return (
