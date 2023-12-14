@@ -9,81 +9,69 @@ import {
   updateProfileFailure,
 } from "./authActions";
 import axios from "axios";
+import { router } from "expo-router";
 
 export const loginUser = (credentials, idToken) => async (dispatch) => {
   // Make API request for login
   try {
-    const options = {
-      method: "POST",
-      url: `https://ipol.netlify.app/.netlify/functions/api/auth/login`,
-      body: JSON.stringify(credentials),
-      headers: {
-        Authorization: idToken,
-      },
-    };
-
-    // Make API request for sign-up
-
-    const response = await axios.request(options);
+    const response = await axios.post(
+      `https://ipol-server.onrender.com/api/auth/login`,
+      { ...credentials },
+      {
+        headers: {
+          Authorization: idToken,
+        },
+      }
+    );
 
     if (response.status === 200) {
+      setIsLoading(false);
       console.log("Backend response:", response.data);
 
       // Dispatch the login success action
       dispatch(loginSuccess(response.data));
+
+      // Navigate to the home screen or any other screen
+      router.push(`/home`);
     } else {
-      const error = await response.json();
-      console.error("Login failed:", error);
+      console.error("Login failed:", response.error);
       // Dispatch the login failure action
-      dispatch(loginFailure(response.response.data.error));
+      dispatch(loginFailure(response.error));
     }
   } catch (error) {
     console.error("Login failed:", error.response);
     // Handle error and dispatch appropriate actions
+    alert("Something went wrong. Try again.");
   }
 };
 
 export const signUp = (credentials, idToken) => async (dispatch) => {
   try {
-    console.log("Signup. Request Body:", {
-      ...credentials,
-      idToken: idToken,
-    });
-
-    const options = {
-      method: "POST",
-      url: `https://ipol.netlify.app/.netlify/functions/api/auth/register`,
-      data: JSON.stringify(credentials),
-      headers: {
-        Authorization: idToken,
-      },
-    };
-
     // Make API request for sign-up
-
-    const response = await axios.request(options);
-    // const response = await axios.post(
-    //   `${process.env.BASE_URL}auth/register`,
-    //   credentials,
-    //   {
-    //     headers: {
-    //       Authorization: idToken,
-    //     },
-    //   }
-    // );
+    const response = await axios.post(
+      `https://ipol-server.onrender.com/api/auth/register`,
+      { ...credentials },
+      {
+        headers: {
+          Authorization: idToken,
+        },
+      }
+    );
 
     if (response.status === 200) {
       // Dispatch the sign-up success action
       console.log("Backend response:", response.data);
       dispatch(signUpSuccess(response.data));
+
+      // Navigate to the login screen or any other screen
+      router.push(`/auth/signIn_`);
     } else {
       // Dispatch the sign-up failure action
-      dispatch(signUpFailure(response.response.data.error));
+      dispatch(signUpFailure(response.error));
     }
   } catch (error) {
     console.error("Sign-up failed:", error);
-    // Dispatch the sign-up failure action with an appropriate error message
-    dispatch(signUpFailure("Sign-up failed. Please try again."));
+    alert("Something went wrong. Try again.");
   }
 };
 
@@ -94,28 +82,16 @@ export const createProfile =
         ...profileData,
         userId: user_id,
       });
-
-      const options = {
-        method: "POST",
-        url: `https://ipol.netlify.app/.netlify/functions/api/users/profile`,
-        data: { ...profileData, userId: user_id },
-        headers: {
-          Authorization: idToken,
-        },
-      };
-
       // Make API request for sign-up
-
-      const response = await axios.request(options);
-      // const response = await axios.post(
-      //   `${process.env.BASE_URL}users/profile`,
-      //   { ...profileData, userId: user_id },
-      //   {
-      //     headers: {
-      //       Authorization: idToken,
-      //     },
-      //   }
-      // );
+      const response = await axios.post(
+        `https://ipol-server.onrender.com/api/users/profile`,
+        { ...profileData, userId: user_id },
+        {
+          headers: {
+            Authorization: idToken,
+          },
+        }
+      );
       console.log("Profile created-):", response.data);
 
       if (response.status === 201) {
@@ -132,6 +108,9 @@ export const createProfile =
       dispatch(
         createProfileFailure("Create profile failed. Please try again.")
       );
+      alert("Something went wrong. Try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -145,7 +124,7 @@ export const updateProfile =
 
       // Make API request for updating a profile
       const response = await axios.put(
-        `https://ipol.netlify.app/.netlify/functions/api/users/profile/${user_id}`,
+        `https://ipol-server.onrender.com/api/users/profile/${user_id}`,
         { ...updatedProfileData, userId: user_id },
         {
           headers: {
