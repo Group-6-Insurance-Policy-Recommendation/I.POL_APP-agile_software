@@ -7,16 +7,11 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
-  userName: {
-    fontFamily: FONT.regular,
-    fontSize: SIZES.medium,
-    color: COLORS.text2,
-  },
   welcomeMessage: {
     fontFamily: FONT.bold,
-    fontSize: SIZES.xLarge,
+    fontSize: SIZES.large,
     fontWeight: "600",
-    color: COLORS.primary,
+    color: COLORS.text2,
     marginTop: 2,
   },
   searchContainer: {
@@ -24,8 +19,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     marginTop: SIZES.large,
+    // marginVertical: SIZES.medium,
+    backgroundColor: COLORS.tertiary,
+    borderRadius: 10,
+    height: 50,
+  },
+  searchContainer2: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: SIZES.large,
     marginVertical: SIZES.medium,
     height: 50,
+  },
+  searchImg: {
+    width: 50,
+    height: "100%",
+    backgroundColor: COLORS.tertiary,
+    borderRadius: SIZES.small,
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchWrapper: {
     flex: 1,
@@ -33,11 +46,19 @@ const styles = StyleSheet.create({
     marginRight: SIZES.small,
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
     borderRadius: SIZES.small,
     height: "100%",
   },
   searchInput: {
     width: "100%",
+    height: "100%",
+    fontFamily: FONT.regular,
+    color: COLORS.gray,
+    paddingHorizontal: SIZES.medium,
+  },
+  searchInput2: {
+    width: "80%",
     height: "100%",
     fontFamily: FONT.regular,
     color: COLORS.gray,
@@ -59,6 +80,11 @@ const styles = StyleSheet.create({
   searchBtnImage: {
     width: "50%",
     height: "50%",
+    tintColor: COLORS.primary,
+  },
+  searchBtnImage2: {
+    width: "50%",
+    height: "50%",
     tintColor: COLORS.white,
   },
   header: {
@@ -70,7 +96,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
-    color: COLORS.text,
+    color: COLORS.text2,
   },
   headerBtn: {
     fontSize: SIZES.small,

@@ -102,13 +102,22 @@ const EditInformation = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ marginHorizontal: SIZES.small }}>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: SIZES.medium,
+          }}
+        >
           <View
             style={{
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              padding: SIZES.medium,
+              backgroundColor: COLORS.tertiary,
+              borderRadius: SIZES.small,
+              paddingVertical: SIZES.medium,
             }}
           >
             <Image
@@ -116,121 +125,102 @@ const EditInformation = () => {
               source={require("../../../../assets/images/PrinceStiles.jpg")}
               resizeMode="center"
             />
-            <View
+            <Text
               style={{
-                justifyContent: "center",
-                alignItems: "center",
-                paddingVertical: SIZES.medium,
+                fontFamily: FONT.regular,
+                fontSize: SIZES.xSmall,
+                fontWeight: "100",
+                color: COLORS.gray,
+                paddingVertical: SIZES.small,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.xSmall,
-                  fontWeight: "100",
-                  color: COLORS.gray,
-                }}
-              >
-                @PrinceStiles
-              </Text>
-            </View>
-            <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
-              <View>
-                <Text style={styles.label}>Name</Text>
-                <TextInput
-                  style={[styles.editInput, nameFocus && styles.focusedInput]}
-                  placeholder="Name"
-                  keyboardType="default"
-                  onFocus={handleNameFocus}
-                  onBlur={handleNameBlur}
-                  value={firstname}
-                  onChangeText={setFirstname}
-                />
-
-                <Text style={styles.label}>Surname</Text>
-                <TextInput
-                  style={[
-                    styles.editInput,
-                    surnameFocus && styles.focusedInput,
-                  ]}
-                  placeholder="Surname"
-                  keyboardType="default"
-                  onFocus={handleSurnameFocus}
-                  onBlur={handleSurnameBlur}
-                  value={lastname}
-                  onChangeText={setLastname}
-                />
-
-                <Text style={styles.label}>Username</Text>
-                <TextInput
-                  style={[
-                    styles.editInput,
-                    usernameFocus && styles.focusedInput,
-                  ]}
-                  placeholder="Username"
-                  keyboardType="default"
-                  onFocus={handleUsernameFocus}
-                  onBlur={handleUsernameBlur}
-                  value={username}
-                  onChangeText={setUsername}
-                />
-
-                <Text style={styles.label}>Nationality</Text>
-                <TextInput
-                  style={[
-                    styles.editInput,
-                    nationalFocus && styles.focusedInput,
-                  ]}
-                  placeholder="Nationality"
-                  keyboardType="default"
-                  onFocus={handleNationalFocus}
-                  onBlur={handleNationalBlur}
-                  value={nationality}
-                  onChangeText={setNationality}
-                />
-
-                <Text style={styles.label}>Address</Text>
-                <TextInput
-                  style={[
-                    styles.editInput,
-                    addressFocus && styles.focusedInput,
-                  ]}
-                  placeholder="Address"
-                  keyboardType="default"
-                  onFocus={handleAddressFocus}
-                  onBlur={handleAddressBlur}
-                  value={address}
-                  onChangeText={setAddress}
-                />
-
-                <Text style={styles.label}>City</Text>
-                <TextInput
-                  style={[styles.editInput, cityFocus && styles.focusedInput]}
-                  placeholder="City"
-                  keyboardType="default"
-                  onFocus={handleCityFocus}
-                  onBlur={handleCityBlur}
-                  value={city}
-                  onChangeText={setCity}
-                />
-
-                <Text style={styles.label}>Date of Birth</Text>
-                <TextInput
-                  style={[styles.editInput, dobFocus && styles.focusedInput]}
-                  placeholder="Date of Birth"
-                  keyboardType="default"
-                  onFocus={handleDobFocus}
-                  onBlur={handleDobBlur}
-                  value={dateOfBirth}
-                  onChangeText={setDateOfBirth}
-                />
-
-                <TouchableOpacity style={styles.editBtn} onPress={handleSave}>
-                  <Text style={styles.editBtnText}>Save</Text>
-                </TouchableOpacity>
-              </View>
-            </KeyboardAvoidingView>
+              @PrinceStiles
+            </Text>
           </View>
+          <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
+            <View>
+              <Text style={styles.label}>Name</Text>
+              <TextInput
+                style={[styles.editInput, nameFocus && styles.focusedInput]}
+                placeholder="Name"
+                keyboardType="default"
+                onFocus={handleNameFocus}
+                onBlur={handleNameBlur}
+                value={firstname}
+                onChangeText={setFirstname}
+              />
+
+              <Text style={styles.label}>Surname</Text>
+              <TextInput
+                style={[styles.editInput, surnameFocus && styles.focusedInput]}
+                placeholder="Surname"
+                keyboardType="default"
+                onFocus={handleSurnameFocus}
+                onBlur={handleSurnameBlur}
+                value={lastname}
+                onChangeText={setLastname}
+              />
+
+              <Text style={styles.label}>Username</Text>
+              <TextInput
+                style={[styles.editInput, usernameFocus && styles.focusedInput]}
+                placeholder="Username"
+                keyboardType="default"
+                onFocus={handleUsernameFocus}
+                onBlur={handleUsernameBlur}
+                value={username}
+                onChangeText={setUsername}
+              />
+
+              <Text style={styles.label}>Nationality</Text>
+              <TextInput
+                style={[styles.editInput, nationalFocus && styles.focusedInput]}
+                placeholder="Nationality"
+                keyboardType="default"
+                onFocus={handleNationalFocus}
+                onBlur={handleNationalBlur}
+                value={nationality}
+                onChangeText={setNationality}
+              />
+
+              <Text style={styles.label}>Address</Text>
+              <TextInput
+                style={[styles.editInput, addressFocus && styles.focusedInput]}
+                placeholder="Address"
+                keyboardType="default"
+                onFocus={handleAddressFocus}
+                onBlur={handleAddressBlur}
+                value={address}
+                onChangeText={setAddress}
+              />
+
+              <Text style={styles.label}>City</Text>
+              <TextInput
+                style={[styles.editInput, cityFocus && styles.focusedInput]}
+                placeholder="City"
+                keyboardType="default"
+                onFocus={handleCityFocus}
+                onBlur={handleCityBlur}
+                value={city}
+                onChangeText={setCity}
+              />
+
+              <Text style={styles.label}>Date of Birth</Text>
+              <TextInput
+                style={[styles.editInput, dobFocus && styles.focusedInput]}
+                placeholder="Date of Birth"
+                keyboardType="default"
+                onFocus={handleDobFocus}
+                onBlur={handleDobBlur}
+                value={dateOfBirth}
+                onChangeText={setDateOfBirth}
+              />
+
+              <TouchableOpacity style={styles.editBtn} onPress={handleSave}>
+                <Text style={styles.editBtnText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
         </View>
       </ScrollView>
     </SafeAreaView>

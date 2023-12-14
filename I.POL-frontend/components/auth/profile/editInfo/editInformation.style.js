@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   },
   editBtnText: {
     color: COLORS.white,
-    fontFamily: FONT.regular,
+    fontFamily: FONT.medium,
     fontSize: SIZES.medium,
-    fontWeight: "bold",
+    fontWeight: "400",
   },
 });
 

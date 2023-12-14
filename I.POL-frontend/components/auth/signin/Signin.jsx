@@ -7,16 +7,17 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import firebaseApp from "../../../config/firebase-config";
-const auth = getAuth(firebaseApp);
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import firebaseApp from "../../../config/firebase-config";
+// const auth = getAuth(firebaseApp);
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./signin.style";
-import { router, Stack } from "expo-router";
+import { router } from "expo-router";
 import { COLORS, SIZES, images, icons, SHADOWS } from "../../../constants";
 import { loginUser } from "../../../redux/actions/authThunk";
 
@@ -27,6 +28,7 @@ const Signin = () => {
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,29 +47,32 @@ const Signin = () => {
   });
 
   const handleSignIn = async () => {
+    // Authenticate user using email and password
+    // const userCredential = await signInWithEmailAndPassword(
+    //   auth,
+    //   email,
+    //   password
+    // );
+
+    // // Log user email to the console
+    // console.log(userCredential.user.email);
+
+    // // Get the ID token for authentication with the backend
+    // const idToken = await userCredential.user.getIdToken();
+
+    // Send the ID token to the backend for further authentication
     try {
-      // Authenticate user using email and password
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      setIsLoading(true);
 
-      // Log user email to the console
-      console.log(userCredential.user.email);
-
-      // Get the ID token for authentication with the backend
-      const idToken = await userCredential.user.getIdToken();
-
-      // Send the ID token to the backend for further authentication
       const credentials = { email, password };
-      dispatch(loginUser(credentials, idToken));
-
-      // Navigate to the home screen or any other screen
-      router.push(`/home`);
+      dispatch(loginUser(credentials));
     } catch (error) {
       // Handle sign-in error
       console.error("Sign-in error:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000 * 10);
     }
   };
 
@@ -77,7 +82,7 @@ const Signin = () => {
         backgroundColor: COLORS.white,
       }}
     >
-      <ScrollView showsHorizontalScrollIndicator={false}>
+      {/* <ScrollView showsHorizontalScrollIndicator={false}> */}
         <View style={{ marginHorizontal: SIZES.small }}>
           <View
             style={{
@@ -125,16 +130,22 @@ const Signin = () => {
                 Forgot your <Text style={styles.cta}>Password?</Text>
               </Text>
 
-              <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
-                <Text style={styles.authBtnText}>Login</Text>
-              </TouchableOpacity>
+              {isLoading ? (
+                <TouchableOpacity style={styles.authBtn2}>
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
+                  <Text style={styles.authBtnText}>Login</Text>
+                </TouchableOpacity>
+              )}
 
               <Text style={styles.actionText}>
                 Create new{" "}
                 <Text
                   style={styles.cta}
                   onPress={() => {
-                    router.push(`/auth/sign_up`);
+                    router.push(`/auth/signUp_`);
                   }}
                 >
                   account?
@@ -170,7 +181,7 @@ const Signin = () => {
             </KeyboardAvoidingView>
           </View>
         </View>
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };

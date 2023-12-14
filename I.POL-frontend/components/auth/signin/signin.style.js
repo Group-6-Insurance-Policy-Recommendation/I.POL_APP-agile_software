@@ -88,9 +88,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.primary,
   },
+  authBtn2: {
+    width: "100%",
+    paddingVertical: SIZES.small,
+    paddingHorizontal: SIZES.large,
+    margin: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: COLORS.tertiary,
+  },
   authBtnText: {
     color: COLORS.white,
-    fontFamily: FONT.regular,
+    fontFamily: FONT.medium,
     fontSize: SIZES.medium,
     fontWeight: "400",
   },
@@ -112,7 +122,7 @@ const styles = StyleSheet.create({
   },
   authIcons: {
     padding: SIZES.small,
-    borderRadius: SIZES.xSmall,
+    borderRadius: 50,
     ...SHADOWS.small,
   },
 });

@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import React from "react";
 import { COLORS, FONT, SIZES } from "../../../constants";
@@ -19,15 +20,24 @@ const Profile = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ marginHorizontal: SIZES.small }}>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: SIZES.medium,
+            paddingVertical: SIZES.xxLarge,
+          }}
+        >
           <View
             style={{
-              flex: 1,
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              padding: SIZES.medium,
-              paddingVertical: SIZES.xxLarge,
+              backgroundColor: COLORS.tertiary,
+              borderRadius: SIZES.small,
+              paddingVertical: SIZES.large,
             }}
           >
             <Image
@@ -35,255 +45,154 @@ const Profile = () => {
               source={require("../../../assets/images/PrinceStiles.jpg")}
               resizeMode="center"
             />
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                paddingVertical: SIZES.medium,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.xLarge,
-                  fontWeight: "600",
-                  color: COLORS.text2,
-                }}
-              >
-                Otumfuo Prince
-              </Text>
-              <Text
-                style={{
-                  fontFamily: FONT.regular,
-                  fontSize: SIZES.xSmall,
-                  fontWeight: "100",
-                  color: COLORS.gray,
-                }}
-              >
-                @PrinceStiles
-              </Text>
-            </View>
-            {/* <TouchableOpacity>
             <Text
               style={{
                 fontFamily: FONT.regular,
-                fontSize: SIZES.small,
-                fontWeight: "500",
-                color: COLORS.secondary,
-                padding: 2,
+                fontSize: SIZES.xLarge,
+                fontWeight: "600",
+                color: COLORS.text2,
+                paddingVertical: SIZES.medium,
               }}
             >
-              Edit Profile
+              Otumfuo Prince
             </Text>
-          </TouchableOpacity> */}
-
-            <View
+            <Text
               style={{
-                width: "100%",
-                paddingVertical: SIZES.large,
-                // marginVertical: SIZES.xxLarge,
-                borderTopWidth: 1,
-                borderBottomWidth: 1,
-                borderTopColor: COLORS.lightWhite,
-                borderBottomColor: COLORS.lightWhite,
+                fontFamily: FONT.regular,
+                fontSize: SIZES.xSmall,
+                fontWeight: "100",
+                color: COLORS.primary,
               }}
             >
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-                onPress={() => router.push(`/profile/editInfo`)}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Profile Information
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Insurance Policies
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Claim History
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Security Settings
-                </Text>
-              </TouchableOpacity>
-            </View>
+              @PrinceStiles
+            </Text>
+          </View>
 
-            <View
+          <View style={styles.profileMenu}>
+            <TouchableOpacity
               style={{
                 width: "100%",
-                paddingVertical: SIZES.large,
-                // marginVertical: SIZES.xxLarge,
-                borderTopWidth: 1,
-                borderBottomWidth: 1,
-                borderTopColor: COLORS.lightWhite,
-                borderBottomColor: COLORS.lightWhite,
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+              onPress={() => router.push(`/profile/editProfile_`)}
+            >
+              <Text style={styles.labelText}>Profile Information</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
               }}
             >
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Notification
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  Feedback
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  FAQs
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: "100%",
-                  paddingVertical: SIZES.small,
-                  backgroundColor: COLORS.tertiary,
-                  borderRadius: SIZES.xSmall,
-                  marginVertical: 2,
-                  paddingHorizontal: SIZES.xxLarge,
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: FONT.regular,
-                    fontSize: SIZES.medium,
-                    fontWeight: "100",
-                    color: COLORS.primary,
-                    padding: 2,
-                  }}
-                >
-                  More Settings
-                </Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={styles.labelText}>Insurance Policies</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>Claim History</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>Security Settings</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.profileMenu}>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>Notification</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>Feedback</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>FAQs</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: "100%",
+                paddingVertical: SIZES.small,
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.xSmall,
+                marginVertical: 2,
+                paddingHorizontal: SIZES.xxLarge,
+              }}
+            >
+              <Text style={styles.labelText}>More Settings</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  profileMenu: {
+    width: "100%",
+    paddingTop: SIZES.large,
+    // marginVertical: SIZES.xxLarge,
+    // borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: COLORS.gray2,
+    borderBottomColor: COLORS.lightWhite,
+  },
+  labelText: {
+    fontFamily: FONT.regular,
+    fontSize: SIZES.medium,
+    fontWeight: "100",
+    color: COLORS.text,
+    padding: 2,
+  },
+});
 
 export default Profile;

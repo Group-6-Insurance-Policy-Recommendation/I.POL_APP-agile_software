@@ -8,7 +8,7 @@ const profileHeaderBtn = ({ iconUrl, dimension, handlePress }) => {
     <TouchableOpacity style={styles.btnContainer} onPress={handlePress}>
       <Image
         source={iconUrl}
-        resizeMode="center"
+        resizeMode="contain"
         style={styles.btnImg(dimension)}
       />
     </TouchableOpacity>

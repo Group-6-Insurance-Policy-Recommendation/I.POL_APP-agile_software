@@ -7,10 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseApp from "../../../config/firebase-config";
-const auth = getAuth(firebaseApp);
+// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+// import firebaseApp from "../../../config/firebase-config";
+// const auth = getAuth(firebaseApp);
 
 import { useState } from "react";
 
@@ -25,6 +26,7 @@ const Signup = () => {
   const [usernameFocus, setUsernameFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -38,29 +40,29 @@ const Signup = () => {
   const handlePasswordBlur = () => setPasswordFocus(false);
 
   const handleSignup = async () => {
+    // const userCredential = await createUserWithEmailAndPassword(
+    //   auth,
+    //   email,
+    //   password
+    // );
+
+    // const idToken = await userCredential.user.getIdToken();
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      const idToken = await userCredential.user.getIdToken();
-
-      // Log user email to the console
-      console.log(userCredential.user.email);
+      setIsLoading(true);
 
       const credentials = {
         username: username,
         email: email,
         password: password,
       };
-      dispatch(signUp(credentials, idToken));
-
-      // Navigate to the login screen or any other screen
-      router.push(`/sign_in`);
+      dispatch(signUp(credentials));
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error("Error during sign-up:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000 * 10);
     }
   };
 
@@ -129,16 +131,22 @@ const Signup = () => {
                 <Text
                   style={styles.cta}
                   onPress={() => {
-                    router.push(`/auth/sign_in`);
+                    router.push(`/auth/signIn_`);
                   }}
                 >
                   Login.
                 </Text>
               </Text>
 
-              <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
-                <Text style={styles.authBtnText}>Signup</Text>
-              </TouchableOpacity>
+              {isLoading ? (
+                <TouchableOpacity style={styles.authBtn2}>
+                  <ActivityIndicator size="small" color={COLORS.primary} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
+                  <Text style={styles.authBtnText}>Signup</Text>
+                </TouchableOpacity>
+              )}
 
               <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
                 <Text style={styles.signupOptions}>Or sign up with</Text>

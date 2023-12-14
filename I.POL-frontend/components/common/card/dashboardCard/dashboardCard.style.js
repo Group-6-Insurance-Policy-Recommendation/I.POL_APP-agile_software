@@ -3,7 +3,7 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    // width: 150,
+    width: 150,
     // height: 150,
     padding: SIZES.xLarge,
     margin: SIZES.xSmall,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 100,
     height: 100,
-    backgroundColor: COLORS.white,
+    // backgroundColor: COLORS.white,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     height: "70%",
   },
   cardText: {
-    fontSize: SIZES.small,
+    fontSize: SIZES.medium - 2,
     fontFamily: FONT.regular,
     fontWeight: "200",
     color: COLORS.primary,
