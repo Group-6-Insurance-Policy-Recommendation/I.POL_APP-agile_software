@@ -21,6 +21,9 @@ import Begin from "./screens/Quotas/Begin";
 import RecommendedPolicyScreen from "./screens/Quotas/RecommendedPolicyScreen";
 import CategoryScreen from "./screens/Quotas/CategoryScreen";
 import BudgetScreen from "./screens/Quotas/BudgetScreen";
+import DetailsScreen from "./screens/detailsScreen/DetailsScreen";
+import PolicyPlanScreen from "./screens/PolicyPlanScreen/PolicyPlanScreen";
+import PayScreen from './screens/payScreen/PayScreen';
 
 export {
   ProfileHeaderBtn,
@@ -38,4 +41,7 @@ export {
   RecommendedPolicyScreen,
   CategoryScreen,
   BudgetScreen,
+  DetailsScreen,
+  PolicyPlanScreen,
+  PayScreen,
 };
