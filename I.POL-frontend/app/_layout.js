@@ -195,6 +195,141 @@ const Layout = () => {
         />
 
         <Stack.Screen
+          name="screens/other/detailScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`profile`)}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/other/policyPlanScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.tertiary,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`profile`)}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="screens/other/payScreen_"
+          options={{
+            headerStyle: {
+              backgroundColor: COLORS.white,
+            },
+            headerShadowVisible: false,
+            headerTitle: "",
+            presentation: "modal",
+            headerLeft: () => (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ProfileHeaderBtn
+                  iconUrl={images.logo}
+                  dimension="100%"
+                  handlePress={() => router.push(`home`)}
+                />
+                <Text
+                  style={{
+                    fontFamily: FONT.bold,
+                    fontWeight: "600",
+                    color: COLORS.primary,
+                    fontSize: SIZES.xSmall,
+                  }}
+                >
+                  IPOL
+                </Text>
+              </View>
+            ),
+            headerRight: () => (
+              <ProfileHeaderBtn
+                iconUrl={images.profile}
+                dimension="100%"
+                handlePress={() => router.push(`profile`)}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
           name="home/recommendation_"
           options={{
             headerStyle: {
