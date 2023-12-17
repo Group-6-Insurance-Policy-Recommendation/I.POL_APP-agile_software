@@ -15,6 +15,12 @@ import plan from "../assets/icons/plan.png";
 import corporate from "../assets/icons/corporate.png";
 import family from "../assets/icons/family.png";
 import insure from "../assets/icons/insure.png";
+import silver from "../assets/icons/silver.png";
+import gold from "../assets/icons/gold.png";
+import diamond from "../assets/icons/diamond.png";
+import amazonpay from "../assets/icons/amazonpay.png";
+import applepay from "../assets/icons/applepay.png";
+import gpay from "../assets/icons/gpay.png";
 
 export default {
   google,
@@ -34,4 +40,10 @@ export default {
   corporate,
   family,
   insure,
+  silver,
+  gold,
+  diamond,
+  amazonpay,
+  applepay,
+  gpay,
 };
