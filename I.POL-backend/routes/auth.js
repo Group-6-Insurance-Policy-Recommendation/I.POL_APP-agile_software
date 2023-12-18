@@ -44,13 +44,17 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(404).send("user not found");
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
     const isValidPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-    !isValidPassword && res.status(404).send("wrong password");
+    if (!isValidPassword) {
+      return res.status(404).send("Wrong password");
+    }
 
     // Generate Firebase custom token and send it to the client
     const firebaseToken = req.headers.authorization;
@@ -59,9 +63,10 @@ router.post("/login", async (req, res) => {
     user.firebaseToken = firebaseToken;
     await user.save();
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
