@@ -32,6 +32,30 @@ app.use(
 );
 app.options("*", cors());
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+
+  // Check if headers have already been sent
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  // Handle different types of errors
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    res.status(400).send({ error: 'Invalid JSON syntax' });
+  } else {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+});
+
+// Global unhandled exception handler
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  // You may want to perform cleanup tasks before exiting the process
+  process.exit(1);
+});
+
 // Firebase authentication middleware
 // app.use(async (req, res, next) => {
 //   try {

@@ -41,7 +41,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
   } catch (error) {
     console.error("Login failed:", error.response);
     // Handle error and dispatch appropriate actions
-    alert("Something went wrong. Try again.");
+    alert(error.response.data);
   }
 };
 
