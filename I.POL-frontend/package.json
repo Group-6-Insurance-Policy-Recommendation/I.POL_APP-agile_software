@@ -57,5 +57,5 @@
     "metro-resolver": "^0.73.7"
   },
   "private": true,
-  "proxy": "http://localhost:8800"
+  "proxy": "https://ipol-server.onrender.com"
 }

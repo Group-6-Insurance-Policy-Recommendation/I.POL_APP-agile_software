@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(morgan("common"));
 app.use(
   cors({
-    origin: ["*"], // Specify allowed origins
+    origin: ["*", "http://localhost:8081", "exp://10.20.154.55:8081"], // Specify allowed origins
     credentials: true, // Allow sending cookies in requests
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allow specific methods
