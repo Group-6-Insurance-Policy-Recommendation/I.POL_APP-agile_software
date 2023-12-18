@@ -30,7 +30,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allow specific methods
   })
 );
-app.options("*", cors());
+// app.options("*", cors());
 
 // Error handling middleware
 app.use((err, req, res, next) => {
