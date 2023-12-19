@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
+const policyRoute = require("./routes/policyInfo");
 // const firebaseAuth = require("./firebase-auth");
 
 const app = express();
@@ -42,16 +43,16 @@ app.use((err, req, res, next) => {
   }
 
   // Handle different types of errors
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    res.status(400).send({ error: 'Invalid JSON syntax' });
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    res.status(400).send({ error: "Invalid JSON syntax" });
   } else {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 });
 
 // Global unhandled exception handler
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
   // You may want to perform cleanup tasks before exiting the process
   process.exit(1);
 });
@@ -77,6 +78,7 @@ router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/policy", policyRoute);
 
 app.listen(8800, () => {
   console.log("Backend Server Is Running...");
