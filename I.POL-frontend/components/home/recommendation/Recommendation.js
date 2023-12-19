@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
-import { icons, images, SIZES } from "../../../constants";
+import { icons } from "../../../constants";
 import styles from "./recommendation.style";
 import { router } from "expo-router";
 import CompanyPolicyCard from "../../common/card/companyPolicyCard/CompanyPolicyCard";
@@ -23,6 +23,10 @@ const Dashboard = () => {
 
   const handleSearchFocus = () => setSearchFocus(true);
   const handleSearchBlur = () => setSearchFocus(false);
+
+  const handlePolicyCardClick = (policyID) => {
+    router.push(`screens/other/detailScreen_/${policyID}`);
+  };
 
   return (
     <ScrollView>
@@ -118,9 +122,7 @@ const Dashboard = () => {
               <CompanyPolicyCard
                 policy={policy}
                 key={`popular-policy-${policy?.id}`}
-                handleNavigate={() =>
-                  router.push(`/policy-details/${policy.id}`)
-                }
+                handleNavigate={() => handlePolicyCardClick(policy.id)}
               />
             ))
           )}

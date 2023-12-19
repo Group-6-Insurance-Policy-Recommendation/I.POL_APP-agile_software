@@ -38,13 +38,13 @@ const Signin = () => {
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log(user);
-      console.log(isAuthenticated);
-      return alert("You're logged in.");
-    }
-  });
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     console.log(user);
+  //     console.log(isAuthenticated);
+  //     return alert("You're logged in.");
+  //   }
+  // });
 
   const handleSignIn = async () => {
     // Authenticate user using email and password

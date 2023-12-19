@@ -1,5 +1,5 @@
-import { router } from "expo-router";
-import React, { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StatusBar,
@@ -8,14 +8,34 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, FONT, icons, images, SIZES } from "../../../constants";
+import { COLORS, FONT, icons, SIZES } from "../../../constants";
+import companyPolicies from "../../../data/companyPolicy";
 import PolicyPlanCard from "../../common/card/policyPlanCard/PolicyPlanCard";
-import PaymentCall from "../../common/other/paymentCall/PaymentCall";
 
 const PolicyPlanScreen = () => {
-  const [price, setPrice] = useState(0);
   const [displayPlan, setDisplayPlan] = useState("Standard");
   const [planID, setPlanID] = useState(1);
+  const [companyPolicy, setCompanyPolicy] = useState([]);
+
+  const { policyID } = useLocalSearchParams();
+  const standardTotal =
+    parseInt(companyPolicy?.policyPlans?.standard?.cost, 10) +
+    parseInt(companyPolicy?.policyPlans?.standard?.fees, 10);
+  const advancedTotal =
+    parseInt(companyPolicy?.policyPlans?.advanced?.cost, 10) +
+    parseInt(companyPolicy?.policyPlans?.advanced?.fees, 10);
+  const premiumTotal =
+    parseInt(companyPolicy?.policyPlans?.premium?.cost, 10) +
+    parseInt(companyPolicy?.policyPlans?.premium?.fees, 10);
+
+  useEffect(() => {
+    // Find the policy with the matching policyId
+    const policy = companyPolicies.find((policy) => policy.id === policyID);
+
+    // Set the selected policy in the component state
+    setCompanyPolicy(policy);
+  }, [policyID]);
+
   const cardData = [
     {
       id: 1,
@@ -34,64 +54,18 @@ const PolicyPlanScreen = () => {
     },
   ];
 
+  const handleSelectPay = (policyID, price) => {
+    router.push(`/screens/other/payScreen_/${policyID}/${price}`);
+  };
+
   const handleCardPress = (item) => {
     // Implement the logic to handle card press
-    console.log("Card pressed:", item.title);
     if (item.title) {
       setDisplayPlan(item.title);
     }
     if (item.id) {
       setPlanID(item.id);
     }
-  };
-
-  const policyPlans = {
-    standard: {
-      plan: "Standard Plan",
-      coverage: "Basic coverage for essential needs",
-      cost: "50",
-      benefits: [
-        "Hospitalization coverage",
-        "Outpatient services",
-        "Prescription drugs",
-      ],
-      fees: "20",
-      duration: "12 months",
-      insuranceType: "Health Insurance",
-      expiration: "Annual Renewal",
-    },
-    advanced: {
-      plan: "Advanced Plan",
-      coverage: "Comprehensive coverage for most needs",
-      cost: "80",
-      benefits: [
-        "Hospitalization coverage",
-        "Outpatient services",
-        "Prescription drugs",
-        "Dental and vision coverage",
-      ],
-      fees: "30",
-      duration: "12 months",
-      insuranceType: "Health Insurance",
-      expiration: "Annual Renewal",
-    },
-    premium: {
-      plan: "Premium Plan",
-      coverage: "Top-tier coverage for all needs",
-      cost: "120",
-      benefits: [
-        "Hospitalization coverage",
-        "Outpatient services",
-        "Prescription drugs",
-        "Dental and vision coverage",
-        "Specialized treatments",
-        "Emergency medical evacuation",
-      ],
-      fees: "50",
-      duration: "12 months",
-      insuranceType: "Health Insurance",
-      expiration: "Annual Renewal",
-    },
   };
 
   return (
@@ -117,7 +91,8 @@ const PolicyPlanScreen = () => {
         {displayPlan === "Standard" && (
           <View style={styles.InfoMenu}>
             <Text style={styles.InfoTitle}>
-              {policyPlans.standard.insuranceType} - {policyPlans.standard.plan}
+              {companyPolicy?.policyPlans?.standard?.insuranceType} -{" "}
+              {companyPolicy?.policyPlans?.standard?.plan}
             </Text>
             <View
               style={{
@@ -128,7 +103,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Coverage:</Text>
               <Text style={styles.labelText}>
-                {policyPlans.standard.coverage}
+                {companyPolicy?.policyPlans?.standard?.coverage}
               </Text>
             </View>
             <View
@@ -141,11 +116,13 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Benefits:</Text>
-              {policyPlans.standard.benefits.map((benefit, index) => (
-                <Text key={index} style={styles.labelText}>
-                  {benefit}
-                </Text>
-              ))}
+              {companyPolicy?.policyPlans?.standard?.benefits.map(
+                (benefit, index) => (
+                  <Text key={index} style={styles.labelText}>
+                    {benefit}
+                  </Text>
+                )
+              )}
             </View>
             <View
               style={{
@@ -160,7 +137,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${policyPlans.standard.cost} per month
+                ${companyPolicy?.policyPlans?.standard?.cost} per month
               </Text>
             </View>
             <View
@@ -175,7 +152,9 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
-              <Text style={styles.labelText}>${policyPlans.standard.fees}</Text>
+              <Text style={styles.labelText}>
+                ${companyPolicy?.policyPlans?.standard?.fees}
+              </Text>
             </View>
             <View
               style={{
@@ -190,7 +169,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Duration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.standard.duration}
+                {companyPolicy?.policyPlans?.standard?.duration}
               </Text>
             </View>
             <View
@@ -206,15 +185,13 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Expiration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.standard.expiration}
+                {companyPolicy?.policyPlans?.standard?.expiration}
               </Text>
             </View>
 
             <View style={{ marginTop: 10 }}>
               <TouchableOpacity
-                onPress={() => {
-                  router.push(`/screens/other/payScreen_`);
-                }}
+                onPress={() => handleSelectPay(policyID, standardTotal)}
                 style={styles.pageBtn}
               >
                 <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
@@ -228,7 +205,8 @@ const PolicyPlanScreen = () => {
         {displayPlan === "Advanced" && (
           <View style={styles.InfoMenu}>
             <Text style={styles.InfoTitle}>
-              {policyPlans.advanced.insuranceType} - {policyPlans.advanced.plan}
+              {companyPolicy?.policyPlans?.advanced?.insuranceType} -{" "}
+              {companyPolicy?.policyPlans?.advanced?.plan}
             </Text>
             <View
               style={{
@@ -239,7 +217,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Coverage:</Text>
               <Text style={styles.labelText}>
-                {policyPlans.advanced.coverage}
+                {companyPolicy?.policyPlans?.advanced?.coverage}
               </Text>
             </View>
             <View
@@ -252,11 +230,13 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Benefits:</Text>
-              {policyPlans.advanced.benefits.map((benefit, index) => (
-                <Text key={index} style={styles.labelText}>
-                  {benefit}
-                </Text>
-              ))}
+              {companyPolicy?.policyPlans?.advanced?.benefits.map(
+                (benefit, index) => (
+                  <Text key={index} style={styles.labelText}>
+                    {benefit}
+                  </Text>
+                )
+              )}
             </View>
             <View
               style={{
@@ -271,7 +251,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${policyPlans.advanced.cost} per month
+                ${companyPolicy?.policyPlans?.advanced?.cost} per month
               </Text>
             </View>
             <View
@@ -286,7 +266,9 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
-              <Text style={styles.labelText}>${policyPlans.advanced.fees}</Text>
+              <Text style={styles.labelText}>
+                ${companyPolicy?.policyPlans?.advanced?.fees}
+              </Text>
             </View>
             <View
               style={{
@@ -301,7 +283,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Duration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.advanced.duration}
+                {companyPolicy?.policyPlans?.advanced?.duration}
               </Text>
             </View>
             <View
@@ -317,15 +299,13 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Expiration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.advanced.expiration}
+                {companyPolicy?.policyPlans?.advanced?.expiration}
               </Text>
             </View>
 
             <View style={{ marginTop: 10 }}>
               <TouchableOpacity
-                onPress={() => {
-                  router.push(`/screens/other/payScreen_`);
-                }}
+                onPress={() => handleSelectPay(policyID, advancedTotal)}
                 style={styles.pageBtn}
               >
                 <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
@@ -339,7 +319,8 @@ const PolicyPlanScreen = () => {
         {displayPlan === "Premium" && (
           <View style={styles.InfoMenu}>
             <Text style={styles.InfoTitle}>
-              {policyPlans.premium.insuranceType} - {policyPlans.premium.plan}
+              {companyPolicy?.policyPlans?.premium?.insuranceType} -{" "}
+              {companyPolicy?.policyPlans?.premium?.plan}
             </Text>
             <View
               style={{
@@ -350,7 +331,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Coverage:</Text>
               <Text style={styles.labelText}>
-                {policyPlans.premium.coverage}
+                {companyPolicy?.policyPlans?.premium?.coverage}
               </Text>
             </View>
             <View
@@ -363,11 +344,13 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Benefits:</Text>
-              {policyPlans.premium.benefits.map((benefit, index) => (
-                <Text key={index} style={styles.labelText}>
-                  {benefit}
-                </Text>
-              ))}
+              {companyPolicy?.policyPlans?.premium?.benefits.map(
+                (benefit, index) => (
+                  <Text key={index} style={styles.labelText}>
+                    {benefit}
+                  </Text>
+                )
+              )}
             </View>
             <View
               style={{
@@ -382,7 +365,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${policyPlans.premium.cost} per month
+                ${companyPolicy?.policyPlans?.premium?.cost} per month
               </Text>
             </View>
             <View
@@ -397,7 +380,9 @@ const PolicyPlanScreen = () => {
               }}
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
-              <Text style={styles.labelText}>${policyPlans.premium.fees}</Text>
+              <Text style={styles.labelText}>
+                ${companyPolicy?.policyPlans?.premium?.fees}
+              </Text>
             </View>
             <View
               style={{
@@ -412,7 +397,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Duration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.premium.duration}
+                {companyPolicy?.policyPlans?.premium?.duration}
               </Text>
             </View>
             <View
@@ -428,15 +413,13 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Expiration: </Text>
               <Text style={styles.labelText}>
-                {policyPlans.premium.expiration}
+                {companyPolicy?.policyPlans?.premium?.expiration}
               </Text>
             </View>
 
             <View style={{ marginTop: 10 }}>
               <TouchableOpacity
-                onPress={() => {
-                  router.push(`/screens/other/payScreen_`);
-                }}
+                onPress={() => handleSelectPay(policyID, premiumTotal)}
                 style={styles.pageBtn}
               >
                 <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>

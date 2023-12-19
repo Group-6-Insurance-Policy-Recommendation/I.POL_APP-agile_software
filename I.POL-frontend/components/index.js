@@ -23,7 +23,8 @@ import CategoryScreen from "./screens/Quotas/CategoryScreen";
 import BudgetScreen from "./screens/Quotas/BudgetScreen";
 import DetailsScreen from "./screens/detailsScreen/DetailsScreen";
 import PolicyPlanScreen from "./screens/PolicyPlanScreen/PolicyPlanScreen";
-import PayScreen from './screens/payScreen/PayScreen';
+import PayScreen from "./screens/payScreen/PayScreen";
+import HuddleScreen from "./screens/huddleScreen/HuddleScreen";
 
 export {
   ProfileHeaderBtn,
@@ -44,4 +45,5 @@ export {
   DetailsScreen,
   PolicyPlanScreen,
   PayScreen,
+  HuddleScreen,
 };

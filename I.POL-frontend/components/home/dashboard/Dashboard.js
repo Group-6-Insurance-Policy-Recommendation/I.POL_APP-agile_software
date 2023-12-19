@@ -10,13 +10,17 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import DashboardCard from "../../common/card/dashboardCard/DashboardCard";
-import { icons, images, SIZES } from "../../../constants";
+import { icons } from "../../../constants";
 import styles from "./dashboard.style";
 import PopularPolicyCard from "../../common/card/popularPolicyCard/PopularPolicyCard";
 import policies from "../../../data/policy";
 import { router } from "expo-router";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const user = useSelector((state) => state.user);
+
   const [searchText, setSearchText] = useState("");
   const [searchFocus, setSearchFocus] = useState("");
 
@@ -47,7 +51,7 @@ const Dashboard = () => {
     {
       id: "4",
       title: "Huddle",
-      url: "home/huddle_",
+      url: "screens/other/huddleScreen_",
       image: require("../../../assets/history.png"),
     },
   ];
@@ -62,7 +66,9 @@ const Dashboard = () => {
     <ScrollView showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.container}>
-          <Text style={styles.userName}>Welcome Prince...</Text>
+          <Text style={styles.userName}>
+            Welcome @{user.profile?.username}...
+          </Text>
           <Text style={styles.welcomeMessage}>Dashboard</Text>
         </View>
 

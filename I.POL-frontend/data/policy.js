@@ -4,7 +4,7 @@ const policies = [
   {
     id: "1",
     logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
-    name: "Basic Health Insurance",
+    name: "Health Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
     description:
@@ -31,29 +31,29 @@ const policies = [
   {
     id: "4",
     logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
-    name: "Comprehensive Health Plan",
+    name: "Life Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
     description:
-      "Covers basic health expenses including hospitalization, doctor visits, and medications.",
+      "Provides financial protection to beneficiaries in the event of the policyholder's death.",
   },
   {
     id: "5",
     logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
-    name: "Auto Protection Plus",
+    name: "Business Insurance",
     coverage: "Collision, Liability, Comprehensive",
     premium: "$75 per month",
     description:
-      "Provides coverage for your vehicle against collisions, liability claims, and comprehensive damages.",
+      "Various types, including property insurance, liability insurance, and business interruption insurance, to protect businesses from financial losses.",
   },
   {
     id: "6",
     logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
-    name: "Premier Home Coverage",
-    coverage: "Property Damage, Theft, Personal Liability",
+    name: "Travel Insurance",
+    coverage: "Natural Misfortune, Theft, Personal Liability",
     premium: "$100 per month",
     description:
-      "Protects your home against property damage, theft, and provides personal liability coverage.",
+      "Covers unexpected events during travel, such as trip cancellations, medical emergencies, or lost luggage.",
   },
   // Add more policy objects as needed
 ];

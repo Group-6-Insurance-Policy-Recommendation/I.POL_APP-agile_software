@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { PolicyPlanScreen } from "../../../components";
+import { PolicyPlanScreen } from "../../../../components";
 
 const policyPlanScreen_ = () => {
   return (

@@ -1,16 +1,26 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
+import LottiePlayer from "@lottiefiles/react-lottie-player";
 import { COLORS } from "../../../../constants";
 
 const PopUpAnimation = ({ style }) => {
   return (
     <View style={styles.LottieAnimationContainer}>
-      <LottieView
+      {/* <LottieView
         style={style}
         source={require("./Successful.json")}
         autoPlay
         loop={false}
+      /> */}
+      <LottiePlayer
+        source={{
+          animation: {
+            uri: "https://www.lottiefiles.com/data/animation/41309",
+          },
+        }}
+        loop={false}
+        autoPlay
       />
     </View>
   );

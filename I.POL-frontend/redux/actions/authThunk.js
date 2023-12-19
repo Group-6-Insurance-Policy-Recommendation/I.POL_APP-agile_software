@@ -25,7 +25,6 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
     );
 
     if (response.status === 200) {
-      setIsLoading(false);
       console.log("Backend response:", response.data);
 
       // Dispatch the login success action
@@ -39,7 +38,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
       dispatch(loginFailure(response.error));
     }
   } catch (error) {
-    console.error("Login failed:", error.response);
+    console.error("Login failed:", error.response.data);
     // Handle error and dispatch appropriate actions
     alert(error.response.data);
   }
@@ -60,7 +59,6 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
 
     if (response.status === 200) {
       // Dispatch the sign-up success action
-      console.log("Backend response:", response.data);
       dispatch(signUpSuccess(response.data));
 
       // Navigate to the login screen or any other screen
@@ -70,7 +68,6 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
       dispatch(signUpFailure(response.error));
     }
   } catch (error) {
-    console.error("Sign-up failed:", error);
     alert("Something went wrong. Try again.");
   }
 };
@@ -109,8 +106,6 @@ export const createProfile =
         createProfileFailure("Create profile failed. Please try again.")
       );
       alert("Something went wrong. Try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 

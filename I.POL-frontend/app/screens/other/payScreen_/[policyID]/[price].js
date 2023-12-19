@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { PayScreen } from "../../../components";
+import { PayScreen } from "../../../../../components";
 
 const payScreen_ = () => {
   return (

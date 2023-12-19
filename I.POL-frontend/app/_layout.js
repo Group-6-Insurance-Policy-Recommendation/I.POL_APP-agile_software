@@ -39,13 +39,13 @@ const Layout = () => {
             },
             headerShadowVisible: false,
             headerTitle: "",
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`/_sitemap`)}
-              />
-            ),
+            // headerRight: () => (
+            //   <ProfileHeaderBtn
+            //     iconUrl={images.profile}
+            //     dimension="100%"
+            //     handlePress={() => router.push(`/_sitemap`)}
+            //   />
+            // ),
           }}
         />
 
@@ -117,32 +117,6 @@ const Layout = () => {
             headerShadowVisible: false,
             headerTitle: "",
             presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ProfileHeaderBtn
-                  iconUrl={images.logo}
-                  dimension="100%"
-                  handlePress={() => router.push(`home`)}
-                />
-                <Text
-                  style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
-                  }}
-                >
-                  IPOL
-                </Text>
-              </View>
-            ),
           }}
         />
 
@@ -195,7 +169,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="screens/other/detailScreen_"
+          name="screens/other/detailScreen_/[policyID]"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,
@@ -240,7 +214,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="screens/other/policyPlanScreen_"
+          name="screens/other/policyPlanScreen_/[policyID]"
           options={{
             headerStyle: {
               backgroundColor: COLORS.tertiary,
@@ -285,7 +259,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="screens/other/payScreen_"
+          name="screens/other/payScreen_/[policyID]/[price]"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,

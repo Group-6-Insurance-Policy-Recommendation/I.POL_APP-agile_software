@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,15 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import PaymentMethod from "../../common/other/paymentMethod/PaymentMethod";
-import PopUpAnimation from "../../common/other/popUpAnimation/PopUpAnimation";
+// import PopUpAnimation from "../../common/other/popUpAnimation/PopUpAnimation";
 import CustomIcon from "../../../utils/CustomIcon";
 import PaymentCall from "../../common/other/paymentCall/PaymentCall";
 import { COLORS, FONT, icons, SIZES } from "../../../constants";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import companyPolicies from "../../../data/companyPolicy";
+import { createPolicy } from "../../../redux/actions/policyThunk";
+// import LottiePopUp from "../../common/other/lottiePopUp/LottiePopUp";
 
 const PaymentList = [
   {
@@ -31,28 +35,72 @@ const PaymentList = [
 ];
 
 const PayScreen = () => {
-  const [paymentMode, setPaymentMode] = useState("Credit Card");
-  const [showAnimation, setShowAnimation] = useState(false);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const user = useSelector((state) => state.user);
 
-  const buttonPressHandler = () => {
-    setShowAnimation(true);
-    setTimeout(() => {
-      setShowAnimation(false);
-      router.push(`screens/other/policyPlanScreen_`);
-    }, 2000);
+  const [paymentMode, setPaymentMode] = useState("Credit Card");
+  // const [showAnimation, setShowAnimation] = useState(false);
+
+  const dispatch = useDispatch();
+  const { policyID, price } = useLocalSearchParams();
+  const [companyPolicy, setCompanyPolicy] = useState([]);
+
+  useEffect(() => {
+    // Find the policy with the matching policyId
+    const policy = companyPolicies.find((policy) => policy.id === policyID);
+
+    // Set the selected policy in the component state
+    setCompanyPolicy(policy);
+    console.log(policy);
+  }, [policyID]);
+
+  const handleCreatePolicy = () => {
+    // Check if user profile firstname and lastname are empty
+    if (
+      !user ||
+      !user.profile ||
+      !user.profile.firstname ||
+      !user.profile.lastname
+    ) {
+      alert(
+        "Please complete your profile with your first and last name before creating a policy."
+      );
+      return;
+    }
+
+    // Get current date
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    // Calculate expiration date (assuming one year from now)
+    const expirationDate = new Date(
+      currentYear + 1,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
+    // Create a new policy with updated details
+    const policyData = {
+      name: companyPolicy?.policyDetail?.policyInformation.name,
+      type: companyPolicy?.policyDetail?.policyInformation.type,
+      coverage: companyPolicy?.policyDetail?.policyInformation.coverage,
+      policyNumber: companyPolicy?.policyDetail?.policyInformation.policyNumber,
+      // policyholderName: "John Doe",
+      policyholderName: `${user.profile.firstname} ${user.profile.lastname}`,
+      policyholderEmail: user?.email,
+      policyCost: price,
+      effectiveDate: currentDate.toISOString().split("T")[0], // Format current date as YYYY-MM-DD
+      expirationDate: expirationDate.toISOString().split("T")[0], // Format expiration date as YYYY-MM-DD
+      insuredEntities: ["policyholderName"],
+    };
+    console.log(policyData);
+
+    dispatch(createPolicy(policyData));
   };
 
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar backgroundColor={COLORS.lightWhite} />
-
-      {showAnimation ? (
-        <PopUpAnimation
-          style={styles.LottieAnimation}
-        />
-      ) : (
-        <></>
-      )}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -141,8 +189,8 @@ const PayScreen = () => {
         <View style={{ marginTop: 30 }}></View>
         <PaymentCall
           buttonTitle={`Pay with ${paymentMode}`}
-          price={{ price: "10.00", currency: "$" }}
-          buttonPressHandler={buttonPressHandler}
+          price={{ price: price, currency: "$" }}
+          buttonPressHandler={handleCreatePolicy}
         />
       </ScrollView>
     </View>

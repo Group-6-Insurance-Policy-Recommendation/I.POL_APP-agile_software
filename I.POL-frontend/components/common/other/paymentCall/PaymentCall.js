@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   PriceTitle: {
     fontFamily: FONT.medium,
     fontSize: 14,
-    color: COLORS.text,
+    color: COLORS.gray,
   },
   PriceText: {
     fontFamily: FONT.bold,

@@ -1,5 +1,5 @@
-import { router } from "expo-router";
-import React, { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StatusBar,
@@ -10,82 +10,26 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { COLORS, FONT, images, SIZES } from "../../../constants";
+import companyPolicies from "../../../data/companyPolicy";
 import ImageBackgroundInfo from "../../common/other/imageBgInfo/ImageBackgroundInfo";
 
 const DetailsScreen = () => {
-  const [price, setPrice] = useState(0);
+  const [companyPolicy, setCompanyPolicy] = useState([]);
   const [fullDesc, setFullDesc] = useState(false);
 
-  const policyDetail = {
-    policyInformation: {
-      name: "Gold Health Plus",
-      type: "Travel Insurance",
-      coverage: "Comprehensive Health Coverage",
-      policyholderName: "John Doe",
-      policyNumber: "H123456789",
-      effectiveDate: "2023-01-01",
-      expirationDate: "2023-12-31",
-      insuredEntities: ["John Doe", "Jane Doe", "Dependent1", "Dependent2"],
-    },
-    coverageDetails: {
-      medicalCoverage: {
-        description:
-          "Comprehensive medical coverage for illness and accidents.",
-        coverageLimit: 1000000,
-        deductible: 500,
-      },
-      prescriptionDrugCoverage: {
-        description: "Coverage for prescribed medications.",
-        coverageLimit: 50000,
-        deductible: 20,
-      },
-    },
-    benefits: ["Hospitalization", "Medication", "Dental Care"],
-    exclusions: [
-      "Cosmetic procedures",
-      "Self-inflicted injuries",
-      "Pre-existing conditions",
-    ],
-    termsAndConditions: {
-      premiums: {
-        paymentFrequency: "Monthly",
-        paymentDueDate: "1st of each month",
-        acceptedPaymentMethods: ["Credit card", "Bank transfer"],
-      },
-      renewal: {
-        renewalTerms:
-          "Policy can be renewed annually with a premium adjustment.",
-      },
-      cancellation: {
-        cancellationPolicy: "Policy can be canceled with a 30-day notice.",
-        refundPolicy:
-          "No refunds for cancellations after the first three months.",
-      },
-      claims: {
-        claimsProcess:
-          "Submit claims through the online portal or contact the claims department.",
-        contactInformation: {
-          email: "claims@healthinsco.com",
-          phone: "1-800-123-4567",
-        },
-      },
-    },
-    responsibilities: [
-      "Payment of premiums: The policyholder is responsible for paying premiums by the due date.",
-      "Notification of changes: The policyholder must inform the insurer of any changes in family composition or contact details.",
-      "Compliance with terms: The policyholder must comply with all terms and conditions outlined in this policy.",
-    ],
-    contactInformation: {
-      insuranceCompanyName: "Gold Health Plus",
-      customerService: {
-        email: "support@healthinsco.com",
-        phone: "1-888-555-1234",
-      },
-      claimsDepartment: {
-        email: "claims@healthinsco.com",
-        phone: "1-800-123-4567",
-      },
-    },
+  const { policyID } = useLocalSearchParams();
+
+  useEffect(() => {
+    // Find the policy with the matching policyId
+    const policy = companyPolicies.find((policy) => policy.id === policyID);
+
+    // Set the selected policy in the component state
+    setCompanyPolicy(policy);
+    console.log(policy);
+  }, [policyID]);
+
+  const handleSelectPlan = (policyID) => {
+    router.push(`screens/other/policyPlanScreen_/${policyID}`);
   };
 
   return (
@@ -98,10 +42,10 @@ const DetailsScreen = () => {
         <ImageBackgroundInfo
           EnableBackHandler={true}
           imagelink_portrait={images.welcome1}
-          type={policyDetail.policyInformation.type}
-          name={policyDetail.policyInformation.name}
-          coverage={policyDetail.policyInformation.coverage}
-          benefits={policyDetail.benefits}
+          type={companyPolicy?.policyDetail?.policyInformation.type}
+          name={companyPolicy?.policyDetail?.policyInformation.name}
+          coverage={companyPolicy?.policyDetail?.policyInformation.coverage}
+          benefits={companyPolicy?.policyDetail?.benefits}
         />
 
         <View style={styles.FooterInfoArea}>
@@ -113,13 +57,7 @@ const DetailsScreen = () => {
               }}
             >
               <Text style={styles.DescriptionText}>
-                The Americano is another popular type of coffee drink, and it's
-                very easy to make! It's just espresso with hot water dripping
-                over it. The name came about during World War II when European
-                baristas added water to their espresso drinks for the American
-                soldiers stationed there. The resulting drink had a smoother,
-                less concentrated flavour than espresso and thus the Americano
-                was born.
+                {companyPolicy?.description}
               </Text>
             </TouchableWithoutFeedback>
           ) : (
@@ -129,13 +67,7 @@ const DetailsScreen = () => {
               }}
             >
               <Text numberOfLines={3} style={styles.DescriptionText}>
-                The Americano is another popular type of coffee drink, and it's
-                very easy to make! It's just espresso with hot water dripping
-                over it. The name came about during World War II when European
-                baristas added water to their espresso drinks for the American
-                soldiers stationed there. The resulting drink had a smoother,
-                less concentrated flavour than espresso and thus the Americano
-                was born.
+                {companyPolicy?.description}
               </Text>
             </TouchableWithoutFeedback>
           )}
@@ -146,17 +78,23 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle}>Premium</Text>
               <Text style={styles.subtitle2}>
                 Payment Frequency:{" "}
-                {policyDetail.termsAndConditions.premiums.paymentFrequency}
+                {
+                  companyPolicy?.policyDetail?.termsAndConditions.premiums
+                    .paymentFrequency
+                }
               </Text>
               <Text style={styles.subtitle2}>
                 Payment Due Date:{" "}
-                {policyDetail.termsAndConditions.premiums.paymentDueDate}
+                {
+                  companyPolicy?.policyDetail?.termsAndConditions.premiums
+                    .paymentDueDate
+                }
               </Text>
               <Text style={styles.subtitle2}>Accepted Payment Method:</Text>
               <Text style={styles.subtitle2}>
                 -{" "}
                 {
-                  policyDetail.termsAndConditions.premiums
+                  companyPolicy?.policyDetail?.termsAndConditions.premiums
                     .acceptedPaymentMethods
                 }
               </Text>
@@ -166,7 +104,10 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle}>Renewal</Text>
               <Text style={styles.subtitle2}>
                 Renewal Terms:{" "}
-                {policyDetail.termsAndConditions.renewal.renewalTerms}
+                {
+                  companyPolicy?.policyDetail?.termsAndConditions.renewal
+                    .renewalTerms
+                }
               </Text>
             </View>
 
@@ -176,13 +117,17 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle2}>
                 -{" "}
                 {
-                  policyDetail.termsAndConditions.cancellation
+                  companyPolicy?.policyDetail?.termsAndConditions.cancellation
                     .cancellationPolicy
                 }
               </Text>
               <Text style={styles.subtitle2}>Refund Policy:</Text>
               <Text style={styles.subtitle2}>
-                - {policyDetail.termsAndConditions.cancellation.refundPolicy}
+                -{" "}
+                {
+                  companyPolicy?.policyDetail?.termsAndConditions.cancellation
+                    .refundPolicy
+                }
               </Text>
             </View>
 
@@ -190,18 +135,21 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle}>Claims</Text>
               <Text style={styles.subtitle2}>
                 Claims Process:{" "}
-                {policyDetail.termsAndConditions.claims.claimsProcess}
+                {
+                  companyPolicy?.policyDetail?.termsAndConditions.claims
+                    .claimsProcess
+                }
               </Text>
               <Text style={styles.subtitle2}>
                 Contact Information for Claims:{" "}
                 {
-                  policyDetail.termsAndConditions.claims.contactInformation
-                    .email
+                  companyPolicy?.policyDetail?.termsAndConditions.claims
+                    .contactInformation.email
                 }{" "}
                 |{" "}
                 {
-                  policyDetail.termsAndConditions.claims.contactInformation
-                    .phone
+                  companyPolicy?.policyDetail?.termsAndConditions.claims
+                    .contactInformation.phone
                 }
               </Text>
             </View>
@@ -211,7 +159,7 @@ const DetailsScreen = () => {
             <Text style={styles.InfoTitle}>
               Responsibilities of the Policyholder
             </Text>
-            {policyDetail.responsibilities
+            {companyPolicy?.policyDetail?.responsibilities
               .map((responsibility, index) => (
                 <Text key={index} style={styles.subtitle2}>
                   - {responsibility}
@@ -225,30 +173,45 @@ const DetailsScreen = () => {
             <View style={styles.sectionFlex}>
               <Text style={styles.subtitle2}>
                 Insurance Company Name:{" "}
-                {policyDetail.contactInformation.insuranceCompanyName}
+                {
+                  companyPolicy?.policyDetail?.contactInformation
+                    .insuranceCompanyName
+                }
               </Text>
             </View>
             <View style={styles.sectionFlex}>
               <Text style={styles.subtitle2}>
                 Customer Service:{" "}
-                {policyDetail.contactInformation.customerService.email} |{" "}
-                {policyDetail.contactInformation.customerService.phone}
+                {
+                  companyPolicy?.policyDetail?.contactInformation.customerService
+                    .email
+                }{" "}
+                |{" "}
+                {
+                  companyPolicy?.policyDetail?.contactInformation.customerService
+                    .phone
+                }
               </Text>
             </View>
 
             <View style={styles.sectionFlex}>
               <Text style={styles.subtitle2}>
                 Claims Department:{" "}
-                {policyDetail.contactInformation.claimsDepartment.email} |{" "}
-                {policyDetail.contactInformation.claimsDepartment.phone}
+                {
+                  companyPolicy?.policyDetail?.contactInformation
+                    .claimsDepartment.email
+                }{" "}
+                |{" "}
+                {
+                  companyPolicy?.policyDetail?.contactInformation
+                    .claimsDepartment.phone
+                }
               </Text>
             </View>
           </View>
 
           <TouchableOpacity
-            onPress={() => {
-              router.push(`screens/other/policyPlanScreen_`);
-            }}
+            onPress={() => handleSelectPlan(companyPolicy?.id)}
             style={styles.pageBtn}
           >
             <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
