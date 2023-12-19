@@ -23,6 +23,19 @@ router.post("/create", async (req, res) => {
         error: `Missing required fields: ${missingFields.join(", ")}`,
       });
     }
+
+    // Check for existing policy with same email and number
+    const existingPolicy = await PolicyInformationModel.findOne({
+      policyholderEmail: req.body.policyholderEmail,
+      policyNumber: req.body.policyNumber,
+    });
+
+    if (existingPolicy) {
+      return res.status(409).json({
+        error: "A policy with the same email and policy number already exists.",
+      });
+    }
+    
     // Create a new policy information instance
     const newPolicyInformation = new PolicyInformationModel({
       name: req.body.name,
