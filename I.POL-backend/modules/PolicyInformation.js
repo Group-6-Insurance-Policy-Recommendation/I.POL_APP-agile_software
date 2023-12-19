@@ -25,6 +25,10 @@ const PolicyInformationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  policyCost: {
+    type: String,
+    required: true,
+  },
   effectiveDate: {
     type: Date,
     required: true,
