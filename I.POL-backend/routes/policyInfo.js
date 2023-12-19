@@ -13,6 +13,7 @@ router.post("/create", async (req, res) => {
       "policyholderName",
       "policyholderEmail",
       "policyNumber",
+      "policyCost",
       "effectiveDate",
       "expirationDate",
     ];
@@ -35,7 +36,7 @@ router.post("/create", async (req, res) => {
         error: "A policy with the same email and policy number already exists.",
       });
     }
-    
+
     // Create a new policy information instance
     const newPolicyInformation = new PolicyInformationModel({
       name: req.body.name,
@@ -44,6 +45,7 @@ router.post("/create", async (req, res) => {
       policyholderName: req.body.policyholderName,
       policyholderEmail: req.body.policyholderEmail,
       policyNumber: req.body.policyNumber,
+      policyCost: req.body.policyCost,
       effectiveDate: req.body.effectiveDate,
       expirationDate: req.body.expirationDate,
       insuredEntities: req.body.insuredEntities,
@@ -71,7 +73,7 @@ router.get("/:email", async (req, res) => {
     if (policies.length === 0) {
       return res
         .status(404)
-        .json({ message: "No policies found for the specified email." });
+        .json({ error: "No policies found for the specified email." });
     }
 
     res.status(200).json(policies);
