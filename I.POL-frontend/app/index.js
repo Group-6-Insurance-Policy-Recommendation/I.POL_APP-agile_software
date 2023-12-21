@@ -16,7 +16,7 @@ const Home = () => {
       end={{ x: 1, y: 1 }}
       colors={[COLORS.white, COLORS.lightWhite]}
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView>
         <View
           style={{
             marginHorizontal: SIZES.xLarge,
