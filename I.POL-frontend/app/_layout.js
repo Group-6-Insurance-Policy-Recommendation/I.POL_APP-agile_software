@@ -349,7 +349,7 @@ const Layout = () => {
         />
 
         <Stack.Screen
-          name="home/recommendation_"
+          name="home/recommendation_/[urlInsuranceType]"
           options={{
             headerStyle: {
               backgroundColor: COLORS.white,

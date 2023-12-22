@@ -140,7 +140,10 @@ const Signup = () => {
 
               {isLoading ? (
                 <TouchableOpacity style={styles.authBtn2}>
-                  <ActivityIndicator size="small" color={COLORS.primary} />
+                  <ActivityIndicator
+                    size={SIZES.large}
+                    color={COLORS.primary}
+                  />
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>

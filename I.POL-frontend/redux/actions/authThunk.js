@@ -38,9 +38,13 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
       dispatch(loginFailure(response.error));
     }
   } catch (error) {
-    console.error("Login failed:", error.response.data);
-    // Handle error and dispatch appropriate actions
-    alert(error.response.data);
+    if (error.response.data) {
+      console.error("Login failed:", error.response.data);
+      // Handle error and dispatch appropriate actions
+      alert(error.response.data);
+    } else {
+      alert("An Error Occurred. Try Again!");
+    }
   }
 };
 

@@ -33,7 +33,7 @@ const Dashboard = () => {
     {
       id: "1",
       title: "Recommendations",
-      url: "home/recommendation_",
+      url: "home/recommendation_/[urlInsuranceType]",
       image: require("../../../assets/recommendation.png"),
     },
     {
@@ -58,8 +58,11 @@ const Dashboard = () => {
 
   const handleCardPress = (item) => {
     // Implement the logic to handle card press
-    console.log("Card pressed:", item.title);
     router.push(`${item.url}`);
+  };
+
+  const handlePolicyCardClick = (urlInsuranceType) => {
+    router.push(`home/recommendation_/${urlInsuranceType}`);
   };
 
   return (
@@ -127,9 +130,7 @@ const Dashboard = () => {
               <PopularPolicyCard
                 policy={policy}
                 key={`popular-policy-${policy?.id}`}
-                handleNavigate={() =>
-                  router.push(`/policy-details/${policy.id}`)
-                }
+                handleNavigate={() => handlePolicyCardClick(policy?.name)}
               />
             ))
           )}
