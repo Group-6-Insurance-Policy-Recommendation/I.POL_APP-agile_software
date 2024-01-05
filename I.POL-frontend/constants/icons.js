@@ -18,6 +18,7 @@ import insure from "../assets/icons/insure.png";
 import silver from "../assets/icons/silver.png";
 import gold from "../assets/icons/gold.png";
 import diamond from "../assets/icons/diamond.png";
+import emerald from "../assets/icons/emerald.png";
 import amazonpay from "../assets/icons/amazonpay.png";
 import applepay from "../assets/icons/applepay.png";
 import gpay from "../assets/icons/gpay.png";
@@ -43,6 +44,7 @@ export default {
   silver,
   gold,
   diamond,
+  emerald,
   amazonpay,
   applepay,
   gpay,
