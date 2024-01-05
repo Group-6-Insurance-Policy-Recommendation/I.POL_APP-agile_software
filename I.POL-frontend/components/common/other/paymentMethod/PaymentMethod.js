@@ -16,7 +16,7 @@ const PaymentMethod = ({ paymentMode, name, icon }) => {
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        colors={[COLORS.gray2, COLORS.gray]}
+        colors={[COLORS.gray2, COLORS.gray2]}
         style={styles.LinearGradientRegular}
       >
         <Image source={icon} style={styles.PaymentImage} />
@@ -28,8 +28,8 @@ const PaymentMethod = ({ paymentMode, name, icon }) => {
 
 const styles = StyleSheet.create({
   PaymentCardContainer: {
-    borderRadius: 20,
-    borderWidth: 3,
+    borderRadius: 16,
+    borderWidth: 1,
     borderColor: COLORS.white,
   },
   LinearGradientWallet: {

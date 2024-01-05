@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   searchWrapper: {
     flex: 1,
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.lightWhite,
     marginRight: SIZES.small,
     justifyContent: "center",
     alignItems: "center",
@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     fontFamily: FONT.regular,
-    color: COLORS.gray,
     paddingHorizontal: SIZES.medium,
+    borderRadius: SIZES.small,
   },
   searchInputFocus: {
     borderWidth: 0,
+    backgroundColor: COLORS.tertiary,
     borderColor: COLORS.tertiary,
     color: COLORS.text2,
   },

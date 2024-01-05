@@ -2,7 +2,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -50,7 +49,7 @@ const PolicyPlanScreen = () => {
     {
       id: 3,
       title: "Premium",
-      image: icons.diamond,
+      image: icons.emerald,
     },
   ];
 
@@ -70,7 +69,6 @@ const PolicyPlanScreen = () => {
 
   return (
     <View style={styles.ScreenContainer}>
-      <StatusBar backgroundColor={COLORS.tertiary} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}
@@ -467,7 +465,7 @@ const styles = StyleSheet.create({
   },
   labelTitle: {
     fontFamily: FONT.regular,
-    fontSize: SIZES.medium,
+    fontSize: SIZES.medium - 2,
     fontWeight: "100",
     color: COLORS.primary,
     padding: 2,

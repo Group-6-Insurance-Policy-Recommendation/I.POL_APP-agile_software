@@ -28,7 +28,7 @@ const HuddleItemCard = ({
             style={styles.Image}
           />
           <View>
-            <Text style={styles.CardTitle}>{name}</Text>
+            <Text style={styles.CardTitle}>{name.slice(0, 15)}...</Text>
             <Text style={styles.CardSubtitle}>{type}</Text>
           </View>
         </View>
@@ -59,7 +59,7 @@ const HuddleItemCard = ({
       <View style={styles.CardTableRow}>
         <View style={styles.CardTableRow}>
           <View style={styles.BoxLeft}>
-            <Text style={styles.SizeText}>Policy No.</Text>
+            <Text style={styles.SizeText}>Policy Number</Text>
           </View>
           <View style={styles.BoxRight}>
             <Text style={styles.Detail}>{policyNumber}</Text>
@@ -138,13 +138,13 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderRightWidth: 1,
-    borderRightColor: "#252A32",
+    // borderRightWidth: 1,
+    // borderRightColor: "#252A32",
   },
   SizeText: {
-    fontFamily: FONT.medium,
+    fontFamily: FONT.regular,
     fontSize: SIZES.medium - 2,
-    color: "#AEAEAE",
+    color: COLORS.gray,
   },
   BoxRight: {
     backgroundColor: COLORS.gray2,
@@ -154,11 +154,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderLeftWidth: 1,
-    borderLeftColor: "#252A32",
+    // borderLeftWidth: 1,
+    // borderLeftColor: "#252A32",
   },
   Detail: {
-    fontFamily: FONT.bold,
+    fontFamily: FONT.medium,
     fontSize: SIZES.medium - 2,
     color: COLORS.primary,
   },

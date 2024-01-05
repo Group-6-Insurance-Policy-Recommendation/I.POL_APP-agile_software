@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from "react-native";
-import { COLORS, FONT, SHADOWS, SIZES } from "../../../constants";
+import { StyleSheet } from "react-native";
+import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   welcomeContainer: {
+    width: "100%",
     paddingVertical: SIZES.large,
   },
   welcomeMsg: {
@@ -23,29 +24,12 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     fontSize: SIZES.medium - 2,
     fontWeight: "400",
+    paddingVertical: SIZES.large,
     color: COLORS.text,
-    paddingHorizontal: 4,
-  },
-  logoArea: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    flexShrink: 0,
-  },
-  logoText: {
-    color: COLORS.primary,
-    textAlign: "center",
-    fontFamily: FONT.medium,
-    fontSize: SIZES.medium,
-    fontStyle: "normal",
   },
   formArea: {
     width: "100%",
     paddingHorizontal: 10,
-    paddingVertical: 20,
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
@@ -55,16 +39,17 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.xSmall,
     paddingHorizontal: SIZES.large,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: COLORS.tertiary,
-    backgroundColor: COLORS.tertiary,
+    borderWidth: 1,
+    borderColor: COLORS.gray2,
+    backgroundColor: COLORS.gray2,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
     color: COLORS.text,
     fontWeight: "medium",
   },
   focusedInput: {
-    borderColor: COLORS.active,
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.lightWhite,
     color: COLORS.text2,
   },
   actionText: {
@@ -72,10 +57,13 @@ const styles = StyleSheet.create({
     fontSize: SIZES.small,
     fontFamily: FONT.medium,
     color: COLORS.text,
+    paddingVertical: SIZES.large,
   },
   cta: {
     color: COLORS.primary,
-    fontFamily: FONT.regular,
+    fontSize: SIZES.small,
+    fontFamily: FONT.medium,
+    paddingVertical: SIZES.large,
   },
   authBtn: {
     width: "100%",
@@ -87,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.primary,
   },
-  authBtn2: {
+  focussedBtn: {
     width: "100%",
     paddingVertical: SIZES.small,
     paddingHorizontal: SIZES.large,
@@ -109,20 +97,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLORS.gray,
   },
-  authIconsArea: {
+  socialButtonsContainer: {
+    marginVertical: SIZES.xxLarge,
     flexDirection: "row",
-    width: "100%",
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    marginTop: SIZES.small,
     justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
   },
-  authIcons: {
-    padding: SIZES.small,
-    borderRadius: 50,
-    ...SHADOWS.small,
+  socialButton: {
+    padding: SIZES.medium,
+    backgroundColor: COLORS.gray2,
+    borderRadius: SIZES.medium,
+    marginHorizontal: SIZES.medium,
   },
 });
 

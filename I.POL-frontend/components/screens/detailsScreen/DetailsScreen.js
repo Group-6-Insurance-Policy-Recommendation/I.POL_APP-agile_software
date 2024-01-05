@@ -41,7 +41,7 @@ const DetailsScreen = () => {
       >
         <ImageBackgroundInfo
           EnableBackHandler={true}
-          imagelink_portrait={images.welcome1}
+          imagelink_portrait={images.welcome2}
           type={companyPolicy?.policyDetail?.policyInformation.type}
           name={companyPolicy?.policyDetail?.policyInformation.name}
           coverage={companyPolicy?.policyDetail?.policyInformation.coverage}
@@ -92,11 +92,14 @@ const DetailsScreen = () => {
               </Text>
               <Text style={styles.subtitle2}>Accepted Payment Method:</Text>
               <Text style={styles.subtitle2}>
-                -{" "}
-                {
-                  companyPolicy?.policyDetail?.termsAndConditions.premiums
-                    .acceptedPaymentMethods
-                }
+                {companyPolicy?.policyDetail?.termsAndConditions.premiums.acceptedPaymentMethods.map(
+                  (responsibility, index) => (
+                    <Text key={index} style={styles.subtitle2}>
+                      - {responsibility}
+                      {"... "}
+                    </Text>
+                  )
+                )}
               </Text>
             </View>
 
@@ -183,13 +186,13 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle2}>
                 Customer Service:{" "}
                 {
-                  companyPolicy?.policyDetail?.contactInformation.customerService
-                    .email
+                  companyPolicy?.policyDetail?.contactInformation
+                    .customerService.email
                 }{" "}
                 |{" "}
                 {
-                  companyPolicy?.policyDetail?.contactInformation.customerService
-                    .phone
+                  companyPolicy?.policyDetail?.contactInformation
+                    .customerService.phone
                 }
               </Text>
             </View>

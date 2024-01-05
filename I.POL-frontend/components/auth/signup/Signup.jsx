@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 // import firebaseApp from "../../../config/firebase-config";
 // const auth = getAuth(firebaseApp);
 
-import { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 
 import styles from "./signup.style";
 import { router } from "expo-router";
@@ -38,6 +40,14 @@ const Signup = () => {
   const handleEmailBlur = () => setEmailFocus(false);
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
 
   const handleSignup = async () => {
     // const userCredential = await createUserWithEmailAndPassword(
@@ -69,32 +79,18 @@ const Signup = () => {
   return (
     <SafeAreaView
       style={{
+        height: height,
         backgroundColor: COLORS.white,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
         <View style={{ marginHorizontal: SIZES.small }}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: COLORS.white,
-              padding: SIZES.medium,
-            }}
-          >
+          <View style={styles.container}>
             <View style={styles.welcomeContainer}>
               <Text style={styles.welcomeMsg}>Welcome Back</Text>
               <Text style={styles.preMsg}>
-                Register to explore all existing insurances!!!
+                Sign up to explore all existing insurance policies!!!
               </Text>
-            </View>
-
-            <View style={styles.logoArea}>
-              <Image
-                source={images.logo}
-                style={styles.logo}
-                resizeMode="contain"
-              />
-              {/* <Text style={styles.logoText}>I.POL</Text> */}
             </View>
 
             <KeyboardAvoidingView style={styles.formArea} behavior="padding">
@@ -139,7 +135,7 @@ const Signup = () => {
               </Text>
 
               {isLoading ? (
-                <TouchableOpacity style={styles.authBtn2}>
+                <TouchableOpacity style={styles.focussedBtn}>
                   <ActivityIndicator
                     size={SIZES.large}
                     color={COLORS.primary}
@@ -147,33 +143,33 @@ const Signup = () => {
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
-                  <Text style={styles.authBtnText}>Signup</Text>
+                  <Text style={styles.authBtnText}>Sign up</Text>
                 </TouchableOpacity>
               )}
 
               <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
                 <Text style={styles.signupOptions}>Or sign up with</Text>
 
-                <View style={styles.authIconsArea}>
-                  <TouchableOpacity style={styles.authIcons}>
-                    <Image
-                      resizeMode="contain"
-                      source={icons.google}
-                      style={{ width: 35, height: 35 }}
+                <View style={styles.socialButtonsContainer}>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-google"
+                      color={COLORS.text2}
+                      size={SIZES.large}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.authIcons}>
-                    <Image
-                      resizeMode="contain"
-                      source={icons.facebook}
-                      style={{ width: 35, height: 35 }}
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-apple"
+                      color={COLORS.text2}
+                      size={SIZES.large}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.authIcons}>
-                    <Image
-                      resizeMode="contain"
-                      source={icons.apple}
-                      style={{ width: 35, height: 35 }}
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-facebook"
+                      color={COLORS.text2}
+                      size={SIZES.large}
                     />
                   </TouchableOpacity>
                 </View>

@@ -1,11 +1,4 @@
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 // import EmptyListAnimation from "../components/EmptyListAnimation";
 import { COLORS, SIZES } from "../../../constants";
@@ -20,6 +13,14 @@ const HuddleScreen = () => {
 
   const [policyList, setPolicyList] = useState([]);
 
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
+
   const email = user.email;
 
   const getPolicies = async () => {
@@ -33,8 +34,15 @@ const HuddleScreen = () => {
       setPolicyList(response.data);
       // Update your state or UI with the retrieved policies
     } catch (error) {
-      console.error("Error getting policies:", error.response.data);
       // Handle the error
+      if (error?.response?.data) {
+        console.error("Error getting policies:", error.response.data);
+        alert(error.response.data);
+      } else if (error.response?.data?.error) {
+        alert(error.response?.data?.error);
+      } else {
+        alert("An Error Occurred. Try Again!");
+      }
     }
   };
 
@@ -55,14 +63,12 @@ const HuddleScreen = () => {
   };
 
   return (
-    <View style={styles.ScreenContainer}>
-      <StatusBar backgroundColor={COLORS.white} />
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.ScrollViewFlex}
-      >
-        <View style={[styles.ScrollViewInnerView, { marginBottom: 10 }]}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.ScrollViewFlex}
+    >
+      <View style={styles.ScreenContainer}>
+        <View style={styles.ScrollViewInnerView}>
           <View style={styles.ItemContainer}>
             {/* <HeaderBar title="Order History" /> */}
 
@@ -84,8 +90,8 @@ const HuddleScreen = () => {
             )}
           </View>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

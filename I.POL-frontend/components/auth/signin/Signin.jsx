@@ -3,22 +3,23 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  Image,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // import firebaseApp from "../../../config/firebase-config";
 // const auth = getAuth(firebaseApp);
 
+import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./signin.style";
 import { router } from "expo-router";
-import { COLORS, SIZES, images, icons, SHADOWS } from "../../../constants";
+import { COLORS, SIZES } from "../../../constants";
 import { loginUser } from "../../../redux/actions/authThunk";
 
 const Signin = () => {
@@ -37,6 +38,14 @@ const Signin = () => {
   const handleEmailBlur = () => setEmailFocus(false);
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
 
   // useEffect(() => {
   //   if (isAuthenticated) {
@@ -79,109 +88,102 @@ const Signin = () => {
   return (
     <SafeAreaView
       style={{
+        height: height,
         backgroundColor: COLORS.white,
       }}
     >
-      {/* <ScrollView showsHorizontalScrollIndicator={false}> */}
-      <View style={{ marginHorizontal: SIZES.small }}>
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            padding: SIZES.medium,
-          }}
-        >
-          <View style={styles.welcomeContainer}>
-            <Text style={styles.welcomeMsg}>Welcome Back</Text>
-            <Text style={styles.preMsg}>
-              Log in to explore all existing insurances!!!
-            </Text>
-          </View>
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <View style={{ marginHorizontal: SIZES.small }}>
+          <View style={styles.container}>
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcomeMsg}>Welcome Back</Text>
+              <Text style={styles.preMsg}>
+                Log in to explore all existing insurance policies!!!
+              </Text>
+            </View>
 
-          <View style={styles.logoArea}>
+            {/* <View style={styles.logoArea}>
             <Image
               source={images.logo}
               style={styles.logo}
               resizeMode="contain"
             />
-            {/* <Text style={styles.logoText}>I.POL</Text> */}
-          </View>
+          </View> */}
 
-          <KeyboardAvoidingView style={styles.formArea} behavior="padding">
-            <TextInput
-              style={[styles.formInput, emailFocus && styles.focusedInput]}
-              placeholder="Email"
-              keyboardType="email-address"
-              onChangeText={setEmail}
-              value={email}
-              onFocus={handleEmailFocus}
-              onBlur={handleEmailBlur}
-            />
-            <TextInput
-              style={[styles.formInput, passwordFocus && styles.focusedInput]}
-              placeholder="Password"
-              secureTextEntry
-              onChangeText={setPassword}
-              value={password}
-              onFocus={handlePasswordFocus}
-              onBlur={handlePasswordBlur}
-            />
+            <KeyboardAvoidingView style={styles.formArea} behavior="padding">
+              <TextInput
+                style={[styles.formInput, emailFocus && styles.focusedInput]}
+                placeholder="Email"
+                keyboardType="email-address"
+                onChangeText={setEmail}
+                value={email}
+                onFocus={handleEmailFocus}
+                onBlur={handleEmailBlur}
+              />
+              <TextInput
+                style={[styles.formInput, passwordFocus && styles.focusedInput]}
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={setPassword}
+                value={password}
+                onFocus={handlePasswordFocus}
+                onBlur={handlePasswordBlur}
+              />
 
-            <Text style={styles.actionText}>
-              Forgot your <Text style={styles.cta}>Password?</Text>
-            </Text>
+              <Text style={styles.actionText}>Forgot your password?</Text>
 
-            {isLoading ? (
-              <TouchableOpacity style={styles.authBtn2}>
-                <ActivityIndicator size={SIZES.large} color={COLORS.primary} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
-                <Text style={styles.authBtnText}>Login</Text>
-              </TouchableOpacity>
-            )}
+              {isLoading ? (
+                <TouchableOpacity style={styles.focussedBtn}>
+                  <ActivityIndicator
+                    size={SIZES.large}
+                    color={COLORS.primary}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
+                  <Text style={styles.authBtnText}>Log in</Text>
+                </TouchableOpacity>
+              )}
 
-            <Text style={styles.actionText}>
-              Create new{" "}
               <Text
                 style={styles.cta}
                 onPress={() => {
                   router.push(`/auth/signUp_`);
                 }}
               >
-                account?
+                Create new account?
               </Text>
-            </Text>
-            <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
-              <Text style={styles.signupOptions}>Or sign up with</Text>
+              <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
+                <Text style={styles.signupOptions}>Or sign up with</Text>
 
-              <View style={styles.authIconsArea}>
-                <TouchableOpacity style={styles.authIcons}>
-                  <Image
-                    resizeMode="contain"
-                    style={{ width: 35, height: 35 }}
-                    source={icons.google}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.authIcons}>
-                  <Image
-                    resizeMode="contain"
-                    style={{ width: 35, height: 35 }}
-                    source={icons.facebook}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.authIcons}>
-                  <Image
-                    resizeMode="contain"
-                    style={{ width: 35, height: 35 }}
-                    source={icons.apple}
-                  />
-                </TouchableOpacity>
+                <View style={styles.socialButtonsContainer}>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-google"
+                      color={COLORS.text2}
+                      size={SIZES.large}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-apple"
+                      color={COLORS.text2}
+                      size={SIZES.large}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.socialButton}>
+                    <Ionicons
+                      name="logo-facebook"
+                      color={COLORS.text2}
+                      size={SIZES.large}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+          </View>
         </View>
-      </View>
-      {/* </ScrollView> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };

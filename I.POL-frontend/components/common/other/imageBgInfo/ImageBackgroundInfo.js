@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import { COLORS, FONT, SIZES } from "../../../../constants";
 
 const ImageBackgroundInfo = ({
@@ -27,12 +21,12 @@ const ImageBackgroundInfo = ({
             width: "100%",
             borderTopLeftRadius: SIZES.xxLarge,
             borderTopRightRadius: SIZES.xxLarge,
-            backgroundColor: COLORS.white,
+            backgroundColor: COLORS.gray,
             padding: SIZES.large,
           }}
         >
           <Text style={styles.policyName} numberOfLines={1}>
-            Company: {name}
+            {name}
           </Text>
           <Text style={styles.detail}>Type: {type}</Text>
           <Text style={styles.detail} numberOfLines={1}>
@@ -68,16 +62,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   policyName: {
-    fontSize: SIZES.medium - 2,
+    fontSize: SIZES.medium,
     fontFamily: FONT.medium,
     fontWeight: "400",
-    color: COLORS.primary,
+    color: COLORS.white,
     marginBottom: 10,
   },
   detail: {
     fontSize: SIZES.small,
     fontFamily: FONT.regular,
-    color: "black",
+    color: COLORS.lightWhite,
     marginBottom: 5,
   },
   subtitle: {
@@ -91,7 +85,7 @@ const styles = StyleSheet.create({
   benefit: {
     fontSize: SIZES.small,
     fontFamily: FONT.regular,
-    color: "black",
+    color: COLORS.lightWhite,
     // marginLeft: 10,
   },
   ImageInfoOuterContainer: {

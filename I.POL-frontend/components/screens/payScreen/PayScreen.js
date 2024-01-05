@@ -6,6 +6,7 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import PaymentMethod from "../../common/other/paymentMethod/PaymentMethod";
@@ -40,6 +41,14 @@ const PayScreen = () => {
 
   const [paymentMode, setPaymentMode] = useState("Credit Card");
   // const [showAnimation, setShowAnimation] = useState(false);
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
 
   const dispatch = useDispatch();
   const { policyID, price } = useLocalSearchParams();
@@ -99,15 +108,18 @@ const PayScreen = () => {
   };
 
   return (
-    <View style={styles.ScreenContainer}>
-      <StatusBar backgroundColor={COLORS.lightWhite} />
-
+    <View
+      style={{
+        height: height,
+        backgroundColor: COLORS.white,
+      }}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}
       >
         <View style={styles.HeaderContainer}>
-          <Text style={styles.HeaderText}>Payments</Text>
+          <Text style={styles.HeaderText}>Payment mode</Text>
         </View>
 
         <View style={styles.PaymentOptionsContainer}>
@@ -147,8 +159,8 @@ const PayScreen = () => {
                   </View>
                   <View style={styles.CreditCardNumberContainer}>
                     <Text style={styles.CreditCardNumber}>3879</Text>
-                    <Text style={styles.CreditCardNumber}>8923</Text>
-                    <Text style={styles.CreditCardNumber}>6745</Text>
+                    <Text style={styles.CreditCardNumber}>****</Text>
+                    <Text style={styles.CreditCardNumber}>****</Text>
                     <Text style={styles.CreditCardNumber}>4638</Text>
                   </View>
                   <View style={styles.CreditCardRow}>
@@ -157,7 +169,7 @@ const PayScreen = () => {
                         Card Holder Name
                       </Text>
                       <Text style={styles.CreditCardNameTitle}>
-                        Prince Stiles
+                        {user.profile?.lastname + " " + user.profile?.firstname}
                       </Text>
                     </View>
                     <View style={styles.CreditCardDateContainer}>
@@ -217,10 +229,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   HeaderText: {
-    fontFamily: FONT.bold,
+    fontFamily: FONT.medium,
     fontWeight: "600",
     fontSize: SIZES.large,
-    color: COLORS.primary,
+    color: COLORS.text2,
   },
   PaymentOptionsContainer: {
     padding: 15,

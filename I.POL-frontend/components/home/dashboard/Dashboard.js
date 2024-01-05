@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import DashboardCard from "../../common/card/dashboardCard/DashboardCard";
-import { icons } from "../../../constants";
+import { icons, SIZES } from "../../../constants";
 import styles from "./dashboard.style";
 import PopularPolicyCard from "../../common/card/popularPolicyCard/PopularPolicyCard";
 import policies from "../../../data/policy";
@@ -33,7 +33,7 @@ const Dashboard = () => {
     {
       id: "1",
       title: "Recommendations",
-      url: "home/recommendation_/[urlInsuranceType]",
+      url: "home/recommendation_/InsuranceType",
       image: require("../../../assets/recommendation.png"),
     },
     {
@@ -107,9 +107,9 @@ const Dashboard = () => {
           )}
           numColumns={2}
           contentContainerStyle={{
-            //   columnGap: SIZES.medium,
-            //   rowGap: SIZES.medium,
-            width: "100%",
+            columnGap: SIZES.medium,
+            // rowGap: SIZES.medium,
+            // width: "100%",
             justifyContent: "space-between",
             alignItems: "center",
           }}

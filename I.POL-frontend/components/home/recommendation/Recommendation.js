@@ -1,12 +1,12 @@
 import {
   View,
   Text,
-  FlatList,
   TextInput,
   TouchableOpacity,
   Image,
   ActivityIndicator,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, icons, SIZES } from "../../../constants";
@@ -28,6 +28,14 @@ const Recommendation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const handleSearchFocus = () => setSearchFocus(true);
   const handleSearchBlur = () => setSearchFocus(false);
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
 
   const handleSearchInputChange = (category, value) => {
     setSearchInputs((prevInputs) => ({
@@ -69,7 +77,7 @@ const Recommendation = () => {
 
   useEffect(() => {
     console.log(urlInsuranceType);
-    if (urlInsuranceType) {
+    if (urlInsuranceType && urlInsuranceType !== "InsuranceType") {
       setSearchInputs((prevInputs) => ({
         ...prevInputs,
         insuranceType: urlInsuranceType,
@@ -91,7 +99,14 @@ const Recommendation = () => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View
+        style={{
+          width: "100%",
+          height: height,
+          padding: 16,
+          backgroundColor: "#fff",
+        }}
+      >
         <Text style={styles.welcomeMessage}>Recommendations</Text>
 
         <View style={styles.searchContainer}>
