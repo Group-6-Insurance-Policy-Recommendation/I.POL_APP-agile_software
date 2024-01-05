@@ -7,9 +7,10 @@ import { COLORS, FONT, SIZES, images } from "../constants";
 SplashScreen.preventAutoHideAsync();
 
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import { store, persistor } from "../redux/store";
 import { ProfileHeaderBtn } from "../components";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
+import { PersistGate } from "redux-persist/integration/react";
 
 const Layout = () => {
   const router = useRouter();
@@ -30,414 +31,417 @@ const Layout = () => {
 
   return (
     <Provider store={store}>
-      <Stack onLayout={onLayoutRootView}>
-        <Stack.Screen
-          name="index"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            // headerRight: () => (
-            //   <ProfileHeaderBtn
-            //     iconUrl={images.profile}
-            //     dimension="100%"
-            //     handlePress={() => router.push(`/_sitemap`)}
-            //   />
-            // ),
-          }}
-        />
-
-        <Stack.Screen
-          name="auth/signIn_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-          }}
-        />
-
-        <Stack.Screen
-          name="auth/signUp_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-          }}
-        />
-
-        <Stack.Screen
-          name="profile/index"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+      <PersistGate loading={null} persistor={persistor}>
+        <Stack onLayout={onLayoutRootView}>
+          <StatusBar backgroundColor={COLORS.white} />
+          <Stack.Screen
+            name="index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`/_sitemap`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="auth/signIn_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+            }}
+          />
+
+          <Stack.Screen
+            name="auth/signUp_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+            }}
+          />
+
+          <Stack.Screen
+            name="profile/index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-          }}
-        />
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+            }}
+          />
 
-        <Stack.Screen
-          name="profile/editProfile_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-          }}
-        />
+          <Stack.Screen
+            name="profile/editProfile_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-        <Stack.Screen
-          name="screens/quotas/index"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-          }}
-        />
+          <Stack.Screen
+            name="screens/quotas/index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-        <Stack.Screen
-          name="screens/quotas/recommendedPolicyScreen_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-          }}
-        />
+          <Stack.Screen
+            name="screens/quotas/recommendedPolicyScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-        <Stack.Screen
-          name="screens/quotas/categoryScreen_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-          }}
-        />
+          <Stack.Screen
+            name="screens/quotas/categoryScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-        <Stack.Screen
-          name="screens/quotas/budgetScreen_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-          }}
-        />
+          <Stack.Screen
+            name="screens/quotas/budgetScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-        <Stack.Screen
-          name="screens/other/detailScreen_/[policyID]"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ProfileHeaderBtn
-                  iconUrl={images.logo}
-                  dimension="100%"
-                  handlePress={() => router.push(`home`)}
-                />
-                <Text
+          <Stack.Screen
+            name="screens/other/detailScreen_/[policyID]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="screens/other/policyPlanScreen_/[policyID]"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.tertiary,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`profile`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="screens/other/policyPlanScreen_/[policyID]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="screens/other/payScreen_/[policyID]/[price]"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`profile`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="screens/other/payScreen_/[policyID]/[price]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="screens/other/huddleScreen_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`profile`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="screens/other/huddleScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="home/recommendation_/[urlInsuranceType]"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`profile`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="home/recommendation_/[urlInsuranceType]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="home/specialPackage_"
-          options={{
-            headerStyle: {
-              backgroundColor: COLORS.white,
-            },
-            headerShadowVisible: false,
-            headerTitle: "",
-            presentation: "modal",
-            headerLeft: () => (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
                 <ProfileHeaderBtn
-                  iconUrl={images.logo}
+                  iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`home`)}
+                  handlePress={() => router.push(`profile`)}
                 />
-                <Text
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="home/specialPackage_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
                   style={{
-                    fontFamily: FONT.bold,
-                    fontWeight: "600",
-                    color: COLORS.primary,
-                    fontSize: SIZES.xSmall,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  IPOL
-                </Text>
-              </View>
-            ),
-            headerRight: () => (
-              <ProfileHeaderBtn
-                iconUrl={images.profile}
-                dimension="100%"
-                handlePress={() => router.push(`profile`)}
-              />
-            ),
-          }}
-        />
-      </Stack>
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: FONT.bold,
+                      fontWeight: "600",
+                      color: COLORS.primary,
+                      fontSize: SIZES.xSmall,
+                    }}
+                  >
+                    IPOL
+                  </Text>
+                </View>
+              ),
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
+        </Stack>
+      </PersistGate>
     </Provider>
   );
 };
