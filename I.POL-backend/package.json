@@ -19,6 +19,7 @@
     "firebase": "^10.7.0",
     "firebase-admin": "^11.11.1",
     "google-auth-library": "^9.4.1",
+    "googleapis": "^130.0.0",
     "helmet": "^6.1.5",
     "mongodb": "^5.9.1",
     "mongoose": "^7.6.6",
