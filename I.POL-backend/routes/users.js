@@ -152,9 +152,16 @@ router.get("/reset-password/:resetToken", async (req, res) => {
 
     // Find the user associated with the token
     const isValidToken = await User.findOne({ resetToken });
+    const isTokenExpired = await User.findOne({ resetToken });
 
     if (!isValidToken) {
       return res.status(404).json({ error: "Invalid reset token" });
+    }
+
+    // Check if the token has expired
+    const now = Date.now();
+    if (isTokenExpired.resetExpires < now) {
+      return res.status(404).json({ error: "Reset token has expired" });
     }
 
     // Render the password reset form view
