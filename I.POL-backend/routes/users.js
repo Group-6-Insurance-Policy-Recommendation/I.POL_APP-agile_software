@@ -178,7 +178,7 @@ router.put("/reset-password", async (req, res) => {
     // Get reset token and new password from request body
     const resetToken = req.body.resetToken;
     const newPassword = req.body.newPassword;
-
+    console.log(newPassword);
     // Find the user associated with the token
     const user = await User.findOne({ resetToken });
 
