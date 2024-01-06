@@ -27,12 +27,6 @@ router.post("/register", async (req, res) => {
     });
 
     const user = await newUser.save();
-
-    // Generate Firebase custom token and send it to the client
-    const firebaseToken = req.headers.authorization;
-
-    // Update the User's Firebase token in the database
-    user.firebaseToken = firebaseToken;
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
@@ -56,13 +50,7 @@ router.post("/login", async (req, res) => {
       return res.status(404).send("Wrong password");
     }
 
-    // Generate Firebase custom token and send it to the client
-    const firebaseToken = req.headers.authorization;
-
-    // Update the User's Firebase token in the database
-    user.firebaseToken = firebaseToken;
     await user.save();
-
     return res.status(200).json(user);
   } catch (err) {
     console.error(err);
