@@ -17,7 +17,8 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    firebaseToken: { type: String },
+    resetToken: { type: String },
+    resetExpires: { type: Date },
     profile: {
       profilePicture: {
         type: String,
