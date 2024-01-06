@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 // DELETE USER
 router.delete("/delete-user", async (req, res) => {
   try {
-    // Get user ID from request body or headers (adjust based on how you pass user ID)
-    const userId = req.body.userId || req.headers.userId;
+    // Get user ID from request body or headers
+    const userId = req.body.userId;
 
     // Find the user to delete
     const user = await User.findById(userId);
@@ -38,8 +38,8 @@ router.delete("/delete-user", async (req, res) => {
 // GET A USER
 router.get("/get-user", async (req, res) => {
   try {
-    // Get user ID from request body, headers, or authentication middleware
-    const userId = req.body.userId || req.headers.userId || req.user.id;
+    // Get user ID from request body
+    const userId = req.body.userId;
 
     // Find the user
     const user = await User.findById(userId);
