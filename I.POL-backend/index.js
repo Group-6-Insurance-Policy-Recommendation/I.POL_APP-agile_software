@@ -7,6 +7,7 @@ const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const policyRoute = require("./routes/policyInfo");
+const path = require("path");
 // const firebaseAuth = require("./firebase-auth");
 
 const app = express();
