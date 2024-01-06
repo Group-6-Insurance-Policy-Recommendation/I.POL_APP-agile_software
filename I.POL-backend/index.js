@@ -10,7 +10,9 @@ const policyRoute = require("./routes/policyInfo");
 // const firebaseAuth = require("./firebase-auth");
 
 const app = express();
+app.set("view engine", "ejs");
 const router = express.Router();
+app.set("views", path.join(__dirname, "template"));
 
 dotenv.config();
 
