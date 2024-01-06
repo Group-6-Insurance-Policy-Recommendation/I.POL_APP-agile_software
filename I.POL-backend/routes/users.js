@@ -144,10 +144,17 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     const resetToken = req.params.resetToken;
 
     // Validate token (replace with your validation logic)
-    const isValidToken = await validateResetToken(resetToken); // Implement validation
+    // const isValidToken = await validateResetToken(resetToken); // Implement validation
+
+    // if (!isValidToken) {
+    //   return res.status(400).json({ error: "Invalid reset token" });
+    // }
+
+    // Find the user associated with the token
+    const isValidToken = await User.findOne({ resetToken });
 
     if (!isValidToken) {
-      return res.status(400).json({ error: "Invalid reset token" });
+      return res.status(404).json({ error: "Invalid reset token" });
     }
 
     // Render the password reset form view
