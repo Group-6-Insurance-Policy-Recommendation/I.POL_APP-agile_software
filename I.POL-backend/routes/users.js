@@ -26,12 +26,12 @@ router.delete("/delete-user", async (req, res) => {
     }
 
     // Delete the user
-    await user.delete();
+    await user.remove();
 
     res.status(200).json({ message: "Account deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to delete user" });
+    res.status(500).json({ error: "Failed to delete account" });
   }
 });
 
