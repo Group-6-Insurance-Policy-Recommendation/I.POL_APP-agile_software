@@ -1,109 +1,127 @@
 const router = require("express").Router();
 const User = require("../modules/User");
 const bcrypt = require("bcrypt");
-const firebaseAuth = require("../firebase-auth");
-
-// UPDATE USER
-router.put("/:id", async (req, res) => {
-  try {
-    // Verify Firebase ID token sent by the client
-    const decodedToken = await firebaseAuth.verifyIdToken(
-      req.headers.authorization
-    );
-
-    // You can now use `decodedToken.uid` to get the user ID
-    const userId = decodedToken.uid;
-    // const userId = req.params.id;
-    const {
-      userId: requestUserId,
-      isAdmin,
-      password,
-      ...otherUpdateFields
-    } = req.body;
-
-    // Check if the user making the request is the account owner or an admin
-    if (requestUserId === userId || isAdmin) {
-      // If the request includes a password, hash it before updating
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        otherUpdateFields.password = hashedPassword;
-      }
-
-      // Update the user account
-      const updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { $set: otherUpdateFields },
-        { new: true }
-      );
-
-      // Remove sensitive information from the response
-      const {
-        password: _,
-        updatedAt,
-        ...updatedUserWithoutSensitiveInfo
-      } = updatedUser._doc;
-
-      res.status(200).json(updatedUserWithoutSensitiveInfo);
-    } else {
-      res.status(403).json("You can update only your account!");
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
 
 // DELETE USER
-router.delete("/:id", async (req, res) => {
+router.delete("/delete-user", async (req, res) => {
   try {
-    // Verify Firebase ID token sent by the client
-    const decodedToken = await firebaseAuth.verifyIdToken(
-      req.headers.authorization
-    );
+    // Get user ID from request body or headers (adjust based on how you pass user ID)
+    const userId = req.body.userId || req.headers.userId;
 
-    // You can now use `decodedToken.uid` to get the user ID
-    const userId = decodedToken.uid;
+    // Find the user to delete
+    const user = await User.findById(userId);
 
-    if (userId === req.params.id || req.body.isAdmin) {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account has been deleted");
-    } else {
-      return res.status(403).json("You can delete only your account!");
+    // Ensure user exists and password matches
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
+
+    // Compare provided password with hashed password
+    const passwordMatch = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    // Delete the user
+    await user.delete();
+
+    res.status(200).json({ message: "Account deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to delete user account" });
+    res.status(500).json({ error: "Failed to delete user" });
   }
 });
 
 // GET A USER
-router.get("/:id", async (req, res) => {
+router.get("/get-user", async (req, res) => {
   try {
-    // Verify Firebase ID token sent by the client
-    const decodedToken = await firebaseAuth.verifyIdToken(
-      req.headers.authorization
-    );
+    // Get user ID from request body, headers, or authentication middleware
+    const userId = req.body.userId || req.headers.userId || req.user.id;
 
-    // You can now use `decodedToken.uid` to get the user ID
-    const userId = decodedToken.uid;
+    // Find the user
+    const user = await User.findById(userId);
 
-    const user = await User.findById(req.params.id);
+    // Filter sensitive fields if necessary
+    const filteredUser = {
+      ...user._doc, // Copy all fields
+      _id: user._id, // Explicitly include _id
+      password: undefined, // Exclude sensitive fields
+      // ... exclude other sensitive fields if applicable
+    };
 
-    // Check if the requesting user is the same as the user being queried or is an admin
-    if (userId === req.params.id || user.isAdmin) {
-      const { password, updatedAt, ...other } = user._doc;
-      res.status(200).json(other);
-    } else {
-      return res
-        .status(403)
-        .json(
-          "You can only retrieve your own account details or you must be an admin"
-        );
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
+
+    res.status(200).json(filteredUser);
   } catch (err) {
     console.error(err);
-    res.status(500).json(err);
+    res.status(500).json({ error: "Failed to retrieve user" });
+  }
+});
+
+// CHANGE PASSWORD
+router.put("/change-password", async (req, res) => {
+  try {
+    // Get user ID and passwords from request body
+    const userId = req.body.userId;
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+
+    // Find the user
+    const user = await User.findById(userId);
+
+    // Ensure user exists and old password matches
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password
+    user.password = hashedNewPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to change password" });
+  }
+});
+
+// FORGOT PASSWORD
+router.post("/forgot-password", async (req, res) => {
+  try {
+    // Get email from request body
+    const email = req.body.email;
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Generate a password reset token
+    const resetToken = await generatePasswordResetToken(user);
+
+    // Send password reset email with token
+    await sendPasswordResetEmail(user, resetToken);
+
+    res.status(200).json({ message: "Password reset email sent" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to initiate password reset" });
   }
 });
 
