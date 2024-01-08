@@ -263,7 +263,7 @@ router.put("/profile/:id", async (req, res) => {
     const userId = req.params.id;
 
     const updatedProfileData = {
-      profilePicture: req.body.profilePicture || "",
+      profilePicture: profilePicture || "",
       coverPicture: req.body.coverPicture || "",
       desc: req.body.desc || "",
       relationship: req.body.relationship || null,
@@ -274,6 +274,13 @@ router.put("/profile/:id", async (req, res) => {
       address: req.body.address || "",
       city: req.body.city || "",
       dateOfBirth: req.body.dateOfBirth || null,
+      phone: req.body.phone || "",
+      gender: req.body.gender || "",
+      ocupation: req.body.ocupation || "",
+      maritalStatus: req.body.maritalStatus || "",
+      income: req.body.income || "",
+      asset: req.body.asset || "",
+      liability: req.body.liability || "",
       // ... update other profile fields
     };
 
