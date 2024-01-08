@@ -104,6 +104,7 @@ const EditInformation = () => {
 
   const handleSave = async () => {
     const storedImageUri = await AsyncStorage.getItem("profileImage");
+    console.log(storedImageUri)
     const profileData = {
       firstname,
       lastname,

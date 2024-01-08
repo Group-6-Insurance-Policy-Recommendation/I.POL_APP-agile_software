@@ -2,6 +2,7 @@
 const initialState = {
   user: {},
   isAuthenticated: false,
+  err: {},
 };
 
 const authReducer = (state = initialState, action) => {
@@ -39,7 +40,7 @@ const authReducer = (state = initialState, action) => {
     case "CREATE_PROFILE_FAILURE":
       return {
         ...state,
-        user: action.payload,
+        err: action.payload,
       };
     case "UPDATE_PROFILE_SUCCESS":
       return {
@@ -50,7 +51,7 @@ const authReducer = (state = initialState, action) => {
     case "UPDATE_PROFILE_FAILURE":
       return {
         ...state,
-        user: action.payload,
+        err: action.payload,
       };
     case "CHANGE_PASSWORD_SUCCESS":
       return {
@@ -70,7 +71,7 @@ const authReducer = (state = initialState, action) => {
     case "FORGOT_PASSWORD_FAILURE":
       return {
         ...state,
-        user: action.payload,
+        err: action.payload,
       };
     case "DELETE_USER_SUCCESS":
       return {

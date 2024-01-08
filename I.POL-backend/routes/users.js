@@ -204,14 +204,24 @@ router.put("/reset-password", async (req, res) => {
 
 const multer = require("multer");
 const storage = multer.memoryStorage(); // Store uploaded files in memory temporarily
-const upload = multer({ storage });
+const upload = multer({
+  fileFilter: (req, file, callback) => {
+    if (file.mimetype.startsWith("image/")) {
+      const base64Data = req.body.profileImage.split(",").pop();
+      const imageBuffer = Buffer.from(base64Data, "base64");
+      callback(null, imageBuffer);
+    } else {
+      callback(new Error("Invalid image type"));
+    }
+  },
+});
 
 // CREATE PROFILE
 router.post("/profile", upload.single("profilePicture"), async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.body.userId;
 
-    const profilePicture = req?.file?.buffer.toString("base64");
+    const profilePicture = req.file ? req.file.buffer : null;
     // Create a new profile
     const profileData = {
       profilePicture: profilePicture || "",
@@ -267,8 +277,8 @@ router.put(
     try {
       const userId = req.params.id;
 
-      const profilePicture = req?.file?.buffer.toString("base64");
-
+      const profilePicture = req.file ? req.file.buffer : null;
+      console.log(req);
       const updatedProfileData = {
         profilePicture: profilePicture || "",
         coverPicture: req.body.coverPicture || "",
