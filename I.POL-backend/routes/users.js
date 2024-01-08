@@ -221,7 +221,11 @@ router.post("/profile", upload.single("profilePicture"), async (req, res) => {
   try {
     const userId = req.body.userId;
 
-    const profilePicture = req.file ? req.file.buffer : null;
+    profilePicture: req.file
+      ? req.file.buffer
+      : req.body.profileImage
+      ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
+      : null;
     // Create a new profile
     const profileData = {
       profilePicture: profilePicture || "",
@@ -277,8 +281,12 @@ router.put(
     try {
       const userId = req.params.id;
 
-      const profilePicture = req.file ? req.file.buffer : null;
-      console.log(req);
+      profilePicture: req.file
+        ? req.file.buffer
+        : req.body.profileImage
+        ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
+        : null;
+
       const updatedProfileData = {
         profilePicture: profilePicture || "",
         coverPicture: req.body.coverPicture || "",
