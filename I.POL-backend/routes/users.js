@@ -211,7 +211,7 @@ router.post("/profile", upload.single("profilePicture"), async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const profilePicture = req.file.buffer.toString("base64");
+    const profilePicture = req?.file?.buffer.toString("base64");
     // Create a new profile
     const profileData = {
       profilePicture: profilePicture || "",
@@ -265,9 +265,9 @@ router.put(
   upload.single("profilePicture"),
   async (req, res) => {
     try {
-      const userId = req.params.user_id;
+      const userId = req.params.id;
 
-      const profilePicture = req.file.buffer.toString("base64");
+      const profilePicture = req?.file?.buffer.toString("base64");
 
       const updatedProfileData = {
         profilePicture: profilePicture || "",

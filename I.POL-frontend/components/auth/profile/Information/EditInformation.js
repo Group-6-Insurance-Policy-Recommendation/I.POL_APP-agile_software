@@ -70,7 +70,7 @@ const EditInformation = () => {
     });
 
     if (!result.canceled) {
-      // await AsyncStorage.setItem("profileImage", result.assets[0].uri);
+      await AsyncStorage.setItem("profileImage", result.assets[0].uri);
       // const storedImageUri = await AsyncStorage.getItem("profileImage");
       const profileData = {
         firstname,
@@ -335,7 +335,9 @@ const EditInformation = () => {
             />
 
             <Text style={styles.textLabel}>Gender</Text>
-            <Text style={styles.textLabell}>{user?.profile?.gender || "field is empty"}</Text>
+            <Text style={styles.textLabell}>
+              {user?.profile?.gender || "field is empty"}
+            </Text>
             <View style={{ width: "100%" }}>
               <Dropdown
                 style={[
@@ -390,7 +392,9 @@ const EditInformation = () => {
             />
 
             <Text style={styles.textLabel}>Income</Text>
-            <Text style={styles.textLabell}>{user?.profile?.income || "field is empty"}</Text>
+            <Text style={styles.textLabell}>
+              {user?.profile?.income || "field is empty"}
+            </Text>
             <View style={{ width: "100%" }}>
               <Dropdown
                 style={[
@@ -423,7 +427,9 @@ const EditInformation = () => {
             </View>
 
             <Text style={styles.textLabel}>Asset</Text>
-            <Text style={styles.textLabell}>{user?.profile?.asset || "field is empty"}</Text>
+            <Text style={styles.textLabell}>
+              {user?.profile?.asset || "field is empty"}
+            </Text>
             <View style={{ width: "100%" }}>
               <Dropdown
                 style={[
@@ -456,7 +462,9 @@ const EditInformation = () => {
             </View>
 
             <Text style={styles.textLabel}>Liability</Text>
-            <Text style={styles.textLabell}>{user?.profile?.liability || "field is empty"}</Text>
+            <Text style={styles.textLabell}>
+              {user?.profile?.liability || "field is empty"}
+            </Text>
             <View style={{ width: "100%" }}>
               <Dropdown
                 style={[
