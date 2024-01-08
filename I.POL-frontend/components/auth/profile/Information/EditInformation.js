@@ -200,6 +200,7 @@ const EditInformation = () => {
                   width: 100,
                   height: 100,
                   borderRadius: 50,
+                  // backgroundColor: COLORS.white
                 }}
                 source={
                   storedImageUri
@@ -208,7 +209,7 @@ const EditInformation = () => {
                     ? { uri: user?.profile.profilePicture }
                     : images.profile
                 }
-                resizeMode="center"
+                resizeMode="cover"
               />
             </TouchableOpacity>
             <View style={{ paddingVertical: 6 }}></View>
