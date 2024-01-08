@@ -202,38 +202,34 @@ router.put("/reset-password", async (req, res) => {
   }
 });
 
-const multer = require("multer");
-const storage = multer.memoryStorage(); // Store uploaded files in memory temporarily
-const upload = multer({
-  fileFilter: (req, file, callback) => {
-    if (file.mimetype.startsWith("image/")) {
-      const base64Data = req.body.profileImage.split(",").pop();
-      const imageBuffer = Buffer.from(base64Data, "base64");
-      callback(null, imageBuffer);
-    } else {
-      callback(new Error("Invalid image type"));
-    }
-  },
-});
+// const multer = require("multer");
+// const storage = multer.memoryStorage(); // Store uploaded files in memory temporarily
+// const upload = multer({
+//   fileFilter: (req, file, callback) => {
+//     if (file.mimetype.startsWith("image/")) {
+//       const base64Data = req.body.profileImage.split(",").pop();
+//       const imageBuffer = Buffer.from(base64Data, "base64");
+//       callback(null, imageBuffer);
+//     } else {
+//       callback(new Error("Invalid image type"));
+//     }
+//   },
+// });
 
 // CREATE PROFILE
-router.post("/profile", upload.single("profilePicture"), async (req, res) => {
+router.post("/profile", async (req, res) => {
   try {
     const userId = req.body.userId;
 
-    profilePicture = req.body.profileImage
-      ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-      : req.file
-      ? req.file.buffer
-      : null;
+    // profilePicture = req.file
+    //   ? req.file.buffer
+    //   : req.body.profileImage
+    //   ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
+    //   : null;
 
     // Create a new profile
     const profileData = {
-      profilePicture: req.file
-        ? req.file.buffer
-        : req.body.profileImage
-        ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-        : null,
+      profilePicture: profilePicture || "",
       coverPicture: req.body.coverPicture || "",
       desc: req.body.desc || "",
       relationship: req.body.relationship || null,
@@ -279,66 +275,57 @@ router.post("/profile", upload.single("profilePicture"), async (req, res) => {
 });
 
 // UPDATE PROFILE
-router.put(
-  "/profile/:id",
-  upload.single("profilePicture"),
-  async (req, res) => {
-    try {
-      const userId = req.params.id;
+router.put("/profile/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
 
-      profilePicture = req.body.profileImage
-        ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-        : req.file
-        ? req.file.buffer
-        : null;
-      console.log(req.file);
+    // profilePicture = req.file
+    //   ? req.file.buffer
+    //   : req.body.profileImage
+    //   ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
+    //   : null;
 
-      const updatedProfileData = {
-        profilePicture: req.file
-          ? req.file.buffer
-          : req.body.profileImage
-          ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-          : null,
-        coverPicture: req.body.coverPicture || "",
-        desc: req.body.desc || "",
-        relationship: req.body.relationship || null,
-        firstname: req.body.firstname || "",
-        lastname: req.body.lastname || "",
-        username: req.body.username || "",
-        nationality: req.body.nationality || "",
-        address: req.body.address || "",
-        city: req.body.city || "",
-        dateOfBirth: req.body.dateOfBirth || null,
-        phone: req.body.phone || "",
-        gender: req.body.gender || "",
-        ocupation: req.body.ocupation || "",
-        maritalStatus: req.body.maritalStatus || "",
-        income: req.body.income || "",
-        asset: req.body.asset || "",
-        liability: req.body.liability || "",
-        // ... update other profile fields
-      };
+    const updatedProfileData = {
+      profilePicture: req.body.profilePicture || "",
+      coverPicture: req.body.coverPicture || "",
+      desc: req.body.desc || "",
+      relationship: req.body.relationship || null,
+      firstname: req.body.firstname || "",
+      lastname: req.body.lastname || "",
+      username: req.body.username || "",
+      nationality: req.body.nationality || "",
+      address: req.body.address || "",
+      city: req.body.city || "",
+      dateOfBirth: req.body.dateOfBirth || null,
+      phone: req.body.phone || "",
+      gender: req.body.gender || "",
+      ocupation: req.body.ocupation || "",
+      maritalStatus: req.body.maritalStatus || "",
+      income: req.body.income || "",
+      asset: req.body.asset || "",
+      liability: req.body.liability || "",
+      // ... update other profile fields
+    };
 
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: userId },
-        { $set: { profile: updatedProfileData } },
-        { new: true, populate: "profile" }
-      );
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { profile: updatedProfileData } },
+      { new: true, populate: "profile" }
+    );
 
-      if (!updatedUser) {
-        return res.status(404).json({ error: "User or profile not found" });
-      }
-
-      res.status(200).json(updatedUser);
-    } catch (err) {
-      console.error(err);
-      console.error("Error in profile update route:", err); // Log detailed error
-      res.status(500).json({
-        error: "Failed to update profile",
-        details: err.message, // Include error message in response
-      });
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User or profile not found" });
     }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    console.error("Error in profile update route:", err); // Log detailed error
+    res.status(500).json({
+      error: "Failed to update profile",
+      details: err.message, // Include error message in response
+    });
   }
-);
+});
 
 module.exports = router;

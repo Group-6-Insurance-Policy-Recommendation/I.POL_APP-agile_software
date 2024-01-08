@@ -125,11 +125,9 @@ export const createProfile =
         dispatch(createProfileSuccess(response.data));
 
         // Save profile data to AsyncStorage
-        await AsyncStorage.setItem(
-          "userData",
-          JSON.stringify(response.data)
-        );
-        alert("Create profile was successful.")
+        await AsyncStorage.setItem("userData", JSON.stringify(response.data));
+        await AsyncStorage.removeItem("profileImage");
+        alert("Create profile was successful.");
       } else {
         // Dispatch the create profile failure action
         dispatch(createProfileFailure(response.data.error));
@@ -168,11 +166,9 @@ export const updateProfile =
         dispatch(updateProfileSuccess(response.data));
 
         // Save updated profile data to AsyncStorage
-        await AsyncStorage.setItem(
-          "userData",
-          JSON.stringify(response.data)
-        );
-        alert("Update profile was successful.")
+        await AsyncStorage.setItem("userData", JSON.stringify(response.data));
+        await AsyncStorage.removeItem("profileImage");
+        alert("Update profile was successful.");
       } else {
         // Dispatch the update profile failure action
         dispatch(updateProfileFailure(response.data.error));

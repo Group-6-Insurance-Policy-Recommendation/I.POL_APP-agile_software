@@ -52,59 +52,84 @@ const EditInformation = () => {
   const [incomeObject, setIncomeObject] = useState(null);
   const [assetObject, setAssetObject] = useState(null);
 
+  const [nameFocus, setNameFocus] = useState(false);
+  const [surnameFocus, setSurnameFocus] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
+  const [nationalFocus, setNationalFocus] = useState(false);
+  const [addressFocus, setAddressFocus] = useState(false);
+  const [cityFocus, setCityFocus] = useState(false);
+  const [dobFocus, setDobFocus] = useState(false);
+  const [genderFocus, setGenderFocus] = useState(false);
+  const [ocupationFocus, setOcupationFocus] = useState(false);
+  const [statusFocus, setStatusFocus] = useState(false);
+  const [phoneFocus, setPhoneFocus] = useState(false);
+  const [incomeFocus, setIncomeFocus] = useState(false);
+  const [assetFocus, setAssetFocus] = useState(false);
+  const [liabilityFocus, setLiabilityFocus] = useState(false);
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+  const [storedImageUri, setStoredImageUri] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+
+    setStoredImageUri(AsyncStorage.getItem("profileImage"));
+  }, []);
+
   // Function to pick image and store in AsyncStorage
   const pickAndStoreImage = async () => {
-    // await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //   allowsEditing: true,
-    //   aspect: [4, 3],
-    //   quality: 1,
-    // });
-    ImagePicker.requestCameraPermissionsAsync();
-    let result = await ImagePicker.launchCameraAsync({
-      cameraType: ImagePicker.CameraType.front,
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
+    // ImagePicker.requestCameraPermissionsAsync();
+    // let result = await ImagePicker.launchCameraAsync({
+    //   cameraType: ImagePicker.CameraType.front,
+    //   allowsEditing: true,
+    //   aspect: [4, 3],
+    //   quality: 1,
+    // });
 
     if (!result.canceled) {
       await AsyncStorage.setItem("profileImage", result.assets[0].uri);
       // const storedImageUri = await AsyncStorage.getItem("profileImage");
-      const profileData = {
-        firstname,
-        lastname,
-        username,
-        nationality,
-        address,
-        city,
-        dateOfBirth,
-        phone,
-        gender,
-        ocupation,
-        maritalStatus,
-        income,
-        asset,
-        liability,
-        profilePicture: result.assets[0].uri,
-      };
+      // const profileData = {
+      //   firstname,
+      //   lastname,
+      //   username,
+      //   nationality,
+      //   address,
+      //   city,
+      //   dateOfBirth,
+      //   phone,
+      //   gender,
+      //   ocupation,
+      //   maritalStatus,
+      //   income,
+      //   asset,
+      //   liability,
+      //   profilePicture: result.assets[0].uri,
+      // };
 
       // Check if the user already has a profile
-      if (isAuthenticated) {
-        console.log(isAuthenticated);
-        // User has a profile, update the profile
-        dispatch(updateProfile(profileData, user._id));
-      } else {
-        console.log(isAuthenticated);
-        alert("You're not authenticated.");
-      }
+      // if (isAuthenticated) {
+      //   console.log(isAuthenticated);
+      //   // User has a profile, update the profile
+      //   dispatch(updateProfile(profileData, user._id));
+      // } else {
+      //   console.log(isAuthenticated);
+      //   alert("You're not authenticated.");
+      // }
     }
   };
 
   const handleSave = async () => {
-    const storedImageUri = await AsyncStorage.getItem("profileImage");
-    console.log(storedImageUri)
+    console.log(storedImageUri);
     const profileData = {
       firstname,
       lastname,
@@ -146,29 +171,6 @@ const EditInformation = () => {
       alert("You're not authenticated. Logout and start again.");
     }
   };
-
-  const [nameFocus, setNameFocus] = useState(false);
-  const [surnameFocus, setSurnameFocus] = useState(false);
-  const [usernameFocus, setUsernameFocus] = useState(false);
-  const [nationalFocus, setNationalFocus] = useState(false);
-  const [addressFocus, setAddressFocus] = useState(false);
-  const [cityFocus, setCityFocus] = useState(false);
-  const [dobFocus, setDobFocus] = useState(false);
-  const [genderFocus, setGenderFocus] = useState(false);
-  const [ocupationFocus, setOcupationFocus] = useState(false);
-  const [statusFocus, setStatusFocus] = useState(false);
-  const [phoneFocus, setPhoneFocus] = useState(false);
-  const [incomeFocus, setIncomeFocus] = useState(false);
-  const [assetFocus, setAssetFocus] = useState(false);
-  const [liabilityFocus, setLiabilityFocus] = useState(false);
-
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-
-  useEffect(() => {
-    setHeight(Dimensions.get("window").height);
-    setWidth(Dimensions.get("window").width);
-  }, []);
 
   const genderInfo = [
     { label: "Male", value: "male" },
@@ -229,7 +231,13 @@ const EditInformation = () => {
                   height: 100,
                   borderRadius: 50,
                 }}
-                source={images.profile}
+                source={
+                  storedImageUri
+                    ? { storedImageUri }
+                    : user?.profile.profilePicture
+                  // ? user?.profile.profilePicture
+                  // : images.profile
+                }
                 resizeMode="center"
               />
             </TouchableOpacity>
