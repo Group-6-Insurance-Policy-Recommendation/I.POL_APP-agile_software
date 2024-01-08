@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const {
   generatePasswordResetToken,
   sendPasswordResetEmail,
-  validateResetToken,
 } = require("../hook/resetToken");
 
 // DELETE USER
@@ -203,12 +202,17 @@ router.put("/reset-password", async (req, res) => {
   }
 });
 
+const multer = require("multer");
+const storage = multer.memoryStorage(); // Store uploaded files in memory temporarily
+const upload = multer({ storage });
+
 // CREATE PROFILE
-router.post("/profile", async (req, res) => {
+router.post("/profile", upload.single("profilePicture"), async (req, res) => {
   try {
+    const profilePicture = req.file.buffer.toString("base64");
     // Create a new profile
     const profileData = {
-      profilePicture: req.body.profilePicture || "",
+      profilePicture: profilePicture || "",
       coverPicture: req.body.coverPicture || "",
       desc: req.body.desc || "",
       relationship: req.body.relationship || null,
@@ -219,6 +223,13 @@ router.post("/profile", async (req, res) => {
       address: req.body.address || "",
       city: req.body.city || "",
       dateOfBirth: req.body.dateOfBirth || null,
+      phone: req.body.phone || "",
+      gender: req.body.gender || "",
+      ocupation: req.body.ocupation || "",
+      maritalStatus: req.body.maritalStatus || "",
+      income: req.body.income || "",
+      asset: req.body.asset || "",
+      liability: req.body.liability || "",
       // ... other profile fields
     };
 

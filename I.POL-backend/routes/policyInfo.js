@@ -37,6 +37,23 @@ router.post("/create", async (req, res) => {
       });
     }
 
+    // Check insurance type and populate corresponding fields
+    const insuranceTypes = [
+      "health",
+      "home",
+      "auto",
+      "life",
+      "business",
+      "travel",
+    ];
+    const type = req.body.type.toLowerCase();
+
+    if (!insuranceTypes.includes(type)) {
+      return res.status(400).json({
+        error: `Invalid insurance type: ${req.body.type}`,
+      });
+    }
+
     // Create a new policy information instance
     const newPolicyInformation = new PolicyInformationModel({
       name: req.body.name,
@@ -49,6 +66,7 @@ router.post("/create", async (req, res) => {
       effectiveDate: req.body.effectiveDate,
       expirationDate: req.body.expirationDate,
       insuredEntities: req.body.insuredEntities,
+      [type + "InsuranceData"]: req.body[type + "InsuranceData"],
     });
 
     // Save the policy information to the database

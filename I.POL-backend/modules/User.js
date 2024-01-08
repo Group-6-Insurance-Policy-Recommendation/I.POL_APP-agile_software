@@ -34,6 +34,34 @@ const UserSchema = mongoose.Schema(
       address: { type: String, default: "" },
       city: { type: String, default: "" },
       dateOfBirth: { type: Date, default: null },
+      phone: {
+        type: String,
+        default: "",
+      },
+      gender: {
+        type: String,
+        default: "",
+      },
+      occupation: {
+        type: String,
+        default: "",
+      },
+      maritalStatus: {
+        type: String,
+        default: "",
+      },
+      income: {
+        type: String,
+        default: "",
+      },
+      asset: {
+        type: String,
+        default: "",
+      },
+      liability: {
+        type: String,
+        default: "",
+      },
     },
     policies: [
       {
