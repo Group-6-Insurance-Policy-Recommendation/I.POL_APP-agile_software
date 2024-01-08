@@ -126,7 +126,6 @@ export const createProfile =
 
         // Save profile data to AsyncStorage
         await AsyncStorage.setItem("userData", JSON.stringify(response.data));
-        await AsyncStorage.removeItem("profileImage");
         alert("Create profile was successful.");
       } else {
         // Dispatch the create profile failure action
@@ -167,7 +166,6 @@ export const updateProfile =
 
         // Save updated profile data to AsyncStorage
         await AsyncStorage.setItem("userData", JSON.stringify(response.data));
-        await AsyncStorage.removeItem("profileImage");
         alert("Update profile was successful.");
       } else {
         // Dispatch the update profile failure action

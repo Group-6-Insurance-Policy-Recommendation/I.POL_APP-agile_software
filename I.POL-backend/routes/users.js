@@ -221,15 +221,9 @@ router.post("/profile", async (req, res) => {
   try {
     const userId = req.body.userId;
 
-    // profilePicture = req.file
-    //   ? req.file.buffer
-    //   : req.body.profileImage
-    //   ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-    //   : null;
-
     // Create a new profile
     const profileData = {
-      profilePicture: profilePicture || "",
+      profilePicture: req.body.profilePicture || "",
       coverPicture: req.body.coverPicture || "",
       desc: req.body.desc || "",
       relationship: req.body.relationship || null,

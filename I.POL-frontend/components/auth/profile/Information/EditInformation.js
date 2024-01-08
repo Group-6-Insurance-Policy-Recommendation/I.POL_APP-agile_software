@@ -20,7 +20,6 @@ import styles from "./editInformation.style";
 import { Dropdown } from "react-native-element-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const EditInformation = () => {
   // Access Redux store state using useSelector
@@ -74,8 +73,6 @@ const EditInformation = () => {
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
     setWidth(Dimensions.get("window").width);
-
-    setStoredImageUri(AsyncStorage.getItem("profileImage"));
   }, []);
 
   // Function to pick image and store in AsyncStorage
@@ -96,40 +93,11 @@ const EditInformation = () => {
     // });
 
     if (!result.canceled) {
-      await AsyncStorage.setItem("profileImage", result.assets[0].uri);
-      // const storedImageUri = await AsyncStorage.getItem("profileImage");
-      // const profileData = {
-      //   firstname,
-      //   lastname,
-      //   username,
-      //   nationality,
-      //   address,
-      //   city,
-      //   dateOfBirth,
-      //   phone,
-      //   gender,
-      //   ocupation,
-      //   maritalStatus,
-      //   income,
-      //   asset,
-      //   liability,
-      //   profilePicture: result.assets[0].uri,
-      // };
-
-      // Check if the user already has a profile
-      // if (isAuthenticated) {
-      //   console.log(isAuthenticated);
-      //   // User has a profile, update the profile
-      //   dispatch(updateProfile(profileData, user._id));
-      // } else {
-      //   console.log(isAuthenticated);
-      //   alert("You're not authenticated.");
-      // }
+      setStoredImageUri(result.assets[0].uri);
     }
   };
 
   const handleSave = async () => {
-    console.log(storedImageUri);
     const profileData = {
       firstname,
       lastname,
@@ -163,9 +131,11 @@ const EditInformation = () => {
       ) {
         // User does not have a profile, create a new profile
         dispatch(createProfile(profileData, user._id));
+        setStoredImageUri("");
       } else {
         // User has a profile, update the profile
         dispatch(updateProfile(profileData, user._id));
+        setStoredImageUri("");
       }
     } else {
       alert("You're not authenticated. Logout and start again.");
@@ -233,10 +203,10 @@ const EditInformation = () => {
                 }}
                 source={
                   storedImageUri
-                    ? { storedImageUri }
+                    ? { uri: storedImageUri }
                     : user?.profile.profilePicture
-                  // ? user?.profile.profilePicture
-                  // : images.profile
+                    ? { uri: user?.profile.profilePicture }
+                    : images.profile
                 }
                 resizeMode="center"
               />

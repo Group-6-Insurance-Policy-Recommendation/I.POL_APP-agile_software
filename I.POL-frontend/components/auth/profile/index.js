@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { COLORS, FONT, icons, SIZES } from "../../../constants";
+import { COLORS, FONT, icons, images, SIZES } from "../../../constants";
 import { router } from "expo-router";
 import {
   Ionicons,
@@ -68,7 +68,11 @@ const Profile = () => {
           >
             <Image
               style={{ width: 100, height: 100, borderRadius: 50 }}
-              source={require("../../../assets/images/PrinceStiles.jpg")}
+              source={
+                user?.profile.profilePicture
+                  ? { uri: user?.profile.profilePicture }
+                  : images.profile
+              }
               resizeMode="center"
             />
             <Text
