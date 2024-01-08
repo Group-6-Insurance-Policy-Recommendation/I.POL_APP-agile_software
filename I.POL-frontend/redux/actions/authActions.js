@@ -39,6 +39,36 @@ export const updateProfileFailure = (error) => ({
   payload: { error },
 });
 
-export const logout = () => ({
+export const changePasswordSuccess = (user) => ({
+  type: "CHANGE_PASSWORD_SUCCESS",
+  payload: user,
+});
+
+export const changePasswordFailure = (error) => ({
+  type: "CHANGE_PASSWORD_FAILURE",
+  payload: { error },
+});
+
+export const forgotPasswordSuccess = (user) => ({
+  type: "FORGOT_PASSWORD_SUCCESS",
+  payload: user,
+});
+
+export const forgotPasswordFailure = (error) => ({
+  type: "FORGOT_PASSWORD_FAILURE",
+  payload: { error },
+});
+
+export const deleteUserSuccess = (user) => ({
+  type: "DELETE_USER_SUCCESS",
+  payload: user,
+});
+
+export const deleteUserFailure = (error) => ({
+  type: "DELETE_USER_FAILURE",
+  payload: { error },
+});
+
+export const logoutSuccess = () => ({
   type: "LOGOUT",
 });

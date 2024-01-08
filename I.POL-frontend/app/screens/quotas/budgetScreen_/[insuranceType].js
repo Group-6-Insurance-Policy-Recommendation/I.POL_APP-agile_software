@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { BudgetScreen } from "../../../components";
+import { BudgetScreen } from "../../../../components";
 
 const budgetScreen = () => {
   return (

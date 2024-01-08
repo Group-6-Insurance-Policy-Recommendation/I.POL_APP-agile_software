@@ -6,10 +6,17 @@ import Signup from "./auth/signup/Signup";
 
 // auth profile pages
 import Profile from "./auth/profile/index";
-import EditInformation from "./auth/profile/editInfo/EditInformation";
-import AccountSetting from "./auth/profile/accountSettings/AccountSetting";
-import UserInsurancePolicy from "./auth/profile/userInsurancePolicy/UserInsurancePolicy";
-import ClaimHistory from "./auth/profile/claimHistory/ClaimHistory";
+import EditInformation from "./auth/profile/Information/EditInformation";
+import AccountSetting from "./auth/profile/account/AccountSetting";
+import UserInsurancePolicy from "./auth/profile/Insurance/UserInsurancePolicy";
+import ClaimHistory from "./auth/profile/claim/ClaimHistory";
+import Feedback from "./auth/profile/feedback/Feedback";
+import SecuritySettings from "./auth/profile/security/SecuritySettings";
+import ChangePassword from "./auth/profile/security/ChangePassword";
+import ForgotPassword from "./auth/password/ForgotPassword";
+import DeleteAccount from "./auth/profile/security/DeleteAccount";
+import Faqs from "./auth/profile/faqs/Faqs";
+import Notification from "./auth/profile/notification/Notification";
 
 // home pages
 import Dashboard from "./home/dashboard/Dashboard";
@@ -25,6 +32,8 @@ import DetailsScreen from "./screens/detailsScreen/DetailsScreen";
 import PolicyPlanScreen from "./screens/PolicyPlanScreen/PolicyPlanScreen";
 import PayScreen from "./screens/payScreen/PayScreen";
 import HuddleScreen from "./screens/huddleScreen/HuddleScreen";
+import PackageInfo from "./screens/packageInfo/PackageInfo";
+import InsuranceInfo from "./screens/other/InsuranceInfo";
 
 export {
   ProfileHeaderBtn,
@@ -38,6 +47,13 @@ export {
   AccountSetting,
   UserInsurancePolicy,
   ClaimHistory,
+  Feedback,
+  SecuritySettings,
+  ChangePassword,
+  ForgotPassword,
+  DeleteAccount,
+  Faqs,
+  Notification,
   Begin,
   RecommendedPolicyScreen,
   CategoryScreen,
@@ -46,4 +62,6 @@ export {
   PolicyPlanScreen,
   PayScreen,
   HuddleScreen,
+  PackageInfo,
+  InsuranceInfo,
 };

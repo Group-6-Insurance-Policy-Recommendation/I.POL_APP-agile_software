@@ -3,7 +3,7 @@
 const policies = [
   {
     id: "1",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Health Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
@@ -12,7 +12,7 @@ const policies = [
   },
   {
     id: "2",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Auto Insurance",
     coverage: "Collision, Liability, Comprehensive",
     premium: "$75 per month",
@@ -21,7 +21,7 @@ const policies = [
   },
   {
     id: "3",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Home Insurance",
     coverage: "Property Damage, Theft, Personal Liability",
     premium: "$100 per month",
@@ -30,7 +30,7 @@ const policies = [
   },
   {
     id: "4",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Life Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
@@ -39,7 +39,7 @@ const policies = [
   },
   {
     id: "5",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Business Insurance",
     coverage: "Collision, Liability, Comprehensive",
     premium: "$75 per month",
@@ -48,7 +48,7 @@ const policies = [
   },
   {
     id: "6",
-    logo: "https://via.placeholder.com/150/33A5FF/FFFFFF?text=Company+G",
+    logo: "/assets/icons/iAuto",
     name: "Travel Insurance",
     coverage: "Natural Misfortune, Theft, Personal Liability",
     premium: "$100 per month",
@@ -59,3 +59,10 @@ const policies = [
 ];
 
 export default policies;
+
+// Policy renewal reminders: Alert users about upcoming policy renewals to ensure uninterrupted coverage.
+// Payment reminders: Prompt users to make timely premium payments to avoid lapses in coverage.
+// Claim status updates: Keep users informed about the progress of their claims, enhancing transparency and customer satisfaction.
+// Benefit utilization notifications: Inform users about available benefits they might be eligible for, promoting better utilization of insurance plans.
+// Important announcements: Communicate essential information like changes to policies, terms, or coverage options.
+// Educational messages: Offer tips for staying healthy, protecting property, or managing finances, fostering risk prevention and financial wellness.

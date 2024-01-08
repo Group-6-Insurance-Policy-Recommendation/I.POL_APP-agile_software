@@ -40,7 +40,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        isAuthenticated: false,
       };
     case "UPDATE_PROFILE_SUCCESS":
       return {
@@ -52,7 +51,37 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        isAuthenticated: false,
+      };
+    case "CHANGE_PASSWORD_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case "CHANGE_PASSWORD_FAILURE":
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case "FORGOT_PASSWORD_SUCCESS":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "FORGOT_PASSWORD_FAILURE":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "DELETE_USER_SUCCESS":
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true,
+      };
+    case "DELETE_USER_FAILURE":
+      return {
+        ...state,
+        isAuthenticated: true,
       };
     case "LOGOUT":
       return {

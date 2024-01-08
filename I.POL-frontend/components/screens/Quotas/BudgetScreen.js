@@ -1,4 +1,4 @@
-import { router, Stack } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import {
   Text,
   View,
@@ -7,11 +7,13 @@ import {
   Image,
   StyleSheet,
   TextInput,
+  Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
-import { COLORS, icons, images, SIZES, FONT } from "../../../constants";
+import { COLORS, images, SIZES, FONT } from "../../../constants";
 import { ProfileHeaderBtn } from "../..";
 import start from "../../../assets/start.jpeg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const BudgetScreen = () => {
   const [inputFocus, setInputFocus] = useState(false);
@@ -19,96 +21,98 @@ const BudgetScreen = () => {
   const handleInputFocus = () => setInputFocus(true);
   const handleInputBlur = () => setInputFocus(false);
 
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+    console.log(insuranceType);
+  }, []);
+
+  const [minBudget, setMinBudget] = useState("");
+  const [maxBudget, setMaxBudget] = useState("");
+
+  const { insuranceType } = useLocalSearchParams();
+
+  const handleBudgetSelect = () => {
+    // Navigate to the next screen with selected budget details
+    if (minBudget === "" && maxBudget === "") {
+      return alert("Budget preferences not set!");
+    }
+    router.push(
+      `/screens/quotas/recommendationPolicyScreen_/${insuranceType}/${minBudget}/${maxBudget}`
+    );
+  };
+
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         backgroundColor: COLORS.white,
       }}
     >
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          headerLeft: () => (
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ProfileHeaderBtn
-                iconUrl={images.logo}
-                dimension="100%"
-                handlePress={() => router.push(`home`)}
-              />
-              <Text
-                style={{
-                  fontFamily: FONT.bold,
-                  fontWeight: "600",
-                  color: COLORS.primary,
-                  fontSize: SIZES.xSmall,
-                }}
-              >
-                IPOL
-              </Text>
-            </View>
-          ),
-          headerRight: () => (
-            <ProfileHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={() => router.push(`profile`)}
-            />
-          ),
+      <View
+        style={{
+          width: width,
+          height: height,
+          padding: SIZES.medium,
         }}
-      />
-
-      <View style={styles.container}>
+      >
         <View style={styles.pageImgContainer}>
-          <Image source={start} resizeMode="center" style={styles.pageImg} />
-        </View>
-        <Text style={styles.txt}>
-          Enter Your Minimum and Maximum Budgets...
-        </Text>
-        <View style={styles.inputOuterContainer}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.currencyLabel}>₵</Text>
-            <TextInput
-              style={[styles.input, inputFocus && styles.focusedInput]}
-              placeholder="amt"
-              keyboardType="numeric"
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.currencyLabel}>₵</Text>
-            <TextInput
-              style={[styles.input, inputFocus && styles.focusedInput]}
-              placeholder="amt"
-              keyboardType="numeric"
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-            />
-          </View>
+          <Image
+            source={start}
+            resizeMode="center"
+            style={{
+              width: width - 20,
+              height: height / 2,
+            }}
+          />
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            router.push(`/screens/quotas/recommendedPolicyScreen_`);
-          }}
-          style={styles.pageBtn}
-        >
-          <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-            Recommend
+        <View style={{ paddingVertical: SIZES.xLarge }}>
+          <Text style={styles.txt}>
+            Enter Your Minimum and Maximum Budgets...
           </Text>
-        </TouchableOpacity>
+          <KeyboardAvoidingView style={{ width: "100%" }} behavior="position">
+            <View style={styles.inputOuterContainer}>
+              <View style={styles.inputContainer}>
+                <Text style={styles.currencyLabel}>₵</Text>
+                <TextInput
+                  style={[styles.input, inputFocus && styles.focusedInput]}
+                  placeholder="min"
+                  keyboardType="numeric"
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  value={minBudget}
+                  onChangeText={(text) => setMinBudget(text)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.currencyLabel}>₵</Text>
+                <TextInput
+                  style={[styles.input, inputFocus && styles.focusedInput]}
+                  placeholder="max"
+                  keyboardType="numeric"
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
+                  value={maxBudget}
+                  onChangeText={(text) => setMaxBudget(text)}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+
+          <TouchableOpacity
+            onPress={() => {
+              handleBudgetSelect();
+            }}
+            style={styles.pageBtn}
+          >
+            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
+              Recommend
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -132,19 +136,19 @@ const styles = StyleSheet.create({
   inputOuterContainer: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     gap: SIZES.large,
     marginVertical: 30,
   },
   inputContainer: {
-    width: "40%",
+    width: "46%",
     paddingVertical: SIZES.xSmall,
     paddingHorizontal: SIZES.large,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLORS.primary,
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.width,
     marginBottom: SIZES.xSmall,
     fontFamily: FONT.regular,
     color: COLORS.text,
@@ -164,14 +168,14 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderRadius: 4,
     borderWidth: 0,
-    borderColor: COLORS.tertiary,
-    backgroundColor: COLORS.tertiary,
+    borderColor: COLORS.white,
+    backgroundColor: COLORS.white,
     fontFamily: FONT.regular,
     color: COLORS.text,
     fontWeight: "medium",
   },
   focusedInput: {
-    borderColor: COLORS.tertiary,
+    borderColor: COLORS.white,
     borderWidth: 0,
     color: COLORS.text2,
   },
@@ -189,7 +193,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
   },
   pageImg: {
     width: 200,

@@ -98,15 +98,15 @@ const Recommendation = () => {
   };
 
   return (
-    <ScrollView>
-      <View
-        style={{
-          width: "100%",
-          height: height,
-          padding: 16,
-          backgroundColor: "#fff",
-        }}
-      >
+    <ScrollView
+      style={{
+        height: height,
+        width: "100%",
+        padding: SIZES.medium,
+        backgroundColor: COLORS.white,
+      }}
+    >
+      <View style={{ marginBottom: 100 }}>
         <Text style={styles.welcomeMessage}>Recommendations</Text>
 
         <View style={styles.searchContainer}>
@@ -192,7 +192,7 @@ const Recommendation = () => {
         </View>
 
         <View style={styles.header}>
-          {filteredPolicies.length > 0 ? (
+          {searchInputs.insuranceType !== "" ? (
             <Text style={styles.headerTitle} numberOfLines={1}>
               Search Results For Company Policies
             </Text>
@@ -218,7 +218,7 @@ const Recommendation = () => {
             searchInputs.location ||
             searchInputs.company ||
             filteredPolicies.length === 0 ? (
-            <Text style={styles.headerTitle}>Search Not Found...</Text>
+            <Text style={styles.headerTitle2}>Search not found...</Text>
           ) : (
             companyPolicies?.map((policy) => (
               <CompanyPolicyCard

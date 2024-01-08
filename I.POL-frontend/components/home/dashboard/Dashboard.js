@@ -38,7 +38,7 @@ const Dashboard = () => {
     },
     {
       id: "2",
-      title: "Special Packages",
+      title: "Packages",
       url: "home/specialPackage_",
       image: require("../../../assets/special.png"),
     },
@@ -56,6 +56,64 @@ const Dashboard = () => {
     },
   ];
 
+  const policies = [
+    {
+      id: "1",
+      logo: require("../../../assets/icons/iHealth.png"),
+      name: "Health Insurance",
+      coverage: "Hospitalization, Doctor Visits, Medications",
+      premium: "$50 per month",
+      description:
+        "Covers basic health expenses including hospitalization, doctor visits, and medications.",
+    },
+    {
+      id: "2",
+      logo: require("../../../assets/icons/iAuto.png"),
+      name: "Auto Insurance",
+      coverage: "Collision, Liability, Comprehensive",
+      premium: "$75 per month",
+      description:
+        "Provides coverage for your vehicle against collisions, liability claims, and comprehensive damages.",
+    },
+    {
+      id: "3",
+      logo: require("../../../assets/icons/iHome.png"),
+      name: "Home Insurance",
+      coverage: "Property Damage, Theft, Personal Liability",
+      premium: "$100 per month",
+      description:
+        "Protects your home against property damage, theft, and provides personal liability coverage.",
+    },
+    {
+      id: "4",
+      logo: require("../../../assets/icons/iLife.png"),
+      name: "Life Insurance",
+      coverage: "Hospitalization, Doctor Visits, Medications",
+      premium: "$50 per month",
+      description:
+        "Provides financial protection to beneficiaries in the event of the policyholder's death.",
+    },
+    {
+      id: "5",
+      logo: require("../../../assets/icons/iBusiness.png"),
+      name: "Business Insurance",
+      coverage: "Collision, Liability, Comprehensive",
+      premium: "$75 per month",
+      description:
+        "Various types, including property insurance, liability insurance, and business interruption insurance, to protect businesses from financial losses.",
+    },
+    {
+      id: "6",
+      logo: require("../../../assets/icons/iTravel.png"),
+      name: "Travel Insurance",
+      coverage: "Natural Misfortune, Theft, Personal Liability",
+      premium: "$100 per month",
+      description:
+        "Covers unexpected events during travel, such as trip cancellations, medical emergencies, or lost luggage.",
+    },
+    // Add more policy objects as needed
+  ];
+
   const handleCardPress = (item) => {
     // Implement the logic to handle card press
     router.push(`${item.url}`);
@@ -70,7 +128,7 @@ const Dashboard = () => {
       <View style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.userName}>
-            Welcome @{user.profile?.username}...
+            Welcome @{user?.profile?.username}...
           </Text>
           <Text style={styles.welcomeMessage}>Dashboard</Text>
         </View>

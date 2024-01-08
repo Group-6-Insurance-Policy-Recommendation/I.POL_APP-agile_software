@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   formArea: {
     width: "100%",
-    paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
     gap: 10,

@@ -17,6 +17,7 @@ const PolicyPlanScreen = () => {
   const [companyPolicy, setCompanyPolicy] = useState([]);
 
   const { policyID } = useLocalSearchParams();
+  
   const standardTotal =
     parseInt(companyPolicy?.policyPlans?.standard?.cost, 10) +
     parseInt(companyPolicy?.policyPlans?.standard?.fees, 10);
@@ -135,7 +136,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.standard?.cost} per month
+                ₵{companyPolicy?.policyPlans?.standard?.cost} per month
               </Text>
             </View>
             <View
@@ -151,7 +152,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.standard?.fees}
+                ₵{companyPolicy?.policyPlans?.standard?.fees}
               </Text>
             </View>
             <View
@@ -249,7 +250,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.advanced?.cost} per month
+                ₵{companyPolicy?.policyPlans?.advanced?.cost} per month
               </Text>
             </View>
             <View
@@ -265,7 +266,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.advanced?.fees}
+                ₵{companyPolicy?.policyPlans?.advanced?.fees}
               </Text>
             </View>
             <View
@@ -363,7 +364,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Cost: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.premium?.cost} per month
+                ₵{companyPolicy?.policyPlans?.premium?.cost} per month
               </Text>
             </View>
             <View
@@ -379,7 +380,7 @@ const PolicyPlanScreen = () => {
             >
               <Text style={styles.labelTitle}>Enrollment Fee: </Text>
               <Text style={styles.labelText}>
-                ${companyPolicy?.policyPlans?.premium?.fees}
+                ₵{companyPolicy?.policyPlans?.premium?.fees}
               </Text>
             </View>
             <View

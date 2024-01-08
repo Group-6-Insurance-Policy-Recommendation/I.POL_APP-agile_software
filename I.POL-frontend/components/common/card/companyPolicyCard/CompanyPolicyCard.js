@@ -15,13 +15,22 @@ const CompanyPolicyCard = ({ policy, handleNavigate }) => {
           }}
           resizeMode="contain"
           style={styles.logoImage}
+          onPress={handleNavigate}
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>
-        <Text style={styles.policyName} numberOfLines={1}>
+        <Text
+          style={styles.policyName}
+          onPress={handleNavigate}
+          numberOfLines={1}
+        >
           {policy.company}
         </Text>
-        <Text style={styles.policyDesc} numberOfLines={2}>
+        <Text
+          style={styles.policyDesc}
+          onPress={handleNavigate}
+          numberOfLines={2}
+        >
           {policy.description}
         </Text>
       </View>

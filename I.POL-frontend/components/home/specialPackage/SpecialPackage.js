@@ -6,60 +6,77 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./specialPackage.style";
 import { COLORS, icons, images, SIZES } from "../../../constants";
 import PackageCard from "../../common/card/packageCard/PackageCard";
+import { router } from "expo-router";
 
 const SpecialPackage = () => {
   const cardData = [
     {
       id: "1",
       title: "Student Insurance Plan",
-      url: "home/recommendation_",
+      url: "screens/other/packageInfo_",
       image: icons.plan,
     },
     {
       id: "2",
       title: "Family Insurance plan",
-      url: "home/specialPackage_",
+      url: "screens/other/packageInfo_",
       image: icons.family,
     },
     {
       id: "3",
       title: "Third Party Insurance",
-      url: "home/preference_",
+      url: "screens/other/packageInfo_",
       image: icons.insure,
     },
     {
       id: "4",
       title: "Corporate Health Insurance",
-      url: "home/huddle_",
+      url: "screens/other/packageInfo_",
       image: icons.corporate,
     },
   ];
 
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
+
   const handleCardPress = (item) => {
     // Implement the logic to handle card press
-    console.log("Card pressed:", item.title);
-    // router.push(`${item.url}`);
+    // console.log("Card pressed:", item.title);
+    router.push(`${item.url}`);
   };
 
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
+        width: "100%",
+        height: height,
         backgroundColor: COLORS.white,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
         <View style={styles.container}>
+          <View style={styles.HeaderContainer}>
+            <Text style={styles.HeaderText}>Packages</Text>
+          </View>
           <View style={styles.pageImgContainer}>
             <Image
               source={images.special}
               resizeMode="center"
-              style={styles.pageImg}
+              style={{
+                width: width - 20,
+                height: height / 2,
+              }}
             />
           </View>
           <View
@@ -69,10 +86,6 @@ const SpecialPackage = () => {
               // padding: SIZES.medium,
             }}
           >
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>Special Packages</Text>
-            </View>
-
             <FlatList
               data={cardData}
               keyExtractor={(item) => item.id}

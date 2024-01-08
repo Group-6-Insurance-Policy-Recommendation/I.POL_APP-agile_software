@@ -1,6 +1,5 @@
 import google from "../assets/icons/google.png";
 import facebook from "../assets/icons/facebook.png";
-import apple from "../assets/icons/apple.png";
 import heart from "../assets/icons/heart.png";
 import menu from "../assets/icons/menu.png";
 import search from "../assets/icons/search.png";
@@ -22,11 +21,19 @@ import emerald from "../assets/icons/emerald.png";
 import amazonpay from "../assets/icons/amazonpay.png";
 import applepay from "../assets/icons/applepay.png";
 import gpay from "../assets/icons/gpay.png";
+import visa from "../assets/icons/visa.png";
+import mastercard from "../assets/icons/mastercard.png";
+import feedback from "../assets/icons/feedback.png";
+import iHealth from "../assets/icons/iHealth.png";
+import iLife from "../assets/icons/iLife.png";
+import iAuto from "../assets/icons/iAuto.png";
+import iHome from "../assets/icons/iHome.png";
+import iBusiness from "../assets/icons/iBusiness.png";
+import iTravel from "../assets/icons/iHealth.png";
 
 export default {
   google,
   facebook,
-  apple,
   heart,
   menu,
   search,
@@ -48,4 +55,13 @@ export default {
   amazonpay,
   applepay,
   gpay,
+  visa,
+  mastercard,
+  feedback,
+  iAuto,
+  iBusiness,
+  iHealth,
+  iHome,
+  iLife,
+  iTravel,
 };

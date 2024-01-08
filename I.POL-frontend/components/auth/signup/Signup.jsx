@@ -3,16 +3,12 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
-  Image,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-// import firebaseApp from "../../../config/firebase-config";
-// const auth = getAuth(firebaseApp);
 
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -50,14 +46,6 @@ const Signup = () => {
   }, []);
 
   const handleSignup = async () => {
-    // const userCredential = await createUserWithEmailAndPassword(
-    //   auth,
-    //   email,
-    //   password
-    // );
-
-    // const idToken = await userCredential.user.getIdToken();
-
     try {
       setIsLoading(true);
 
@@ -84,10 +72,10 @@ const Signup = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ marginHorizontal: SIZES.small }}>
+        <View style={{ marginHorizontal: SIZES.large }}>
           <View style={styles.container}>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.welcomeMsg}>Welcome Back</Text>
+              <Text style={styles.welcomeMsg}>Welcome Dear,</Text>
               <Text style={styles.preMsg}>
                 Sign up to explore all existing insurance policies!!!
               </Text>
@@ -121,60 +109,57 @@ const Signup = () => {
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
               />
+            </KeyboardAvoidingView>
 
-              <Text style={styles.actionText}>
-                Already have an account?{" "}
-                <Text
-                  style={styles.cta}
-                  onPress={() => {
-                    router.push(`/auth/signIn_`);
-                  }}
-                >
-                  Login.
-                </Text>
+            <Text style={styles.actionText}>
+              Already have an account?{" "}
+              <Text
+                style={styles.cta}
+                onPress={() => {
+                  router.push(`/auth/signIn_`);
+                }}
+              >
+                Login.
               </Text>
+            </Text>
 
-              {isLoading ? (
-                <TouchableOpacity style={styles.focussedBtn}>
-                  <ActivityIndicator
+            {isLoading ? (
+              <TouchableOpacity style={styles.focussedBtn}>
+                <ActivityIndicator size={SIZES.large} color={COLORS.primary} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
+                <Text style={styles.authBtnText}>Sign up</Text>
+              </TouchableOpacity>
+            )}
+
+            <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
+              <Text style={styles.signupOptions}>Or sign up with</Text>
+
+              <View style={styles.socialButtonsContainer}>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-google"
+                    color={COLORS.text2}
                     size={SIZES.large}
-                    color={COLORS.primary}
                   />
                 </TouchableOpacity>
-              ) : (
-                <TouchableOpacity style={styles.authBtn} onPress={handleSignup}>
-                  <Text style={styles.authBtnText}>Sign up</Text>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-apple"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
                 </TouchableOpacity>
-              )}
-
-              <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
-                <Text style={styles.signupOptions}>Or sign up with</Text>
-
-                <View style={styles.socialButtonsContainer}>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-google"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-apple"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-facebook"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-facebook"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </TouchableOpacity>
               </View>
-            </KeyboardAvoidingView>
+            </View>
           </View>
         </View>
       </ScrollView>

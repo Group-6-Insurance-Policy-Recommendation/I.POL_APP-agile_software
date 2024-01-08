@@ -7,18 +7,16 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import PaymentMethod from "../../common/other/paymentMethod/PaymentMethod";
-// import PopUpAnimation from "../../common/other/popUpAnimation/PopUpAnimation";
-import CustomIcon from "../../../utils/CustomIcon";
 import PaymentCall from "../../common/other/paymentCall/PaymentCall";
 import { COLORS, FONT, icons, SIZES } from "../../../constants";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import companyPolicies from "../../../data/companyPolicy";
 import { createPolicy } from "../../../redux/actions/policyThunk";
-// import LottiePopUp from "../../common/other/lottiePopUp/LottiePopUp";
 
 const PaymentList = [
   {
@@ -63,13 +61,13 @@ const PayScreen = () => {
     console.log(policy);
   }, [policyID]);
 
-  const handleCreatePolicy = () => {
+  const handleCreatePolicy = async () => {
     // Check if user profile firstname and lastname are empty
     if (
       !user ||
-      !user.profile ||
-      !user.profile.firstname ||
-      !user.profile.lastname
+      !user?.profile ||
+      !user?.profile?.firstname ||
+      !user?.profile?.lastname
     ) {
       alert(
         "Please complete your profile with your first and last name before creating a policy."
@@ -95,7 +93,7 @@ const PayScreen = () => {
       coverage: companyPolicy?.policyDetail?.policyInformation.coverage,
       policyNumber: companyPolicy?.policyDetail?.policyInformation.policyNumber,
       // policyholderName: "John Doe",
-      policyholderName: `${user.profile.firstname} ${user.profile.lastname}`,
+      policyholderName: `${user?.profile?.firstname} ${user?.profile?.lastname}`,
       policyholderEmail: user?.email,
       policyCost: price,
       effectiveDate: currentDate.toISOString().split("T")[0], // Format current date as YYYY-MM-DD
@@ -103,6 +101,19 @@ const PayScreen = () => {
       insuredEntities: ["policyholderName"],
     };
     console.log(policyData);
+
+    const insuranceType = policyData.type.toLowerCase();
+    const storageKey = `${insuranceType}InsuranceData`;
+
+    const insuranceData = await AsyncStorage.getItem(storageKey);
+
+    if (!insuranceData) {
+      throw new Error(`Missing insurance data for type ${insuranceType}`);
+    }
+
+    const parsedInsuranceData = JSON.parse(insuranceData);
+
+    policyData[storageKey] = parsedInsuranceData;
 
     dispatch(createPolicy(policyData));
   };
@@ -146,15 +157,20 @@ const PayScreen = () => {
                   colors={[COLORS.gray, "#0C0F14"]}
                 >
                   <View style={styles.CreditCardRow}>
-                    <CustomIcon
+                    {/* <CustomIcon
                       name="chip"
                       size={20 * 2}
                       color={COLORS.primary}
+                    /> */}
+                    <Image
+                      source={icons.visa}
+                      resizeMode="contain"
+                      style={styles.btnImg}
                     />
-                    <CustomIcon
-                      name="visa"
-                      size={30 * 2}
-                      color={COLORS.primary}
+                    <Image
+                      source={icons.mastercard}
+                      resizeMode="contain"
+                      style={styles.btnImg}
                     />
                   </View>
                   <View style={styles.CreditCardNumberContainer}>
@@ -198,10 +214,10 @@ const PayScreen = () => {
             </TouchableOpacity>
           ))}
         </View>
-        <View style={{ marginTop: 30 }}></View>
+        <View style={{ marginTop: 6 }}></View>
         <PaymentCall
           buttonTitle={`Pay with ${paymentMode}`}
-          price={{ price: price, currency: "$" }}
+          price={{ price: price, currency: "₵" }}
           buttonPressHandler={handleCreatePolicy}
         />
       </ScrollView>
@@ -211,11 +227,7 @@ const PayScreen = () => {
 
 const styles = StyleSheet.create({
   ScreenContainer: {
-    // flex: 1,
     backgroundColor: COLORS.white,
-  },
-  LottieAnimation: {
-    // flex: 1,
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -292,6 +304,12 @@ const styles = StyleSheet.create({
   },
   CreditCardDateContainer: {
     alignItems: "flex-end",
+  },
+  btnImg: {
+    width: 40,
+    height: 40,
+    borderRadius: SIZES.small,
+    borderRadius: 50,
   },
 });
 

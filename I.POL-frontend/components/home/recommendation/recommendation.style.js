@@ -98,6 +98,11 @@ const styles = StyleSheet.create({
     fontFamily: FONT.medium,
     color: COLORS.text2,
   },
+  headerTitle2: {
+    fontSize: SIZES.small,
+    fontFamily: FONT.regular,
+    color: COLORS.gray,
+  },
   headerBtn: {
     fontSize: SIZES.small,
     fontFamily: FONT.medium,

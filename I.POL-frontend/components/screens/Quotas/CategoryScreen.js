@@ -6,154 +6,111 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Dimensions,
+  Alert,
 } from "react-native";
-import { COLORS, icons, images, SIZES, FONT } from "../../../constants";
-import { ProfileHeaderBtn } from "../..";
-import RNPickerSelect from "react-native-picker-select";
-import { useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
+import { COLORS, images, SIZES, FONT } from "../../../constants";
+import { useEffect, useState } from "react";
 
 const CategoryScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
 
   const categories = [
     { label: "Health Insurance", value: "health" },
-    { label: "Car Insurance", value: "car" },
+    { label: "Auto Insurance", value: "car" },
     { label: "Home Insurance", value: "home" },
+    { label: "Life Insurance", value: "life" },
+    { label: "Business Insurance", value: "business" },
+    { label: "Travel Insurance", value: "travel" },
   ];
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
+
+  const handleInsuranceTypeSelect = (insuranceType) => {
+    // Navigate to the next screen with selected insurance type
+    if (selectedCategory === null) {
+      return alert("No category is selected!");
+    }
+
+    router.push(`/screens/quotas/budgetScreen_/${insuranceType}`);
+  };
 
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         backgroundColor: COLORS.white,
       }}
     >
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          headerLeft: () => (
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ProfileHeaderBtn
-                iconUrl={images.logo}
-                dimension="100%"
-                handlePress={() => router.push(`home`)}
-              />
-              <Text
-                style={{
-                  fontFamily: FONT.bold,
-                  fontWeight: "600",
-                  color: COLORS.primary,
-                  fontSize: SIZES.xSmall,
-                }}
-              >
-                IPOL
-              </Text>
-            </View>
-          ),
-          headerRight: () => (
-            <ProfileHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={() => router.push(`profile`)}
-            />
-          ),
+      <View
+        style={{
+          width: width,
+          height: height,
+          padding: SIZES.medium,
         }}
-      />
-
-      <View style={styles.container}>
+      >
         <View style={styles.pageImgContainer}>
           <Image
             source={images.recommendation}
             resizeMode="center"
-            style={styles.pageImg}
+            style={{
+              width: width - 20,
+              height: height / 2,
+            }}
           />
         </View>
-        <Text style={styles.txt}>Select Your Preferred Category...</Text>
+        <View style={{ paddingVertical: SIZES.xxLarge }}>
+          <Text style={styles.txt}>Select Your Preferred Category...</Text>
+          <View style={{ width: "100%" }}>
+            <Dropdown
+              style={[
+                styles.dropdown,
+                isFocus && { borderColor: COLORS.primary },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={categories}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus ? "Select category..." : "..."}
+              searchPlaceholder="Search..."
+              value={selectedCategory}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={(value) => {
+                setSelectedCategory(value);
+                setIsFocus(false);
+              }}
+            />
+          </View>
 
-        <View style={{ width: "100%" }}>
-          <RNPickerSelect
-            useNativeAndroidPickerStyle={false}
-            style={pickerSelectStyles}
-            placeholder={{ label: "Select a category.", value: "" }}
-            items={categories}
-            value={selectedCategory}
-            onValueChange={(value) => setSelectedCategory(value)}
-          />
+          <TouchableOpacity
+            onPress={() => {
+              handleInsuranceTypeSelect(selectedCategory?.label);
+              // Alert.alert(`You have selected\nPolicy: ${selectedCategory.label}`);
+            }}
+            style={styles.pageBtn}
+          >
+            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
+              Next
+            </Text>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            router.push(`/screens/quotas/budgetScreen_`);
-          }}
-          style={styles.pageBtn}
-        >
-          <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-            Next
-          </Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    width: "100%",
-    fontSize: 16,
-    fontFamily: FONT.regular,
-    fontWeight: "200",
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.white,
-    borderRadius: 4,
-    color: "black",
-    marginVertical: 30,
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-  inputAndroid: {
-    width: "100%",
-    fontSize: 16,
-    fontFamily: FONT.regular,
-    fontWeight: "200",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.white,
-    borderRadius: 8,
-    color: COLORS.text,
-    marginVertical: 30,
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-  inputWeb: {
-    width: "100%",
-    fontSize: 16,
-    fontFamily: FONT.regular,
-    fontWeight: "200",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.white,
-    borderRadius: 8,
-    color: "black",
-    marginVertical: 30,
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
-});
 
 const styles = StyleSheet.create({
   container: {
@@ -175,34 +132,58 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: SIZES.small,
     paddingHorizontal: SIZES.large,
+    marginVertical: 20,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
     backgroundColor: COLORS.primary,
-    marginVertical: SIZES.large,
   },
   pageImgContainer: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
   },
   pageImg: {
     width: 200,
     height: 200,
   },
-  inputCat: {
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginVertical: 10,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+    fontFamily: FONT.regular,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: COLORS.gray2,
+    fontFamily: FONT.regular,
+  },
+  selectedTextStyle: {
     fontSize: 16,
     fontFamily: FONT.regular,
-    fontWeight: "200",
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
-    borderRadius: 8,
-    color: "black",
-    marginVertical: 30,
-    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

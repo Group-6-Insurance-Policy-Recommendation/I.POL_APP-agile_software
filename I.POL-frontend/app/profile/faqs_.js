@@ -1,12 +1,13 @@
 import { View, Text } from "react-native";
 import React from "react";
+import { Faqs } from "../../components";
 
-const ClaimHistory = () => {
+const faqs_ = () => {
   return (
     <View>
-      <Text>ClaimHistory</Text>
+      <Faqs />
     </View>
   );
 };
 
-export default ClaimHistory;
+export default faqs_;

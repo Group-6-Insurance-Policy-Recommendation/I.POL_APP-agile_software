@@ -6,28 +6,54 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
 } from "react-native";
-import React from "react";
-import { COLORS, FONT, SIZES } from "../../../constants";
+import React, { useEffect, useState } from "react";
+import { COLORS, FONT, icons, SIZES } from "../../../constants";
 import { router } from "expo-router";
+import {
+  Ionicons,
+  FontAwesome5,
+  MaterialIcons,
+  Octicons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../../redux/actions/authThunk";
 
 const Profile = () => {
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <SafeAreaView
       style={{
-        width: "100%",
-        backgroundColor: COLORS.white,
+        width: width,
+        height: height,
+        backgroundColor: COLORS.tertiary,
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
         <View
           style={{
-            flex: 1,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
             padding: SIZES.medium,
-            paddingVertical: SIZES.xxLarge,
+            marginBottom: 60,
           }}
         >
           <View
@@ -35,7 +61,7 @@ const Profile = () => {
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: COLORS.tertiary,
+              backgroundColor: COLORS.primary,
               borderRadius: SIZES.small,
               paddingVertical: SIZES.large,
             }}
@@ -47,127 +73,246 @@ const Profile = () => {
             />
             <Text
               style={{
-                fontFamily: FONT.regular,
+                fontFamily: FONT.medium,
                 fontSize: SIZES.xLarge,
                 fontWeight: "600",
-                color: COLORS.text2,
+                color: COLORS.white,
                 paddingVertical: SIZES.medium,
               }}
             >
-              Otumfuo Prince
+              {user?.profile?.firstname + " " + user?.profile?.lastname}
             </Text>
             <Text
               style={{
                 fontFamily: FONT.regular,
-                fontSize: SIZES.xSmall,
+                fontSize: SIZES.small,
                 fontWeight: "100",
-                color: COLORS.primary,
+                color: COLORS.white,
               }}
             >
-              @PrinceStiles
+              @{user?.profile?.username}
             </Text>
           </View>
 
           <View style={styles.profileMenu}>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
               onPress={() => router.push(`/profile/editProfile_`)}
             >
-              <Text style={styles.labelText}>Profile Information</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <FontAwesome5
+                    name="user-alt"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/editProfile_`)}
+                >
+                  Profile Information
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/editProfile_`)}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`/profile/userInsurancePolicy_`)}
             >
-              <Text style={styles.labelText}>Insurance Policies</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <Octicons
+                    name="heart"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/userInsurancePolicy_`)}
+                >
+                  Insurance Policies
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/userInsurancePolicy_`)}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`/profile/claimHistory_`)}
             >
-              <Text style={styles.labelText}>Claim History</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <MaterialIcons
+                    name="history-edu"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/claimHistory_`)}
+                >
+                  Claim History
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/claimHistory_`)}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`/profile/securitySettings_`)}
             >
-              <Text style={styles.labelText}>Security Settings</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <FontAwesome5
+                    name="user-shield"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/securitySettings_`)}
+                >
+                  Security Settings
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/securitySettings_`)}
+              />
             </TouchableOpacity>
           </View>
 
           <View style={styles.profileMenu}>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`/profile/notification_`)}
             >
-              <Text style={styles.labelText}>Notification</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <Ionicons
+                    name="ios-notifications-circle"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/notification_`)}
+                >
+                  Notification
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/notification_`)}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`profile/feedback_`)}
             >
-              <Text style={styles.labelText}>Feedback</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <Octicons
+                    name="feed-rocket"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`profile/feedback_`)}
+                >
+                  Feedback
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`profile/feedback_`)}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={() => router.push(`/profile/faqs_`)}
             >
-              <Text style={styles.labelText}>FAQs</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <FontAwesome5
+                    name="question-circle"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text
+                  style={styles.labelText}
+                  onPress={() => router.push(`/profile/faqs_`)}
+                >
+                  FAQs
+                </Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+                onPress={() => router.push(`/profile/faqs_`)}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.profileLabel}>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <FontAwesome5
+                    name="user-cog"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text style={styles.labelText}>More Settings</Text>
+              </View>
+              <Image
+                source={icons.chevronRight}
+                resizeMode="contain"
+                style={styles.linkBtnImage}
+              />
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: "100%",
-                paddingVertical: SIZES.small,
-                backgroundColor: COLORS.tertiary,
-                borderRadius: SIZES.xSmall,
-                marginVertical: 2,
-                paddingHorizontal: SIZES.xxLarge,
-              }}
+              style={styles.profileLabel}
+              onPress={logoutHandler}
             >
-              <Text style={styles.labelText}>More Settings</Text>
+              <View style={styles.labelTab}>
+                <View style={styles.icon}>
+                  <SimpleLineIcons
+                    name="logout"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </View>
+                <Text style={styles.logoutText} onPress={logoutHandler}>
+                  Logout
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -180,11 +325,26 @@ const styles = StyleSheet.create({
   profileMenu: {
     width: "100%",
     paddingTop: SIZES.large,
-    // marginVertical: SIZES.xxLarge,
-    // borderTopWidth: 1,
     borderBottomWidth: 1,
     borderTopColor: COLORS.gray2,
     borderBottomColor: COLORS.lightWhite,
+  },
+  profileLabel: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: SIZES.small,
+    paddingHorizontal: SIZES.large,
+    backgroundColor: COLORS.white,
+    borderRadius: SIZES.xSmall,
+    marginVertical: 1,
+  },
+  labelTab: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
   },
   labelText: {
     fontFamily: FONT.regular,
@@ -192,6 +352,26 @@ const styles = StyleSheet.create({
     fontWeight: "100",
     color: COLORS.text,
     padding: 2,
+  },
+  logoutText: {
+    fontFamily: FONT.regular,
+    fontSize: SIZES.medium,
+    fontWeight: "100",
+    color: "red",
+    padding: 2,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    // backgroundColor: COLORS.primary,
+    borderRadius: SIZES.small,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linkBtnImage: {
+    width: 20,
+    height: 20,
+    tintColor: COLORS.primary,
   },
 });
 

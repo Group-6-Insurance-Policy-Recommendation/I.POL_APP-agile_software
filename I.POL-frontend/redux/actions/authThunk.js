@@ -3,15 +3,23 @@ import {
   loginSuccess,
   signUpSuccess,
   signUpFailure,
+  logoutSuccess,
   createProfileSuccess,
   createProfileFailure,
   updateProfileSuccess,
   updateProfileFailure,
+  changePasswordSuccess,
+  changePasswordFailure,
+  deleteUserSuccess,
+  deleteUserFailure,
+  forgotPasswordSuccess,
+  forgotPasswordFailure,
 } from "./authActions";
 import axios from "axios";
 import { router } from "expo-router";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 
 export const loginUser = (credentials, idToken) => async (dispatch) => {
   try {
@@ -28,6 +36,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
     if (response.status === 200) {
       // Dispatch the login success action
       dispatch(loginSuccess(response.data));
+      console.log(response.data);
 
       // Save user data to AsyncStorage
       await AsyncStorage.setItem("userData", JSON.stringify(response.data));
@@ -44,7 +53,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
     if (error?.response?.data) {
       console.error("Login failed:", error.response.data);
       // Handle error and dispatch appropriate actions
-      alert(error.response.data);
+      alert(error.response.data.error);
     } else {
       alert("An Error Occurred. Try Again!");
     }
@@ -82,6 +91,22 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
   }
 };
 
+export const logoutUser = () => async (dispatch) => {
+  try {
+    // Clear user data from AsyncStorage
+    await AsyncStorage.removeItem("userData");
+
+    // Dispatch the logout success action
+    dispatch(logoutSuccess());
+
+    // Navigate to the login screen or any other screen
+    router.push(`/auth/signIn_`);
+  } catch (error) {
+    // Handle error (optional)
+    console.error("Logout failed:", error);
+  }
+};
+
 export const createProfile =
   (profileData, user_id, idToken) => async (dispatch) => {
     try {
@@ -101,9 +126,10 @@ export const createProfile =
 
         // Save profile data to AsyncStorage
         await AsyncStorage.setItem(
-          "profileData",
+          "userData",
           JSON.stringify(response.data)
         );
+        alert("Create profile was successful.")
       } else {
         // Dispatch the create profile failure action
         dispatch(createProfileFailure(response.data.error));
@@ -114,7 +140,13 @@ export const createProfile =
       dispatch(
         createProfileFailure("Create profile failed. Please try again.")
       );
-      alert("Something went wrong. Try again.");
+      if (error?.response?.data) {
+        console.error(error.response.data);
+        // Handle error and dispatch appropriate actions
+        alert(error.response.data.error);
+      } else {
+        alert("Create profile failed. Try Again!");
+      }
     }
   };
 
@@ -137,9 +169,10 @@ export const updateProfile =
 
         // Save updated profile data to AsyncStorage
         await AsyncStorage.setItem(
-          "profileData",
+          "userData",
           JSON.stringify(response.data)
         );
+        alert("Update profile was successful.")
       } else {
         // Dispatch the update profile failure action
         dispatch(updateProfileFailure(response.data.error));
@@ -150,5 +183,107 @@ export const updateProfile =
       dispatch(
         updateProfileFailure("Update profile failed. Please try again.")
       );
+      if (error?.response?.data) {
+        console.error(error.response.data);
+        // Handle error and dispatch appropriate actions
+        alert(error.response.data.error);
+      } else {
+        alert("Update profile failed. Try Again!");
+      }
     }
   };
+
+// Action thunk for changing the password
+export const changePassword =
+  (userId, currentPassword, newPassword) => async (dispatch) => {
+    try {
+      // Make API request to change password
+      console.log(userId);
+      const response = await axios.put(
+        "https://ipol-server.onrender.com/api/users/change-password",
+        {
+          userId,
+          currentPassword,
+          newPassword,
+        }
+      );
+
+      if (response.status === 200) {
+        // Dispatch success action if password change is successful
+        dispatch(changePasswordSuccess(response.data.message));
+        alert(response.data.message);
+      } else {
+        // Dispatch failure action with the error message
+        dispatch(changePasswordFailure(response.data.error));
+      }
+    } catch (error) {
+      // Handle network errors or unexpected errors
+      console.error("Error:", error);
+      dispatch(
+        changePasswordFailure("Failed to change password. Please try again.")
+      );
+      alert("Failed to change password.", error.response.data.error);
+    }
+  };
+
+// Action thunk for initiating forgot password
+export const initiateForgotPassword = (email) => async (dispatch) => {
+  try {
+    // Make API request to initiate forgot password
+    const response = await axios.post(
+      "https://ipol-server.onrender.com/api/users/forgot-password",
+      {
+        email,
+      }
+    );
+
+    if (response.status === 200) {
+      // Dispatch success action if initiating forgot password is successful
+      dispatch(forgotPasswordSuccess(response.data.message));
+      alert(response.data.message);
+    } else {
+      // Dispatch failure action with the error message
+      dispatch(forgotPasswordFailure(response.data.error));
+    }
+  } catch (error) {
+    // Handle network errors or unexpected errors
+    console.error("Error:", error);
+    dispatch(
+      forgotPasswordFailure(
+        "Failed to initiate password reset. Please try again."
+      )
+    );
+    alert("Failed To Initiate Password Reset. ", error.response.data.error);
+  }
+};
+
+// Action thunk for deleting a user
+export const deleteUser = (userId, password) => async (dispatch) => {
+  try {
+    // Make API request to delete user
+    console.log(userId);
+    const response = await axios.delete(
+      "https://ipol-server.onrender.com/api/users/delete-user",
+      {
+        data: { userId, password },
+      }
+    );
+
+    if (response.status === 200) {
+      // Dispatch success action if user deletion is successful
+      dispatch(deleteUserSuccess(response.data.message));
+      alert(response.data.message);
+      setTimeout(() => {
+        dispatch(logoutUser());
+      }, 3000);
+    } else {
+      // Dispatch failure action with the error message
+      dispatch(deleteUserFailure(response.data.error));
+    }
+  } catch (error) {
+    // Handle network errors or unexpected errors
+    console.error("Error:", error);
+    dispatch(deleteUserFailure("Failed to delete account. Please try again."));
+    alert("Failed To Delete Account.", error.response.data.error);
+  }
+};

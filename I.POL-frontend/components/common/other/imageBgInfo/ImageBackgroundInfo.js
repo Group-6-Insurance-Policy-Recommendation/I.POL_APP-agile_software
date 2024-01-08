@@ -21,7 +21,7 @@ const ImageBackgroundInfo = ({
             width: "100%",
             borderTopLeftRadius: SIZES.xxLarge,
             borderTopRightRadius: SIZES.xxLarge,
-            backgroundColor: COLORS.gray,
+            backgroundColor: COLORS.primary,
             padding: SIZES.large,
           }}
         >
@@ -50,7 +50,7 @@ const ImageBackgroundInfo = ({
 const styles = StyleSheet.create({
   ItemBackgroundImage: {
     width: "100%",
-    aspectRatio: 20 / 25,
+    aspectRatio: 20 / 20,
     justifyContent: "flex-end",
     backgroundColor: COLORS.white,
   },
@@ -69,21 +69,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   detail: {
-    fontSize: SIZES.small,
+    fontSize: SIZES.small + 2,
     fontFamily: FONT.regular,
+    fontWeight: "400",
     color: COLORS.lightWhite,
     marginBottom: 5,
   },
   subtitle: {
-    fontSize: SIZES.medium - 2,
+    fontSize: SIZES.medium,
     fontFamily: FONT.medium,
     fontWeight: "400",
-    color: COLORS.primary,
+    color: COLORS.white,
     marginTop: 10,
     marginBottom: 5,
   },
   benefit: {
-    fontSize: SIZES.small,
+    fontSize: SIZES.small + 2,
     fontFamily: FONT.regular,
     color: COLORS.lightWhite,
     // marginLeft: 10,

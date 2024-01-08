@@ -1,7 +1,7 @@
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 // import EmptyListAnimation from "../components/EmptyListAnimation";
-import { COLORS, SIZES } from "../../../constants";
+import { COLORS, FONT, SIZES } from "../../../constants";
 import { router } from "expo-router";
 import { useSelector } from "react-redux";
 import HuddleScreenCard from "../../common/card/huddleCard/HuddleScreenCard";
@@ -63,12 +63,21 @@ const HuddleScreen = () => {
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.ScrollViewFlex}
+    <View
+      style={{
+        backgroundColor: COLORS.white,
+        paddingTop: SIZES.medium,
+        height: height,
+      }}
     >
-      <View style={styles.ScreenContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.ScrollViewFlex}
+      >
         <View style={styles.ScrollViewInnerView}>
+          <View style={styles.HeaderContainer}>
+            <Text style={styles.HeaderText}>My Huddles</Text>
+          </View>
           <View style={styles.ItemContainer}>
             {/* <HeaderBar title="Order History" /> */}
 
@@ -90,8 +99,8 @@ const HuddleScreen = () => {
             )}
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -99,10 +108,6 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     // flex: 1,
     backgroundColor: COLORS.white,
-    paddingVertical: SIZES.medium,
-  },
-  LottieAnimation: {
-    height: 250,
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -110,6 +115,20 @@ const styles = StyleSheet.create({
   ScrollViewInnerView: {
     flex: 1,
     justifyContent: "space-between",
+    marginBottom: 100,
+  },
+  HeaderContainer: {
+    paddingHorizontal: SIZES.large,
+    paddingBottom: SIZES.small,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  HeaderText: {
+    fontFamily: FONT.medium,
+    fontWeight: "600",
+    fontSize: SIZES.large,
+    color: COLORS.primary,
   },
   ItemContainer: {
     flex: 1,

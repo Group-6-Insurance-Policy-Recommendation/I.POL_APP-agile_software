@@ -34,7 +34,7 @@ const HuddleItemCard = ({
         </View>
         <View>
           <Text style={styles.CardCurrency}>
-            $ <Text style={styles.Cost}>{cost}</Text>
+            ₵ <Text style={styles.Cost}>{cost}</Text>
           </Text>
         </View>
       </View>
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
   },
   CardTableRow: {
-    flex: 1,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",

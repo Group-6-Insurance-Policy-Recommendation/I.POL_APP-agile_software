@@ -26,19 +26,9 @@ const index = () => {
             >
               <ProfileHeaderBtn
                 iconUrl={images.logo}
-                dimension="100%"
+                dimension={35}
                 handlePress={() => router.push(`home`)}
               />
-              <Text
-                style={{
-                  fontFamily: FONT.bold,
-                  fontWeight: "600",
-                  color: COLORS.primary,
-                  fontSize: SIZES.xSmall,
-                }}
-              >
-                IPOL
-              </Text>
             </View>
           ),
           headerRight: () => (

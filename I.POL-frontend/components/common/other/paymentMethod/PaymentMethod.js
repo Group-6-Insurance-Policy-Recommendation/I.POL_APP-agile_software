@@ -29,7 +29,7 @@ const PaymentMethod = ({ paymentMode, name, icon }) => {
 const styles = StyleSheet.create({
   PaymentCardContainer: {
     borderRadius: 16,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: COLORS.white,
   },
   LinearGradientWallet: {
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingHorizontal: 24,
     gap: 24,
-    borderRadius: 16,
+    borderRadius: 14,
   },
   PaymentTitle: {
     fontFamily: FONT.medium,

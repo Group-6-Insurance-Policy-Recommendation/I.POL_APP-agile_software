@@ -8,6 +8,7 @@ import {
   View,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { COLORS, FONT, images, SIZES } from "../../../constants";
 import companyPolicies from "../../../data/companyPolicy";
@@ -19,7 +20,13 @@ const DetailsScreen = () => {
 
   const { policyID } = useLocalSearchParams();
 
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
   useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+
     // Find the policy with the matching policyId
     const policy = companyPolicies.find((policy) => policy.id === policyID);
 
@@ -28,12 +35,12 @@ const DetailsScreen = () => {
     console.log(policy);
   }, [policyID]);
 
-  const handleSelectPlan = (policyID) => {
-    router.push(`screens/other/policyPlanScreen_/${policyID}`);
+  const handleInsuranceInfo = (policyID) => {
+    router.push(`screens/other/insuranceInfo_/${policyID}`);
   };
 
   return (
-    <View style={styles.ScreenContainer}>
+    <View style={{ backgroundColor: COLORS.white }}>
       <StatusBar backgroundColor={COLORS.white} />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -95,8 +102,8 @@ const DetailsScreen = () => {
                 {companyPolicy?.policyDetail?.termsAndConditions.premiums.acceptedPaymentMethods.map(
                   (responsibility, index) => (
                     <Text key={index} style={styles.subtitle2}>
-                      - {responsibility}
-                      {"... "}
+                      🎗️ {responsibility}
+                      {"\n"}
                     </Text>
                   )
                 )}
@@ -118,7 +125,7 @@ const DetailsScreen = () => {
               <Text style={styles.subtitle}>Cancellation</Text>
               <Text style={styles.subtitle2}>Cancellation Policy:</Text>
               <Text style={styles.subtitle2}>
-                -{" "}
+                🎈{" "}
                 {
                   companyPolicy?.policyDetail?.termsAndConditions.cancellation
                     .cancellationPolicy
@@ -126,7 +133,7 @@ const DetailsScreen = () => {
               </Text>
               <Text style={styles.subtitle2}>Refund Policy:</Text>
               <Text style={styles.subtitle2}>
-                -{" "}
+                ⌚{" "}
                 {
                   companyPolicy?.policyDetail?.termsAndConditions.cancellation
                     .refundPolicy
@@ -165,14 +172,14 @@ const DetailsScreen = () => {
             {companyPolicy?.policyDetail?.responsibilities
               .map((responsibility, index) => (
                 <Text key={index} style={styles.subtitle2}>
-                  - {responsibility}
+                  💧 {responsibility}
                 </Text>
               ))
               .slice(0, 5)}
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.subtitle}>Contact Information</Text>
+            <Text style={styles.InfoTitle}>{"\n"}Contact Information</Text>
             <View style={styles.sectionFlex}>
               <Text style={styles.subtitle2}>
                 Insurance Company Name:{" "}
@@ -214,11 +221,14 @@ const DetailsScreen = () => {
           </View>
 
           <TouchableOpacity
-            onPress={() => handleSelectPlan(companyPolicy?.id)}
+            onPress={() => handleInsuranceInfo(companyPolicy?.id)}
             style={styles.pageBtn}
           >
-            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-              Select A Plan
+            <Text
+              style={{ color: COLORS.white, fontFamily: FONT.medium }}
+              onPress={() => handleInsuranceInfo(companyPolicy?.id)}
+            >
+              Proceed
             </Text>
           </TouchableOpacity>
         </View>
@@ -229,7 +239,6 @@ const DetailsScreen = () => {
 
 const styles = StyleSheet.create({
   ScreenContainer: {
-    // flex: 1,
     backgroundColor: COLORS.white,
   },
   ScrollViewFlex: {
@@ -240,9 +249,10 @@ const styles = StyleSheet.create({
     padding: SIZES.large,
   },
   InfoTitle: {
-    fontFamily: FONT.bold,
+    fontFamily: FONT.regular,
+    fontWeight: "600",
     fontSize: 16,
-    color: COLORS.text,
+    color: COLORS.primary,
     marginBottom: 10,
   },
   DescriptionText: {
@@ -252,15 +262,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   subtitle2: {
-    fontSize: SIZES.small,
-    fontFamily: FONT.medium,
+    fontSize: SIZES.small + 2,
+    fontFamily: FONT.regular,
     fontWeight: "400",
-    color: COLORS.text2,
-    marginVertical: 10,
+    color: COLORS.gray,
+    marginVertical: 5,
   },
   subtitle: {
     fontSize: SIZES.medium - 2,
-    fontFamily: FONT.medium,
+    fontFamily: FONT.regular,
     fontWeight: "400",
     color: COLORS.primary,
     marginVertical: 10,

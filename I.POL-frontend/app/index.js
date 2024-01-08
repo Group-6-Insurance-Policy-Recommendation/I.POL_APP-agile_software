@@ -59,7 +59,7 @@ const Home = () => {
     },
     signinButton: {
       width: "100%",
-      backgroundColor: COLORS.secondary,
+      backgroundColor: COLORS.primary,
       borderRadius: SIZES.xSmall,
       paddingVertical: SIZES.small,
       paddingHorizontal: SIZES.large,

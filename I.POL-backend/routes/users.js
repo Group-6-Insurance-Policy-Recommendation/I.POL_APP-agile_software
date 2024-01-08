@@ -258,47 +258,53 @@ router.post("/profile", upload.single("profilePicture"), async (req, res) => {
 });
 
 // UPDATE PROFILE
-router.put("/profile/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
+router.put(
+  "/profile/:id",
+  upload.single("profilePicture"),
+  async (req, res) => {
+    try {
+      const userId = req.params.id;
 
-    const updatedProfileData = {
-      profilePicture: profilePicture || "",
-      coverPicture: req.body.coverPicture || "",
-      desc: req.body.desc || "",
-      relationship: req.body.relationship || null,
-      firstname: req.body.firstname || "",
-      lastname: req.body.lastname || "",
-      username: req.body.username || "",
-      nationality: req.body.nationality || "",
-      address: req.body.address || "",
-      city: req.body.city || "",
-      dateOfBirth: req.body.dateOfBirth || null,
-      phone: req.body.phone || "",
-      gender: req.body.gender || "",
-      ocupation: req.body.ocupation || "",
-      maritalStatus: req.body.maritalStatus || "",
-      income: req.body.income || "",
-      asset: req.body.asset || "",
-      liability: req.body.liability || "",
-      // ... update other profile fields
-    };
+      const profilePicture = req.file.buffer.toString("base64");
 
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: userId },
-      { $set: { profile: updatedProfileData } },
-      { new: true, populate: "profile" }
-    );
+      const updatedProfileData = {
+        profilePicture: profilePicture || "",
+        coverPicture: req.body.coverPicture || "",
+        desc: req.body.desc || "",
+        relationship: req.body.relationship || null,
+        firstname: req.body.firstname || "",
+        lastname: req.body.lastname || "",
+        username: req.body.username || "",
+        nationality: req.body.nationality || "",
+        address: req.body.address || "",
+        city: req.body.city || "",
+        dateOfBirth: req.body.dateOfBirth || null,
+        phone: req.body.phone || "",
+        gender: req.body.gender || "",
+        ocupation: req.body.ocupation || "",
+        maritalStatus: req.body.maritalStatus || "",
+        income: req.body.income || "",
+        asset: req.body.asset || "",
+        liability: req.body.liability || "",
+        // ... update other profile fields
+      };
 
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User or profile not found" });
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userId },
+        { $set: { profile: updatedProfileData } },
+        { new: true, populate: "profile" }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User or profile not found" });
+      }
+      //F73F-587E
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to update profile" });
     }
-
-    res.status(200).json(updatedUser);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to update profile" });
   }
-});
+);
 
 module.exports = router;

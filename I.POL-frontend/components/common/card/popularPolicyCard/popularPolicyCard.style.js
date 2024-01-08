@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: COLORS.white,
   },
-  policyCov: {
+  policyCoverage: {
     fontSize: SIZES.small + 2,
     fontFamily: "DMRegular",
     color: COLORS.primary,
     marginTop: 3,
     textTransform: "capitalize",
   },
-  policyDesc: {
+  policyDescription: {
     fontSize: SIZES.small + 2,
     fontFamily: "DMRegular",
     color: COLORS.lightWhite,

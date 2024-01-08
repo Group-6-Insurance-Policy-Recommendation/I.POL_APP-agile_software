@@ -5,13 +5,13 @@ import styles from "./dashboardCard.style";
 const DashboardCard = ({ data, onPress }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(data)}>
-      <TouchableOpacity style={styles.imageContainer}>
+      {/* <TouchableOpacity style={styles.imageContainer}> */}
         <Image
           source={data.image}
           resizeMode="contain"
           style={styles.cardImage}
         />
-      </TouchableOpacity>
+      {/* </TouchableOpacity> */}
       <Text style={styles.cardText} numberOfLines={1}>
         {data.title}
       </Text>

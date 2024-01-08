@@ -6,27 +6,28 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 16,
     backgroundColor: "#fff",
+    marginBottom: 60,
   },
   pageImgContainer: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
   },
   pageImg: {
     width: 200,
     height: 200,
   },
-  header: {
+  HeaderContainer: {
+    paddingBottom: SIZES.small,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    marginTop: SIZES.small,
+    justifyContent: "space-between",
   },
-  headerTitle: {
-    fontSize: SIZES.large,
+  HeaderText: {
     fontFamily: FONT.medium,
-    color: COLORS.text2,
+    fontWeight: "600",
+    fontSize: SIZES.large,
+    color: COLORS.text,
   },
 });
 

@@ -4,10 +4,10 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 const styles = StyleSheet.create({
   container: {
     width: 150,
-    // height: 150,
+    height: 150,
     padding: SIZES.xLarge,
     margin: SIZES.xSmall,
-    backgroundColor: COLORS.lightWhite,
+    backgroundColor: COLORS.primary,
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     alignItems: "center",
@@ -17,20 +17,20 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 100,
     height: 100,
-    // backgroundColor: COLORS.white,
+    backgroundColor: COLORS.white,
     borderRadius: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
   },
   cardImage: {
-    width: "70%",
-    height: "70%",
+    width: 60,
+    height: 60,
   },
   cardText: {
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.regular,
     fontWeight: "200",
-    color: COLORS.primary,
+    color: COLORS.white,
     marginTop: SIZES.small / 1.5,
   },
 });

@@ -1,4 +1,4 @@
-import { router, Stack } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   Text,
   View,
@@ -7,124 +7,177 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from "react-native";
-import { COLORS, icons, images, SIZES, FONT } from "../../../constants";
-import { ProfileHeaderBtn } from "../..";
+import { COLORS, images, SIZES, FONT } from "../../../constants";
+import { useEffect, useState } from "react";
+import companyPolicies from "../../../data/companyPolicy";
 
 const RecommendedPolicyScreen = () => {
-  const recommendedPolicy = {
-    name: "Gold Health Plus",
-    coverage: "Comprehensive Health Coverage",
-    premium: "₵50/month",
-    benefits: ["Hospitalization", "Medication", "Dental Care"],
+  const { insuranceType, minBudget, maxBudget } = useLocalSearchParams();
+  const [policies, setPolicies] = useState([]);
+
+  // At most one policy that suits the preferences
+  const selectedPolicy = policies.length > 0 ? policies[0] : null;
+
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+    console.log(minBudget);
+    console.log(maxBudget);
+    if (insuranceType !== null) {
+      // Fetch suitable policy details based on selected insurance type and budget
+      const suitablePolicies = companyPolicies.filter((policy) => {
+        return (
+          (policy.insuranceType
+            .toLowerCase()
+            .includes(insuranceType.toLowerCase()) &&
+            parseFloat(policy.policyPlans.standard?.cost) >=
+              parseFloat(minBudget)) ||
+          parseFloat(policy.policyPlans.premium?.cost) <= parseFloat(maxBudget)
+        );
+      });
+      setPolicies(suitablePolicies);
+      console.log(suitablePolicies);
+    }
+  }, []);
+
+  const handleSelectPlan = (policyID) => {
+    router.push(`screens/other/policyPlanScreen_/${policyID}`);
   };
 
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         backgroundColor: COLORS.white,
       }}
     >
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          headerLeft: () => (
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ProfileHeaderBtn
-                iconUrl={images.logo}
-                dimension="100%"
-                handlePress={() => router.push(`home`)}
-              />
-              <Text
-                style={{
-                  fontFamily: FONT.bold,
-                  fontWeight: "600",
-                  color: COLORS.primary,
-                  fontSize: SIZES.xSmall,
-                }}
-              >
-                IPOL
-              </Text>
-            </View>
-          ),
-          headerRight: () => (
-            <ProfileHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={() => router.push(`profile`)}
-            />
-          ),
-        }}
-      />
       <ScrollView>
-        <View style={styles.container}>
+        <View
+          style={{
+            width: width,
+            height: height,
+            padding: SIZES.medium,
+            marginBottom: 200,
+          }}
+        >
           <View style={styles.pageImgContainer}>
             <Image
               source={images.recommendation}
               resizeMode="center"
-              style={styles.pageImg}
+              style={{
+                width: width - 20,
+                height: height / 2,
+              }}
             />
           </View>
-          <Text style={styles.txt}>We Found Something For You...</Text>
-          <View
-            style={{
-              width: "100%",
-              backgroundColor: COLORS.tertiary,
-              borderRadius: SIZES.medium,
-              padding: SIZES.medium,
-              marginVertical: 30,
-            }}
-          >
-            <Text style={styles.title}>Recommended Policy</Text>
-            <Text style={styles.policyName}>{recommendedPolicy.name}</Text>
-            <Text style={styles.detail}>
-              Coverage: {recommendedPolicy.coverage}
-            </Text>
-            <Text style={styles.detail}>
-              Premium: {recommendedPolicy.premium}
-            </Text>
+          <View style={{ paddingVertical: SIZES.xLarge }}>
+            <Text style={styles.txt}>We Found Something For You...</Text>
+            <View
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.tertiary,
+                borderRadius: SIZES.medium,
+                padding: SIZES.medium,
+                marginVertical: 30,
+              }}
+            >
+              {policies.length === 0 ? (
+                <View>
+                  <Text style={styles.title}>
+                    Oops! No policies match your preference.
+                  </Text>
+                  <Text style={styles.title2}>Make a new preference...</Text>
+                </View>
+              ) : (
+                <View>
+                  <Text style={styles.title}>Recommended Policy</Text>
+                  <Text style={styles.title2}>Company:</Text>
+                  <Text style={styles.policyName}>
+                    {selectedPolicy?.company}
+                  </Text>
+                  <Text style={styles.title2}>Policy name:</Text>
+                  <Text style={styles.policyName}>
+                    {selectedPolicy?.policyDetail.policyInformation.name}
+                  </Text>
+                  <Text style={styles.detail} numberOfLines={2}>
+                    Coverage: {selectedPolicy?.coverage}
+                  </Text>
+                  <Text style={styles.detail}>
+                    Premium: {selectedPolicy?.premium}
+                  </Text>
 
-            <Text style={styles.subTitle}>Benefits:</Text>
-            {recommendedPolicy.benefits.map((benefit, index) => (
-              <Text key={index} style={styles.benefit}>
-                - {benefit}
-              </Text>
-            ))}
+                  <Text style={styles.subTitle}>Benefits:</Text>
+                  {selectedPolicy?.policyDetail.benefits.map(
+                    (benefit, index) => (
+                      <Text key={index} style={styles.benefit}>
+                        - {benefit}
+                      </Text>
+                    )
+                  )}
+                </View>
+              )}
+            </View>
+
+            {policies.length === 0 ? (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push(`screens/quotas`);
+                  }}
+                  style={styles.pageBtn}
+                >
+                  <Text
+                    style={{ color: COLORS.white, fontFamily: FONT.medium }}
+                  >
+                    New Preference
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push(`/home`);
+                  }}
+                  style={styles.pageBtn}
+                >
+                  <Text
+                    style={{ color: COLORS.white, fontFamily: FONT.medium }}
+                  >
+                    Go To Dashboard
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View>
+                <TouchableOpacity
+                  onPress={() => handleSelectPlan(selectedPolicy?.id)}
+                  style={styles.pageBtn}
+                >
+                  <Text
+                    style={{ color: COLORS.white, fontFamily: FONT.medium }}
+                  >
+                    Select Plan
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    router.push(`/home`);
+                  }}
+                  style={styles.pageBtn}
+                >
+                  <Text
+                    style={{ color: COLORS.white, fontFamily: FONT.medium }}
+                  >
+                    Go To Dashboard
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              router.push(`/home`);
-            }}
-            style={styles.pageBtn}
-          >
-            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-              Accept
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              router.push(`/home`);
-            }}
-            style={styles.pageBtn}
-          >
-            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-              Go To Dashboard
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -152,10 +205,17 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     marginBottom: 10,
   },
-  policyName: {
+  title2: {
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.medium,
-    fontWeight: "bold",
+    fontWeight: "600",
+    color: COLORS.text,
+    marginBottom: 10,
+  },
+  policyName: {
+    fontSize: SIZES.medium,
+    fontFamily: FONT.medium,
+    fontWeight: "600",
     color: COLORS.primary,
     marginBottom: 10,
   },
@@ -168,7 +228,7 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.medium,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: COLORS.primary,
     marginTop: 10,
     marginBottom: 5,
@@ -193,7 +253,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
   },
   pageImg: {
     width: 200,

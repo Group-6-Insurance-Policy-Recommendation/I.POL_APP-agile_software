@@ -9,9 +9,6 @@ import {
   ActivityIndicator,
   Dimensions,
 } from "react-native";
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// import firebaseApp from "../../../config/firebase-config";
-// const auth = getAuth(firebaseApp);
 
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
@@ -47,28 +44,7 @@ const Signin = () => {
     setWidth(Dimensions.get("window").width);
   }, []);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     console.log(user);
-  //     console.log(isAuthenticated);
-  //     return alert("You're logged in.");
-  //   }
-  // });
-
   const handleSignIn = async () => {
-    // Authenticate user using email and password
-    // const userCredential = await signInWithEmailAndPassword(
-    //   auth,
-    //   email,
-    //   password
-    // );
-
-    // // Log user email to the console
-    // console.log(userCredential.user.email);
-
-    // // Get the ID token for authentication with the backend
-    // const idToken = await userCredential.user.getIdToken();
-
     // Send the ID token to the backend for further authentication
     try {
       setIsLoading(true);
@@ -93,22 +69,14 @@ const Signin = () => {
       }}
     >
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View style={{ marginHorizontal: SIZES.small }}>
+        <View style={{ marginHorizontal: SIZES.large }}>
           <View style={styles.container}>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.welcomeMsg}>Welcome Back</Text>
+              <Text style={styles.welcomeMsg}>Welcome Back.</Text>
               <Text style={styles.preMsg}>
                 Log in to explore all existing insurance policies!!!
               </Text>
             </View>
-
-            {/* <View style={styles.logoArea}>
-            <Image
-              source={images.logo}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View> */}
 
             <KeyboardAvoidingView style={styles.formArea} behavior="padding">
               <TextInput
@@ -129,58 +97,62 @@ const Signin = () => {
                 onFocus={handlePasswordFocus}
                 onBlur={handlePasswordBlur}
               />
+            </KeyboardAvoidingView>
 
-              <Text style={styles.actionText}>Forgot your password?</Text>
+            <Text
+              style={styles.actionText}
+              onPress={() => {
+                router.push(`/auth/forgotPassword_`);
+              }}
+            >
+              Forgot your password?
+            </Text>
 
-              {isLoading ? (
-                <TouchableOpacity style={styles.focussedBtn}>
-                  <ActivityIndicator
+            {isLoading ? (
+              <TouchableOpacity style={styles.focussedBtn}>
+                <ActivityIndicator size={SIZES.large} color={COLORS.primary} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
+                <Text style={styles.authBtnText} onPress={handleSignIn}>Log in</Text>
+              </TouchableOpacity>
+            )}
+
+            <Text
+              style={styles.cta}
+              onPress={() => {
+                router.push(`/auth/signUp_`);
+              }}
+            >
+              Create new account?
+            </Text>
+            <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
+              <Text style={styles.signupOptions}>Or sign up with</Text>
+
+              <View style={styles.socialButtonsContainer}>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-google"
+                    color={COLORS.text2}
                     size={SIZES.large}
-                    color={COLORS.primary}
                   />
                 </TouchableOpacity>
-              ) : (
-                <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
-                  <Text style={styles.authBtnText}>Log in</Text>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-apple"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
                 </TouchableOpacity>
-              )}
-
-              <Text
-                style={styles.cta}
-                onPress={() => {
-                  router.push(`/auth/signUp_`);
-                }}
-              >
-                Create new account?
-              </Text>
-              <View style={{ width: "100%", paddingVertical: SIZES.medium }}>
-                <Text style={styles.signupOptions}>Or sign up with</Text>
-
-                <View style={styles.socialButtonsContainer}>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-google"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-apple"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.socialButton}>
-                    <Ionicons
-                      name="logo-facebook"
-                      color={COLORS.text2}
-                      size={SIZES.large}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={styles.socialButton}>
+                  <Ionicons
+                    name="logo-facebook"
+                    color={COLORS.text2}
+                    size={SIZES.large}
+                  />
+                </TouchableOpacity>
               </View>
-            </KeyboardAvoidingView>
+            </View>
           </View>
         </View>
       </ScrollView>

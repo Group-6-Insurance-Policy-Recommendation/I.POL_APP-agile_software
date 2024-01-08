@@ -6,15 +6,23 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 import { COLORS, icons, images, SIZES, FONT } from "../../../constants";
 import { ProfileHeaderBtn } from "../..";
+import { useEffect, useState } from "react";
 
 const Begin = () => {
+  const [width, setWidth] = useState("");
+  const [height, setHeight] = useState("");
+
+  useEffect(() => {
+    setHeight(Dimensions.get("window").height);
+    setWidth(Dimensions.get("window").width);
+  }, []);
   return (
     <SafeAreaView
       style={{
-        // flex: 1,
         backgroundColor: COLORS.white,
       }}
     >
@@ -25,32 +33,7 @@ const Begin = () => {
           },
           headerShadowVisible: false,
           headerTitle: "",
-          headerLeft: () => (
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ProfileHeaderBtn
-                iconUrl={images.logo}
-                dimension="100%"
-                handlePress={() => router.push(`home`)}
-              />
-              <Text
-                style={{
-                  fontFamily: FONT.bold,
-                  fontWeight: "600",
-                  color: COLORS.primary,
-                  fontSize: SIZES.xSmall,
-                }}
-              >
-                IPOL
-              </Text>
-            </View>
-          ),
+          presentation: "modal",
           headerRight: () => (
             <ProfileHeaderBtn
               iconUrl={images.profile}
@@ -61,25 +44,36 @@ const Begin = () => {
         }}
       />
 
-      <View style={styles.container}>
+      <View
+        style={{
+          width: width,
+          height: height,
+          padding: SIZES.medium,
+        }}
+      >
         <View style={styles.pageImgContainer}>
           <Image
             source={images.preference}
             resizeMode="center"
-            style={styles.pageImg}
+            style={{
+              width: width - 20,
+              height: height / 2,
+            }}
           />
         </View>
-        <Text style={styles.txt}>Make A Quick Preference!!!</Text>
-        <TouchableOpacity
-          onPress={() => {
-            router.push(`/screens/quotas/categoryScreen_`);
-          }}
-          style={styles.pageBtn}
-        >
-          <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-            Let's Begin
-          </Text>
-        </TouchableOpacity>
+        <View style={{ paddingVertical: SIZES.xxLarge + 20 }}>
+          <Text style={styles.txt}>Make A Quick Preference!!!</Text>
+          <TouchableOpacity
+            onPress={() => {
+              router.push(`/screens/quotas/categoryScreen_`);
+            }}
+            style={styles.pageBtn}
+          >
+            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
+              Let's Begin
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -115,7 +109,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 50,
+    // paddingVertical: 50,
   },
   pageImg: {
     width: 200,
