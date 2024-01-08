@@ -65,6 +65,7 @@ const InsuranceInfo = () => {
   const [reasonsFocus, setReasonsFocus] = useState(false);
   const [baggageFocus, setBaggageFocus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [typeOfPropertyObject, setTypeOfPropertyObject] = useState(null);
 
   const [healthInsuranceData, setHealthInsuranceData] = useState({
     medicalCondition: "",
@@ -606,9 +607,10 @@ const InsuranceInfo = () => {
                   !typeOfPropertyFocus ? "Select Type of Property..." : "..."
                 }
                 searchPlaceholder="Search..."
-                value={homeInsuranceData.typeOfProperty}
+                value={typeOfPropertyObject}
                 onChangeText={(value) => {
-                  handlehomeInsuranceDataChange("typeOfProperty", value);
+                  setTypeOfPropertyObject(value);
+                  handlehomeInsuranceDataChange("typeOfProperty", value.label);
                   setTypeOfPropertyFocus(false);
                 }}
                 onFocus={() => setTypeOfPropertyFocus(true)}

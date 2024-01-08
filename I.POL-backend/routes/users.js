@@ -209,6 +209,8 @@ const upload = multer({ storage });
 // CREATE PROFILE
 router.post("/profile", upload.single("profilePicture"), async (req, res) => {
   try {
+    const userId = req.params.userId;
+
     const profilePicture = req.file.buffer.toString("base64");
     // Create a new profile
     const profileData = {
@@ -263,7 +265,7 @@ router.put(
   upload.single("profilePicture"),
   async (req, res) => {
     try {
-      const userId = req.params.id;
+      const userId = req.params.user_id;
 
       const profilePicture = req.file.buffer.toString("base64");
 

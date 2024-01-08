@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
     fontFamily: FONT.regular,
     fontSize: SIZES.medium - 2,
   },
+  textLabell: {
+    paddingHorizontal: SIZES.small,
+    fontFamily: FONT.regular,
+    fontSize: SIZES.medium - 2,
+    color: COLORS.gray,
+  },
   editInput: {
     width: "100%",
     paddingVertical: SIZES.xSmall,
