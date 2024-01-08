@@ -300,11 +300,15 @@ router.put(
       if (!updatedUser) {
         return res.status(404).json({ error: "User or profile not found" });
       }
-      //F73F-587E
+
       res.status(200).json(updatedUser);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Failed to update profile" });
+      console.error("Error in profile update route:", err); // Log detailed error
+      res.status(500).json({
+        error: "Failed to update profile",
+        details: err.message, // Include error message in response
+      });
     }
   }
 );
