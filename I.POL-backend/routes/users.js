@@ -180,7 +180,11 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to reset password" });
+    // res.status(500).json({ error: "Failed to reset password" });
+    res.status(500).json({
+      error: "Failed to update profile",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -329,10 +333,7 @@ router.put("/profile/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     console.error("Error in profile update route:", err); // Log detailed error
-    res.status(500).json({
-      error: "Failed to update profile",
-      details: err.message, // Include error message in response
-    });
+    res.status(500).json({ error: "Failed to update profile" });
   }
 });
 
