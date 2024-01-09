@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../modules/User");
 const bcrypt = require("bcrypt");
+const prompt = require("inquirer");
 const {
   generatePasswordResetToken,
   sendPasswordResetEmail,
@@ -155,11 +156,12 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     if (isTokenExpired.resetExpires < now) {
       return res.status(404).json({ error: "Reset token has expired" });
     }
-    // Prompt for new password
-    const { newPassword } = await prompt("Enter your new password:");
 
     // Render the password reset form view
     res.render("reset-password"); // Adjust view name and data
+
+    // Prompt for new password
+    const { newPassword } = await prompt("Enter your new password:");
 
     // Call the reset-forgot-password route
     const response = await fetch(`/reset-forgot-password`, {
@@ -182,7 +184,7 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     console.error(err);
     // res.status(500).json({ error: "Failed to reset password" });
     res.status(500).json({
-      error: "Failed to update profile",
+      error: "Failed reset password.",
       details: err.message, // Include error message in response
     });
   }

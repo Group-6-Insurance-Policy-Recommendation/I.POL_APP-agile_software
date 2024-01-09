@@ -21,6 +21,7 @@
     "google-auth-library": "^9.4.1",
     "googleapis": "^130.0.0",
     "helmet": "^6.1.5",
+    "inquirer": "^9.2.12",
     "mongodb": "^5.9.1",
     "mongoose": "^7.6.6",
     "morgan": "^1.10.0",
