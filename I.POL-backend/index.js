@@ -10,12 +10,17 @@ const policyRoute = require("./routes/policyInfo");
 const path = require("path");
 // const firebaseAuth = require("./firebase-auth");
 const WebSocket = require("ws");
-const wss = new WebSocket.Server({ server });
 
 const app = express();
 app.set("view engine", "ejs");
 const router = express.Router();
 app.set("views", path.join(__dirname, "template"));
+
+const server = app.listen(8800, () => {
+  console.log("Backend Server Is Running...");
+});
+
+const wss = new WebSocket.Server({ server });
 
 dotenv.config();
 
@@ -98,7 +103,3 @@ router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/policy", policyRoute);
-
-app.listen(8800, () => {
-  console.log("Backend Server Is Running...");
-});
