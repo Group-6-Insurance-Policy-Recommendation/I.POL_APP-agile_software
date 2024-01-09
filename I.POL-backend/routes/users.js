@@ -142,13 +142,6 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     // Extract reset token from URL parameter
     const resetToken = req.params.resetToken;
 
-    // Validate token (replace with your validation logic)
-    // const isValidToken = await validateResetToken(resetToken); // Implement validation
-
-    // if (!isValidToken) {
-    //   return res.status(400).json({ error: "Invalid reset token" });
-    // }
-
     // Find the user associated with the token
     const isValidToken = await User.findOne({ resetToken });
     const isTokenExpired = await User.findOne({ resetToken });
@@ -162,21 +155,42 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     if (isTokenExpired.resetExpires < now) {
       return res.status(404).json({ error: "Reset token has expired" });
     }
+    // Prompt for new password
+    const { newPassword } = await prompt("Enter your new password:");
 
     // Render the password reset form view
-    res.render("reset-password", { resetToken }); // Adjust view name and data
+    res.render("reset-password"); // Adjust view name and data
+
+    // Call the reset-forgot-password route
+    const response = await fetch(`/reset-forgot-password`, {
+      method: "PUT",
+      body: JSON.stringify({ newPassword, resetToken }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      // res.render("reset-password-success");
+      res.redirect("/password-reset-success"); // Redirect to success page
+      // Close the window after 5 seconds
+      setTimeout(() => {
+        window.close();
+      }, 5000);
+    } else {
+      res.status(response.status).json(await response.json()); // Handle errors
+    }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to display reset form" });
+    res.status(500).json({ error: "Failed to reset password" });
   }
 });
 
 // RESET PASSWORD
-router.put("/reset-password", async (req, res) => {
+router.put("/reset-forgot-password", async (req, res) => {
   try {
     // Get reset token and new password from request body
-    const resetToken = req.body.resetToken;
-    const newPassword = req.body.newPassword;
+    const { newPassword, resetToken } = req.body;
+    // const resetToken = req.body.resetToken;
+    // const newPassword = req.body.newPassword;
     console.log(newPassword);
     // Find the user associated with the token
     const user = await User.findOne({ resetToken });
