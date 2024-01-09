@@ -17,6 +17,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import companyPolicies from "../../../data/companyPolicy";
 import { createPolicy } from "../../../redux/actions/policyThunk";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PaymentList = [
   {
@@ -102,7 +103,7 @@ const PayScreen = () => {
     };
     console.log(policyData);
 
-    const insuranceType = policyData.type.toLowerCase();
+    const insuranceType = policyData.type.toLowerCase().split(" ")[0];;
     const storageKey = `${insuranceType}InsuranceData`;
 
     const insuranceData = await AsyncStorage.getItem(storageKey);
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: SIZES.small,
-    borderRadius: 50,
+    // borderRadius: 50,
   },
 });
 

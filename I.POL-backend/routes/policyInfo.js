@@ -46,7 +46,7 @@ router.post("/create", async (req, res) => {
       "business",
       "travel",
     ];
-    const type = req.body.type.toLowerCase();
+    const type = req.body.type.toLowerCase().split(" ")[0];
 
     if (!insuranceTypes.includes(type)) {
       return res.status(400).json({

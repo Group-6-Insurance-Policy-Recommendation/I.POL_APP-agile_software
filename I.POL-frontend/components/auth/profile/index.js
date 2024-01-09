@@ -73,7 +73,7 @@ const Profile = () => {
                   ? { uri: user?.profile.profilePicture }
                   : images.profile
               }
-              resizeMode="center"
+              resizeMode="cover"
             />
             <Text
               style={{
