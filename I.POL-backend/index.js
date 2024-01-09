@@ -9,6 +9,8 @@ const authRoute = require("./routes/auth");
 const policyRoute = require("./routes/policyInfo");
 const path = require("path");
 // const firebaseAuth = require("./firebase-auth");
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ server });
 
 const app = express();
 app.set("view engine", "ejs");
@@ -21,6 +23,19 @@ mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+wss.on("connection", (ws) => {
+  console.log("WebSocket client connected");
+});
+
+// Integrate WebSocket into your Express app
+app.use((req, res, next) => {
+  req.ws = wss;
+  next();
+});
+
+const notificationRoutes = require("./routes/notification")(wss); // Pass wss as an argument
+app.use("/api/notifications", notificationRoutes);
 
 // middlewares
 // app.use(express.json());

@@ -62,6 +62,52 @@ const PayScreen = () => {
     console.log(policy);
   }, [policyID]);
 
+  async function createPolicyPaymentNotification(userId, policyDetails) {
+    try {
+      const response = await fetch("/api/notifications/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // ... other necessary headers (e.g., authentication)
+        },
+        body: JSON.stringify({
+          userId,
+          type: "policy_payment", // Adjust the notification type as needed
+          message: "Insurance policy payment successful!",
+          channelId: "policy_updates", // Adjust the channel ID as needed
+          data: {
+            policyId: policyDetails.policyID,
+            amount: policyDetails.amount,
+            // renewalDate: policyDetails.renewalDate,
+            // invoiceId: policyDetails.invoiceId,
+            // dueAmount: policyDetails.dueAmount,
+            // claimId: policyDetails.claimId,
+            // status: policyDetails.status,
+          },
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Notification created successfully");
+      } else {
+        console.error("Failed to create notification:", response.statusText);
+        // Handle the error appropriately, e.g., display an error message to the user
+      }
+    } catch (error) {
+      console.error("Error creating notification:", error);
+      // Handle the error appropriately, e.g., display an error message to the user
+    }
+  }
+
+  // Example usage:
+  // const userId = 'user_123'; // Replace with the actual user ID
+  // const policyDetails = {
+  //   policyId: 'policy_456',
+  //   premiumAmount: 500,
+  //   // ... other policy details
+  // };
+  // createPolicyPaymentNotification(userId, policyDetails);
+
   const handleCreatePolicy = async () => {
     // Check if user profile firstname and lastname are empty
     if (
@@ -93,7 +139,6 @@ const PayScreen = () => {
       type: companyPolicy?.policyDetail?.policyInformation.type,
       coverage: companyPolicy?.policyDetail?.policyInformation.coverage,
       policyNumber: companyPolicy?.policyDetail?.policyInformation.policyNumber,
-      // policyholderName: "John Doe",
       policyholderName: `${user?.profile?.firstname} ${user?.profile?.lastname}`,
       policyholderEmail: user?.email,
       policyCost: price,
@@ -103,7 +148,7 @@ const PayScreen = () => {
     };
     console.log(policyData);
 
-    const insuranceType = policyData.type.toLowerCase().split(" ")[0];;
+    const insuranceType = policyData.type.toLowerCase().split(" ")[0];
     const storageKey = `${insuranceType}InsuranceData`;
 
     const insuranceData = await AsyncStorage.getItem(storageKey);
@@ -116,7 +161,7 @@ const PayScreen = () => {
 
     policyData[storageKey] = parsedInsuranceData;
 
-    dispatch(createPolicy(policyData));
+    dispatch(createPolicy(policyID, price, policyData));
   };
 
   return (
