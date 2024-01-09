@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const User = require("../modules/User");
 const bcrypt = require("bcrypt");
-const prompt = require("inquirer");
 const {
   generatePasswordResetToken,
   sendPasswordResetEmail,
@@ -39,10 +38,16 @@ router.delete("/delete-user", async (req, res) => {
     // Handle potential errors more informatively
     if (err.name === "MongoError" && err.code === 11000) {
       // Handle duplicate key error (adjust message if needed)
-      return res.status(400).json({ error: "User already exists" });
+      res.status(400).json({
+        error: "User already exists.",
+        details: err.message, // Include error message in response
+      });
     } else {
       // Handle other errors generically
-      return res.status(500).json({ error: "Failed to delete account" });
+      res.status(500).json({
+        error: "Failed to delete account.",
+        details: err.message, // Include error message in response
+      });
     }
   }
 });
@@ -71,7 +76,10 @@ router.get("/get-user", async (req, res) => {
     res.status(200).json(filteredUser);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to retrieve user" });
+    res.status(500).json({
+      error: "Failed to retrieve user.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -107,7 +115,10 @@ router.put("/change-password", async (req, res) => {
     res.status(200).json({ message: "Password changed successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to change password" });
+    res.status(500).json({
+      error: "Failed to change password.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -133,7 +144,10 @@ router.post("/forgot-password", async (req, res) => {
     res.status(200).json({ message: "Password reset email sent" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to initiate password reset" });
+    res.status(500).json({
+      error: "Failed to initiate password reset.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -157,11 +171,12 @@ router.get("/reset-password/:resetToken", async (req, res) => {
       return res.status(404).json({ error: "Reset token has expired" });
     }
 
+    // Prompt for new password
+    const prompt = await import("inquirer");
+    const { newPassword } = await prompt("Enter your new password:");
+
     // Render the password reset form view
     res.render("reset-password"); // Adjust view name and data
-
-    // Prompt for new password
-    const { newPassword } = await prompt("Enter your new password:");
 
     // Call the reset-forgot-password route
     const response = await fetch(`/reset-forgot-password`, {
@@ -182,9 +197,8 @@ router.get("/reset-password/:resetToken", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    // res.status(500).json({ error: "Failed to reset password" });
     res.status(500).json({
-      error: "Failed reset password.",
+      error: "Failed to reset password.",
       details: err.message, // Include error message in response
     });
   }
@@ -218,7 +232,10 @@ router.put("/reset-forgot-password", async (req, res) => {
     res.status(200).json({ message: "Password changed successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to reset password" });
+    res.status(500).json({
+      error: "Failed to reset password.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -284,7 +301,10 @@ router.post("/profile", async (req, res) => {
     res.status(201).json(createdUser);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to create profile" });
+    res.status(500).json({
+      error: "Failed to create profile.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
@@ -334,8 +354,10 @@ router.put("/profile/:id", async (req, res) => {
     res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
-    console.error("Error in profile update route:", err); // Log detailed error
-    res.status(500).json({ error: "Failed to update profile" });
+    res.status(500).json({
+      error: "Failed to update profile.",
+      details: err.message, // Include error message in response
+    });
   }
 });
 
