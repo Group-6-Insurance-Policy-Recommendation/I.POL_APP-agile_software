@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   ScrollView,
   TouchableOpacity,
   Dimensions,
@@ -59,7 +58,6 @@ const PayScreen = () => {
 
     // Set the selected policy in the component state
     setCompanyPolicy(policy);
-    console.log(policy);
   }, [policyID]);
 
   async function createPolicyPaymentNotification(userId, policyDetails) {
@@ -99,15 +97,6 @@ const PayScreen = () => {
     }
   }
 
-  // Example usage:
-  // const userId = 'user_123'; // Replace with the actual user ID
-  // const policyDetails = {
-  //   policyId: 'policy_456',
-  //   premiumAmount: 500,
-  //   // ... other policy details
-  // };
-  // createPolicyPaymentNotification(userId, policyDetails);
-
   const handleCreatePolicy = async () => {
     // Check if user profile firstname and lastname are empty
     if (
@@ -146,7 +135,6 @@ const PayScreen = () => {
       expirationDate: expirationDate.toISOString().split("T")[0], // Format expiration date as YYYY-MM-DD
       insuredEntities: ["policyholderName"],
     };
-    console.log(policyData);
 
     const insuranceType = policyData.type.toLowerCase().split(" ")[0];
     const storageKey = `${insuranceType}InsuranceData`;
@@ -160,8 +148,9 @@ const PayScreen = () => {
     const parsedInsuranceData = JSON.parse(insuranceData);
 
     policyData[storageKey] = parsedInsuranceData;
+    console.log(policyData);
 
-    dispatch(createPolicy(policyID, price, policyData));
+    dispatch(createPolicy(user?._id, policyID, price, policyData));
   };
 
   return (

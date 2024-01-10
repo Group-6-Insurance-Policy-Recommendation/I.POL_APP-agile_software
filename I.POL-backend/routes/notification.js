@@ -10,7 +10,12 @@ router.post("/broadcast", async (req, res) => {
     res.status(200).json({ message: "Notification broadcast sent" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to broadcast notification" });
+    res
+      .status(500)
+      .json({
+        error: "Failed to broadcast notification",
+        details: err.message,
+      });
   }
 });
 
@@ -39,7 +44,9 @@ router.post("/create", async (req, res) => {
     res.status(201).json({ message: "Notification created" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to create notification" });
+    res
+      .status(500)
+      .json({ error: "Failed to create notification", details: err.message });
   }
 });
 
@@ -51,7 +58,9 @@ router.get("/user/:userId", async (req, res) => {
     res.json(notifications);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch notifications" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch notification", details: err.message });
   }
 });
 

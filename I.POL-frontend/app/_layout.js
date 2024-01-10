@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router";
-import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { COLORS, FONT, SIZES, images, icons } from "../constants";
@@ -7,9 +7,7 @@ import { COLORS, FONT, SIZES, images, icons } from "../constants";
 SplashScreen.preventAutoHideAsync();
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { WebSocketProvider } from "react-native-websocket";
-
-const WebSocketContext = createContext();
+import io from "socket.io-client";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -34,21 +32,14 @@ const Layout = () => {
     DMRegular: require("../assets/fonts/DMSans-Regular.ttf"),
   });
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
-
-  // if (!fontsLoaded) return null;
-
-  useEffect(() => {
+  const onLayoutRootView = useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
     schedulePushNotification(notifications);
-  }, [fontsLoaded]);
+  }, [fontsLoaded, notifications]);
 
+  // if (!fontsLoaded) return null;
   const [notification, setNotification] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState("");
   const notificationListener = useRef();
@@ -56,8 +47,6 @@ const Layout = () => {
 
   const [ws, setWs] = useState(null);
   const [notifications, setNotifications] = useState([]);
-  const [connectionStatus, setConnectionStatus] = useState("disconnected");
-  const [error, setError] = useState(null);
 
   // const notifications = [
   //   {
@@ -135,480 +124,479 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    const newWs = new WebSocket(
-      "ws://ipol-server.onrender.com/api/notifications"
-    );
+    const socket = io("ws://ipol-server.onrender.com/api/notifications", {
+      reconnection: true,
+      reconnectionDelay: 1000, // 1 second delay between each reconnection attempt
+      reconnectionAttempts: Infinity, // Retry indefinitely
+    });
 
-    newWs.onopen = () => setConnectionStatus("connected");
-    newWs.onclose = () => setConnectionStatus("disconnected");
-    newWs.onerror = (err) => setError(err);
+    // Handle connection events
+    socket.on("connect", () => {
+      console.log("WebSocket connected");
+    });
 
-    newWs.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        // Validate and process incoming notification data
-        setNotifications((prevNotifications) => [...prevNotifications, data]);
-      } catch (parseError) {
-        // Handle parsing errors
-        setError(parseError);
-      }
+    socket.on("disconnect", (reason) => {
+      console.log("WebSocket disconnected:", reason);
+    });
+
+    socket.on("error", (error) => {
+      console.error("WebSocket error:", error);
+    });
+
+    // Handle incoming notifications
+    socket.on("notification", (data) => {
+      setNotifications((prevNotifications) => [...prevNotifications, data]);
+    });
+
+    // Cleanup function to close the socket
+    return () => {
+      socket.disconnect();
     };
-
-    setWs(newWs);
-
-    // Cleanup function for reconnections or closing
-    return () => newWs.close();
-  }, []);
+  }, [notifications]);
 
   return (
-    <WebSocketContext.Provider
-      value={{ ws, notifications, connectionStatus, error }}
-    >
-      <WebSocketProvider ws={ws}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <Stack onLayout>
-              <StatusBar backgroundColor={COLORS.white} />
-              <Stack.Screen
-                name="index"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`/_sitemap`)}
-                    />
-                  ),
-                }}
-              />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Stack onLayout={onLayoutRootView}>
+          <StatusBar backgroundColor={COLORS.white} />
+          <Stack.Screen
+            name="index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`/_sitemap`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="auth/signIn_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  headerLeft: () => {},
-                }}
-              />
+          <Stack.Screen
+            name="auth/signIn_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => {},
+            }}
+          />
 
-              <Stack.Screen
-                name="auth/signUp_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  headerLeft: () => {},
-                }}
-              />
+          <Stack.Screen
+            name="auth/signUp_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => {},
+            }}
+          />
 
-              <Stack.Screen
-                name="auth/forgotPassword_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                }}
-              />
+          <Stack.Screen
+            name="auth/forgotPassword_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/index"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={icons.feedback}
-                      dimension="100%"
-                      handlePress={() => router.push(`/_sitemap`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={icons.feedback}
+                  dimension="100%"
+                  handlePress={() => router.push(`/_sitemap`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/editProfile_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="profile/editProfile_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/feedback_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/feedback_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/userInsurancePolicy_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/userInsurancePolicy_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/claimHistory_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/claimHistory_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/securitySettings_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="profile/securitySettings_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/changePassword_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="profile/changePassword_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/deleteAccount_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="profile/deleteAccount_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/faqs_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/faqs_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="profile/notification_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="profile/notification_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/quotas/index"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="screens/quotas/index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/quotas/recommendationPolicyScreen_/[insuranceType]/[minBudget]/[maxBudget]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="screens/quotas/recommendationPolicyScreen_/[insuranceType]/[minBudget]/[maxBudget]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/quotas/categoryScreen_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                }}
-              />
+          <Stack.Screen
+            name="screens/quotas/categoryScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/quotas/budgetScreen_/[insuranceType]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/quotas/budgetScreen_/[insuranceType]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/detailScreen_/[policyID]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/detailScreen_/[policyID]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/policyPlanScreen_/[policyID]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/policyPlanScreen_/[policyID]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/payScreen_/[policyID]/[price]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerLeft: () => (
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <ProfileHeaderBtn
-                        iconUrl={images.logo}
-                        dimension="100%"
-                        handlePress={() => router.push(`home`)}
-                      />
-                    </View>
-                  ),
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/payScreen_/[policyID]/[price]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerLeft: () => (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension="100%"
+                    handlePress={() => router.push(`home`)}
+                  />
+                </View>
+              ),
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/huddleScreen_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/huddleScreen_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/packageInfo_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/packageInfo_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="screens/other/insuranceInfo_/[policyID]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="screens/other/insuranceInfo_/[policyID]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="home/recommendation_/[urlInsuranceType]"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  presentation: "modal",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
+          <Stack.Screen
+            name="home/recommendation_/[urlInsuranceType]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
 
-              <Stack.Screen
-                name="home/specialPackage_"
-                options={{
-                  headerStyle: {
-                    backgroundColor: COLORS.white,
-                  },
-                  headerShadowVisible: false,
-                  headerTitle: "",
-                  headerRight: () => (
-                    <ProfileHeaderBtn
-                      iconUrl={images.profile}
-                      dimension="100%"
-                      handlePress={() => router.push(`profile`)}
-                    />
-                  ),
-                }}
-              />
-            </Stack>
-          </PersistGate>
-        </Provider>
-      </WebSocketProvider>
-    </WebSocketContext.Provider>
+          <Stack.Screen
+            name="home/specialPackage_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
+        </Stack>
+      </PersistGate>
+    </Provider>
   );
 };
 

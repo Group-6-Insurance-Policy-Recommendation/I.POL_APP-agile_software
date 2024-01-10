@@ -10,7 +10,7 @@ import {
 
 // Create policy action
 export const createPolicy =
-  (policyID, price, policyData) => async (dispatch) => {
+  (userId, policyID, price, policyData) => async (dispatch) => {
     try {
       // Make API request for creating policy
       const response = await axios.post(
@@ -46,7 +46,7 @@ export const createPolicy =
           );
 
           if (response.status === 201) {
-            console.log("Notification created successfully");
+            console.log("Notification created successfully", response);
           } else {
             console.error(
               "Failed to create notification:",
