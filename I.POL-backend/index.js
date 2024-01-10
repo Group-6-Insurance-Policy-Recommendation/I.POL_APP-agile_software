@@ -7,6 +7,7 @@ const cors = require("cors");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 const policyRoute = require("./routes/policyInfo");
+const notificationRoutes = require("./routes/notification");
 const path = require("path");
 // const firebaseAuth = require("./firebase-auth");
 const socketIO = require("socket.io");
@@ -141,9 +142,6 @@ app.use((req, res, next) => {
   next();
 });
 
-const notificationRoutes = require("./routes/notification")(io); // Pass wss as an argument
-app.use("/api/notifications", notificationRoutes);
-
 // middlewares
 // app.use(express.json());
 app.use(express.json({ limit: "50mb" }));
@@ -205,3 +203,4 @@ router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/policy", policyRoute);
+app.use("/api/notifications", notificationRoutes);
