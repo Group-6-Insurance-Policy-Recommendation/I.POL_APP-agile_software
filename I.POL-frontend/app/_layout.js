@@ -151,7 +151,8 @@ const Layout = () => {
       setNotifications((prevNotifications) => [...prevNotifications, data]);
     });
 
-    handleGetNotifications(userId, socket);
+    handleNotifications(userId, socket);
+    handleBroadcasts(socket);
 
     // Cleanup function to close the socket
     return () => {
@@ -159,8 +160,15 @@ const Layout = () => {
     };
   }, [notifications]);
 
-  const handleGetNotifications = (userId, socket) => {
+  const handleNotifications = (userId, socket) => {
     socket.emit("notification", { userId }, (data) => {
+      // Handle server response
+      setNotifications(data.data); // Update state with received notifications
+    });
+  };
+
+  const handleBroadcasts = (socket) => {
+    socket.emit("notification", (data) => {
       // Handle server response
       setNotifications(data.data); // Update state with received notifications
     });

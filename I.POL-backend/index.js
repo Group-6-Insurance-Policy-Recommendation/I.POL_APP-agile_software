@@ -35,9 +35,9 @@ io.on("connect", (socket) => {
 });
 
 try {
-  io.on("notification", async (data) => {
+  io.on("notification", async (client) => {
     // Handle the event and send a response
-    const userId = data.userId;
+    const userId = client.userId;
     const notifications = await Notification.find({
       userId,
       seen: false,
@@ -74,35 +74,44 @@ try {
     .json({ error: "Failed to get notifications", details: err.message });
 }
 
-io.on("broadcast", async (data) => {
-  // Handle the event and send a response
-  const notifications = await Notification.find({
-    userId: "",
-    seen: false,
-    triggered: false,
+try {
+  io.on("broadcast", async () => {
+    // Handle the event and send a response
+    const notifications = await Notification.find({
+      userId: "",
+      seen: false,
+      triggered: false,
+    });
+
+    // Update triggered to false for emitted notifications
+    const updatedNotifications = notifications.map((notification) => ({
+      ...notification,
+      triggered: true,
+    }));
+
+    await Promise.all(
+      updatedNotifications.map((notification) =>
+        Notification.findByIdAndUpdate(notification._id, notification, {
+          new: true,
+        })
+      )
+    );
+
+    const data = JSON.stringify(updatedNotifications);
+    console.log("Received event:", data);
+    io.to(data.userId).emit("response", {
+      message: "Data received",
+      data,
+    });
   });
-
-  // Update triggered to false for emitted notifications
-  const updatedNotifications = notifications.map((notification) => ({
-    ...notification,
-    triggered: true,
-  }));
-
-  await Promise.all(
-    updatedNotifications.map((notification) =>
-      Notification.findByIdAndUpdate(notification._id, notification, {
-        new: true,
-      })
-    )
-  );
-
-  const data = JSON.stringify(updatedNotifications);
-  console.log("Received event:", data);
-  io.to(data.userId).emit("response", {
-    message: "Data received",
-    data,
-  });
-});
+} catch (err) {
+  console.error(err);
+  // Handle error and send feedback to client if needed
+  console.error(err);
+  res
+    .status(500)
+    .json({ error: "Failed to broadcast notifications", details: err.message });
+}
 
 // try {
 //   io.on("create", async (data) => {
