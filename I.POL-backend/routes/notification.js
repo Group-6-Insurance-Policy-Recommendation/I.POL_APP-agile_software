@@ -20,14 +20,21 @@ router.post("/broadcast", async (req, res) => {
 // POST /notifications/create
 router.post("/create", async (req, res) => {
   try {
-    console.log(req.body);
-    const { userId, type, message, channelId, data } = req.body; // Extract new fields
+    console.log("request body: ", req.body);
+
+    if (!req.body || !req.body.userId) {
+      return res.status(400).json({ error: "Missing userId in request body" });
+    }
+
+    // const { userId, type, message, channelId, data } = req.body; // Extract new fields
+    const userId = req.body.userId;
+
     const notification = new Notification({
-      userId,
-      type,
-      message,
-      channelId,
-      data,
+      userId: req.body.userId,
+      type: req.body.type,
+      message: req.body.message,
+      channelId: req.body.channelId,
+      data: req.body.data,
     });
     await notification.save();
     await wss.clients.forEach((client) => {

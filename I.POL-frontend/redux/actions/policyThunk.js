@@ -9,72 +9,40 @@ import {
 } from "./policyActions";
 
 // Create policy action
-export const createPolicy =
-  (userId, policyID, price, policyData) => async (dispatch) => {
-    try {
-      // Make API request for creating policy
-      const response = await axios.post(
-        "https://ipol-server.onrender.com/api/policy/create",
-        { ...policyData },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 201) {
-        try {
-          const response = await fetch(
-            "https://ipol-server.onrender.com/api/notifications/create",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                userId: userId,
-                type: "policy_payment",
-                message: "Insurance policy payment successful!",
-                channelId: "policy_updates",
-                data: {
-                  policyId: policyID,
-                  price: price,
-                },
-              }),
-            }
-          );
-
-          if (response.status === 201) {
-            console.log("Notification created successfully", response);
-          } else {
-            console.error("Failed to create notification:", response);
-            // Handle the error appropriately, e.g., display an error message to the user
-          }
-        } catch (error) {
-          console.error("Error creating notification:", error);
-          // Handle the error appropriately, e.g., display an error message to the user
-        }
-        console.log("Policy creation success:", response?.data);
-        router.push(`screens/other/userInsurancePolicy_`);
-
-        // Dispatch the create policy success action
-        dispatch(createPolicySuccess(response?.data));
-      } else {
-        console.error("Policy creation failed:", response.error);
-        // Dispatch the create policy failure action
-        dispatch(createPolicyFailure(response.error));
+export const createPolicy = (policyData) => async (dispatch) => {
+  try {
+    // Make API request for creating policy
+    const response = await axios.post(
+      "https://ipol-server.onrender.com/api/policy/create",
+      { ...policyData },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    } catch (error) {
-      console.error("Policy creation failed:", error.response?.data);
-      // Handle error and dispatch appropriate actions
-      if (error.response?.data?.error) {
-        alert(error.response?.data?.error);
-      } else {
-        alert(error.response?.data);
-      }
+    );
+
+    if (response.status === 201) {
+      console.log("Policy creation success:", response?.data);
+      router.push(`screens/other/userInsurancePolicy_`);
+
+      // Dispatch the create policy success action
+      dispatch(createPolicySuccess(response?.data));
+    } else {
+      console.error("Policy creation failed:", response.error);
+      // Dispatch the create policy failure action
+      dispatch(createPolicyFailure(response.error));
     }
-  };
+  } catch (error) {
+    console.error("Policy creation failed:", error.response?.data);
+    // Handle error and dispatch appropriate actions
+    if (error?.response?.data) {
+      alert(error.response.data.error);
+    } else {
+      alert("Policy creation failed");
+    }
+  }
+};
 
 // Get policies action
 export const getPolicies = (email, idToken) => async (dispatch) => {
@@ -102,10 +70,10 @@ export const getPolicies = (email, idToken) => async (dispatch) => {
   } catch (error) {
     console.error("Policies retrieval failed:", error.response?.data);
     // Handle error and dispatch appropriate actions
-    if (error.response?.data?.error) {
-      alert(error.response?.data?.error);
+    if (error?.response?.data) {
+      alert(error.response.data.error);
     } else {
-      alert(error.response?.data);
+      alert("Policy retrieval failed");
     }
   }
 };

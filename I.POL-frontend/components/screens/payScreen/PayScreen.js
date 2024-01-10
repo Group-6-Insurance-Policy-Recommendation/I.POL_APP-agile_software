@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import companyPolicies from "../../../data/companyPolicy";
 import { createPolicy } from "../../../redux/actions/policyThunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createPolicyPaymentNotification } from "../../../redux/actions/notificationThunk";
 
 const PaymentList = [
   {
@@ -60,99 +61,72 @@ const PayScreen = () => {
     setCompanyPolicy(policy);
   }, [policyID]);
 
-  async function createPolicyPaymentNotification(userId, policyDetails) {
-    try {
-      const response = await fetch("/api/notifications/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // ... other necessary headers (e.g., authentication)
-        },
-        body: JSON.stringify({
-          userId,
-          type: "policy_payment", // Adjust the notification type as needed
-          message: "Insurance policy payment successful!",
-          channelId: "policy_updates", // Adjust the channel ID as needed
-          data: {
-            policyId: policyDetails.policyID,
-            amount: policyDetails.amount,
-            // renewalDate: policyDetails.renewalDate,
-            // invoiceId: policyDetails.invoiceId,
-            // dueAmount: policyDetails.dueAmount,
-            // claimId: policyDetails.claimId,
-            // status: policyDetails.status,
-          },
-        }),
-      });
-
-      if (response.ok) {
-        console.log("Notification created successfully");
-      } else {
-        console.error("Failed to create notification:", response.statusText);
-        // Handle the error appropriately, e.g., display an error message to the user
-      }
-    } catch (error) {
-      console.error("Error creating notification:", error);
-      // Handle the error appropriately, e.g., display an error message to the user
-    }
-  }
-
   const handleCreatePolicy = async () => {
-    // Check if user profile firstname and lastname are empty
-    if (
-      user?.email === "" &&
-      user?.profile?.firstname === "" &&
-      user?.profile?.lastname === ""
-    ) {
-      alert(
-        "Please complete your profile with your email, first and last name before creating a policy."
+    try {
+      // Check if user profile firstname and lastname are empty
+      if (
+        user?.email === "" &&
+        user?.profile?.firstname === "" &&
+        user?.profile?.lastname === ""
+      ) {
+        alert(
+          "Please complete your profile with your email, first and last name before creating a policy."
+        );
+        return;
+      }
+
+      const userId = user?._id;
+      console.log("userid", user?._id);
+
+      // Get current date
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+
+      // Calculate expiration date (assuming one year from now)
+      const expirationDate = new Date(
+        currentYear + 1,
+        currentDate.getMonth(),
+        currentDate.getDate()
       );
-      return;
+
+      // Create a new policy with updated details
+      const policyData = {
+        name: companyPolicy?.policyDetail?.policyInformation.name,
+        type: companyPolicy?.policyDetail?.policyInformation.type,
+        coverage: companyPolicy?.policyDetail?.policyInformation.coverage,
+        policyNumber:
+          companyPolicy?.policyDetail?.policyInformation.policyNumber,
+        policyholderName: `${user?.profile?.firstname} ${user?.profile?.lastname}`,
+        policyholderEmail: user?.email,
+        policyCost: price,
+        effectiveDate: currentDate.toISOString().split("T")[0], // Format current date as YYYY-MM-DD
+        expirationDate: expirationDate.toISOString().split("T")[0], // Format expiration date as YYYY-MM-DD
+        insuredEntities: ["policyholderName"],
+      };
+
+      const insuranceType = policyData.type.toLowerCase().split(" ")[0];
+      const storageKey = `${insuranceType}InsuranceData`;
+
+      const insuranceData = await AsyncStorage.getItem(storageKey);
+
+      if (!insuranceData) {
+        throw new Error(`Missing insurance data for type ${insuranceType}`);
+      }
+
+      const parsedInsuranceData = JSON.parse(insuranceData);
+
+      policyData[storageKey] = parsedInsuranceData;
+      console.log(policyData);
+
+      dispatch(createPolicy(policyData));
+      console.log(userId);
+      console.log(policyID);
+      console.log(price);
+
+      createPolicyPaymentNotification(userId, policyID, price);
+    } catch (error) {
+      console.error("Error creating policy:", error);
     }
-
-    const userId = user?._id;
-    console.log("userid", user?._id);
-
-    // Get current date
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-
-    // Calculate expiration date (assuming one year from now)
-    const expirationDate = new Date(
-      currentYear + 1,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
-
-    // Create a new policy with updated details
-    const policyData = {
-      name: companyPolicy?.policyDetail?.policyInformation.name,
-      type: companyPolicy?.policyDetail?.policyInformation.type,
-      coverage: companyPolicy?.policyDetail?.policyInformation.coverage,
-      policyNumber: companyPolicy?.policyDetail?.policyInformation.policyNumber,
-      policyholderName: `${user?.profile?.firstname} ${user?.profile?.lastname}`,
-      policyholderEmail: user?.email,
-      policyCost: price,
-      effectiveDate: currentDate.toISOString().split("T")[0], // Format current date as YYYY-MM-DD
-      expirationDate: expirationDate.toISOString().split("T")[0], // Format expiration date as YYYY-MM-DD
-      insuredEntities: ["policyholderName"],
-    };
-
-    const insuranceType = policyData.type.toLowerCase().split(" ")[0];
-    const storageKey = `${insuranceType}InsuranceData`;
-
-    const insuranceData = await AsyncStorage.getItem(storageKey);
-
-    if (!insuranceData) {
-      throw new Error(`Missing insurance data for type ${insuranceType}`);
-    }
-
-    const parsedInsuranceData = JSON.parse(insuranceData);
-
-    policyData[storageKey] = parsedInsuranceData;
-    console.log(policyData);
-
-    dispatch(createPolicy(userId, policyID, price, policyData));
   };
 
   return (

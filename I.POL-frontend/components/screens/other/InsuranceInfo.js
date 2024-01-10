@@ -608,7 +608,7 @@ const InsuranceInfo = () => {
                 }
                 searchPlaceholder="Search..."
                 value={typeOfPropertyObject}
-                onChangeText={(value) => {
+                onChange={(value) => {
                   setTypeOfPropertyObject(value);
                   handlehomeInsuranceDataChange("typeOfProperty", value.label);
                   setTypeOfPropertyFocus(false);
