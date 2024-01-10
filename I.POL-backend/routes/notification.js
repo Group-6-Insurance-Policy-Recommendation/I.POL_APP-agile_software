@@ -2,21 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Notification = require("../modules/Notification");
 
-// /broadcast
-router.post("/broadcast", async (req, res) => {
-  try {
-    const { message, data } = req.body; // Extract message and optional data
-    wss.clients.broadcast(JSON.stringify({ message, data })); // Broadcast to all clients
-    res.status(200).json({ message: "Notification broadcast sent" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Failed to broadcast notification",
-      details: err.message,
-    });
-  }
-});
-
 // POST /notifications/create
 router.post("/create", async (req, res) => {
   try {
@@ -28,6 +13,7 @@ router.post("/create", async (req, res) => {
 
     // const { userId, type, message, channelId, data } = req.body; // Extract new fields
     const userId = req.body.userId;
+    console.log(userId);
 
     const notification = new Notification({
       userId: req.body.userId,
@@ -37,17 +23,8 @@ router.post("/create", async (req, res) => {
       data: req.body.data,
     });
     await notification.save();
-    await wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN && client.userId === userId) {
-        try {
-          client.send(JSON.stringify(notification));
-          console.log("Notification sent to client:", client.id);
-        } catch (err) {
-          console.error("Error sending notification to client:", err);
-        }
-      }
-    });
-    res.status(201).json({ message: "Notification created" });
+
+    res.status(201).json(notification);
   } catch (err) {
     console.error(err);
     res
@@ -70,7 +47,43 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
-module.exports = function (wss) {
-  // Receive wss as a parameter
-  return router;
-};
+// PUT /notifications/:notificationId/mark-seen
+router.put("/:notificationId/mark-seen", async (req, res) => {
+  try {
+    await Notification.findByIdAndUpdate(
+      req.params.notificationId,
+      {
+        seen: true,
+      },
+      { new: true }
+    ); // Return updated notification
+
+    res.json({ message: "Notification marked as seen" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to mark notification as seen",
+      details: err.message,
+    });
+  }
+});
+
+// PUT /notifications/user/:userId/mark-all-seen
+router.put("/user/:userId/mark-all-seen", async (req, res) => {
+  try {
+    await Notification.updateMany(
+      { userId: req.params.userId },
+      { seen: true }
+    );
+
+    res.json({ message: "All notifications marked as seen" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to mark notifications as seen",
+      details: err.message,
+    });
+  }
+});
+
+module.exports = router;

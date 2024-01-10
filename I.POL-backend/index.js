@@ -9,7 +9,8 @@ const authRoute = require("./routes/auth");
 const policyRoute = require("./routes/policyInfo");
 const path = require("path");
 // const firebaseAuth = require("./firebase-auth");
-const WebSocket = require("ws");
+const socketIO = require("socket.io");
+const Notification = require("./modules/Notification");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -20,7 +21,7 @@ const server = app.listen(8800, () => {
   console.log("Backend Server Is Running...");
 });
 
-const wss = new WebSocket.Server({ server });
+const io = socketIO(server);
 
 dotenv.config();
 
@@ -29,17 +30,109 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-wss.on("connection", (ws) => {
-  console.log("WebSocket client connected");
+io.on("connect", (socket) => {
+  console.log("WebSocket client connected:", socket.id);
 });
+
+try {
+  io.on("notification", async (data) => {
+    // Handle the event and send a response
+    const userId = data.userId;
+    const notifications = await Notification.find({
+      userId,
+      seen: false,
+      triggered: false,
+    });
+
+    // Update triggered to false for emitted notifications
+    const updatedNotifications = notifications.map((notification) => ({
+      ...notification,
+      triggered: true,
+    }));
+
+    await Promise.all(
+      updatedNotifications.map((notification) =>
+        Notification.findByIdAndUpdate(notification._id, notification, {
+          new: true,
+        })
+      )
+    );
+
+    const data = JSON.stringify(updatedNotifications);
+    console.log("Received event:", data);
+    io.to(data.userId).emit("response", {
+      message: "Data received",
+      data,
+    });
+  });
+} catch (err) {
+  console.error(err);
+  // Handle error and send feedback to client if needed
+  console.error(err);
+  res
+    .status(500)
+    .json({ error: "Failed to get notifications", details: err.message });
+}
+
+io.on("broadcast", async (data) => {
+  // Handle the event and send a response
+  const notifications = await Notification.find({
+    userId: "",
+    seen: false,
+    triggered: false,
+  });
+
+  // Update triggered to false for emitted notifications
+  const updatedNotifications = notifications.map((notification) => ({
+    ...notification,
+    triggered: true,
+  }));
+
+  await Promise.all(
+    updatedNotifications.map((notification) =>
+      Notification.findByIdAndUpdate(notification._id, notification, {
+        new: true,
+      })
+    )
+  );
+
+  const data = JSON.stringify(updatedNotifications);
+  console.log("Received event:", data);
+  io.to(data.userId).emit("response", {
+    message: "Data received",
+    data,
+  });
+});
+
+// try {
+//   io.on("create", async (data) => {
+//     const notification = new Notification({
+//       userId: data.userId,
+//       message: data.message,
+//       data: data.data,
+//     });
+//     await notification.save();
+//     const data = JSON.stringify(notification);
+//     await io
+//       .to(data.userId)
+//       .emit("notificationCreated", { message: "Notification created", data });
+//   });
+// } catch (err) {
+//   console.error(err);
+//   // Handle error and send feedback to client if needed
+//   console.error(err);
+//   res
+//     .status(500)
+//     .json({ error: "Failed to create notification", details: err.message });
+// }
 
 // Integrate WebSocket into your Express app
 app.use((req, res, next) => {
-  req.ws = wss;
+  req.io = io;
   next();
 });
 
-const notificationRoutes = require("./routes/notification")(wss); // Pass wss as an argument
+const notificationRoutes = require("./routes/notification")(io); // Pass wss as an argument
 app.use("/api/notifications", notificationRoutes);
 
 // middlewares

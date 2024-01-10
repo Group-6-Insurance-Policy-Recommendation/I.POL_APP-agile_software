@@ -24,7 +24,7 @@ export const createPolicy = (policyData) => async (dispatch) => {
 
     if (response.status === 201) {
       console.log("Policy creation success:", response?.data);
-      router.push(`screens/other/userInsurancePolicy_`);
+      router.push(`profile/userInsurancePolicy_`);
 
       // Dispatch the create policy success action
       dispatch(createPolicySuccess(response?.data));

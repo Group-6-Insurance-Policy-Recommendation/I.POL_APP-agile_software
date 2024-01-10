@@ -127,7 +127,7 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io("ws://ipol-server.onrender.com/api/notifications", {
+    const socket = io("ws://ipol-server.onrender.com:8800", {
       reconnection: true,
       reconnectionDelay: 1000, // 1 second delay between each reconnection attempt
       reconnectionAttempts: Infinity, // Retry indefinitely
@@ -135,27 +135,36 @@ const Layout = () => {
 
     // Handle connection events
     socket.on("connect", () => {
-      console.log("WebSocket connected");
+      console.log("Socket.io connected");
     });
 
     socket.on("disconnect", (reason) => {
-      console.log("WebSocket disconnected:", reason);
+      console.log("Socket.io disconnected:", reason);
     });
 
     socket.on("error", (error) => {
-      console.error("WebSocket error:", error);
+      console.error("Socket.io error:", error);
     });
 
     // Handle incoming notifications
-    socket.on("notification", (data) => {
+    socket.emit("notification", (data) => {
       setNotifications((prevNotifications) => [...prevNotifications, data]);
     });
+
+    handleGetNotifications(userId, socket);
 
     // Cleanup function to close the socket
     return () => {
       socket.disconnect();
     };
   }, [notifications]);
+
+  const handleGetNotifications = (userId, socket) => {
+    socket.emit("notification", { userId }, (data) => {
+      // Handle server response
+      setNotifications(data.data); // Update state with received notifications
+    });
+  };
 
   return (
     <Provider store={store}>

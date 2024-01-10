@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 50,
-    marginHorizontal: SIZES.medium,
+    marginHorizontal: SIZES.small,
     backgroundColor: COLORS.white,
     justifyContent: "center",
     alignItems: "center",
