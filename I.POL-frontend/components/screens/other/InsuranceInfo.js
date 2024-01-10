@@ -907,7 +907,7 @@ const InsuranceInfo = () => {
                 styles.formInput,
                 relationshipFocus && styles.focusedInput,
               ]}
-              placeholder="name"
+              placeholder="relationship"
               keyboardType="default"
               value={lifeInsuranceData.relationship}
               onChangeText={(value) =>

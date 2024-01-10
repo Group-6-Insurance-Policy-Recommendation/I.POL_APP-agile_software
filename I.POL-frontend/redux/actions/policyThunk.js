@@ -33,7 +33,7 @@ export const createPolicy =
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                userId,
+                userId: userId,
                 type: "policy_payment",
                 message: "Insurance policy payment successful!",
                 channelId: "policy_updates",
@@ -48,10 +48,7 @@ export const createPolicy =
           if (response.status === 201) {
             console.log("Notification created successfully", response);
           } else {
-            console.error(
-              "Failed to create notification:",
-              response
-            );
+            console.error("Failed to create notification:", response);
             // Handle the error appropriately, e.g., display an error message to the user
           }
         } catch (error) {
@@ -59,7 +56,7 @@ export const createPolicy =
           // Handle the error appropriately, e.g., display an error message to the user
         }
         console.log("Policy creation success:", response?.data);
-        router.push(`screens/other/huddleScreen_`);
+        router.push(`screens/other/userInsurancePolicy_`);
 
         // Dispatch the create policy success action
         dispatch(createPolicySuccess(response?.data));

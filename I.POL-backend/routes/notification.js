@@ -10,18 +10,17 @@ router.post("/broadcast", async (req, res) => {
     res.status(200).json({ message: "Notification broadcast sent" });
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({
-        error: "Failed to broadcast notification",
-        details: err.message,
-      });
+    res.status(500).json({
+      error: "Failed to broadcast notification",
+      details: err.message,
+    });
   }
 });
 
 // POST /notifications/create
 router.post("/create", async (req, res) => {
   try {
+    console.log(req.body);
     const { userId, type, message, channelId, data } = req.body; // Extract new fields
     const notification = new Notification({
       userId,

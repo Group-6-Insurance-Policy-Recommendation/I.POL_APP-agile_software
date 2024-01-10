@@ -100,16 +100,18 @@ const PayScreen = () => {
   const handleCreatePolicy = async () => {
     // Check if user profile firstname and lastname are empty
     if (
-      !user ||
-      !user?.profile ||
-      !user?.profile?.firstname ||
-      !user?.profile?.lastname
+      user?.email === "" &&
+      user?.profile?.firstname === "" &&
+      user?.profile?.lastname === ""
     ) {
       alert(
-        "Please complete your profile with your first and last name before creating a policy."
+        "Please complete your profile with your email, first and last name before creating a policy."
       );
       return;
     }
+
+    const userId = user?._id;
+    console.log("userid", user?._id);
 
     // Get current date
     const currentDate = new Date();
@@ -150,7 +152,7 @@ const PayScreen = () => {
     policyData[storageKey] = parsedInsuranceData;
     console.log(policyData);
 
-    dispatch(createPolicy(user?._id, policyID, price, policyData));
+    dispatch(createPolicy(userId, policyID, price, policyData));
   };
 
   return (

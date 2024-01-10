@@ -27,7 +27,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Layout = () => {
   const router = useRouter();
   const user = AsyncStorage.getItem("userData");
-  const userId = user?._id
+  const userId = user?._id;
 
   const [fontsLoaded] = useFonts({
     DMBold: require("../assets/fonts/DMSans-Bold.ttf"),
@@ -127,7 +127,7 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io(`ws://ipol-server.onrender.com/api/notifications/user/${userId}`, {
+    const socket = io("ws://ipol-server.onrender.com/api/notifications", {
       reconnection: true,
       reconnectionDelay: 1000, // 1 second delay between each reconnection attempt
       reconnectionAttempts: Infinity, // Retry indefinitely

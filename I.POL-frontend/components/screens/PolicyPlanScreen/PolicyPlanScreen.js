@@ -435,8 +435,7 @@ const PolicyPlanScreen = () => {
 
 const styles = StyleSheet.create({
   ScreenContainer: {
-    // flex: 1,
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.primary,
   },
   ScrollViewFlex: {
     flexGrow: 1,
