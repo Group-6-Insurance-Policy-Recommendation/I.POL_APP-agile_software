@@ -66,7 +66,7 @@ const UserInsurancePolicy = () => {
       style={{
         backgroundColor: COLORS.white,
         paddingTop: SIZES.medium,
-        height: policyList.length === 0 ? height : "",
+        height: policyList.length < 2 ? height : "",
       }}
     >
       <ScrollView

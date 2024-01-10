@@ -50,7 +50,7 @@ export const createPolicy =
           } else {
             console.error(
               "Failed to create notification:",
-              response.statusText
+              response
             );
             // Handle the error appropriately, e.g., display an error message to the user
           }
