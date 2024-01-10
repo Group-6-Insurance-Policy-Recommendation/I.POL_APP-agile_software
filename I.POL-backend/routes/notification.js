@@ -20,7 +20,7 @@ router.post("/broadcast", async (req, res) => {
 // POST /notifications/create
 router.post("/create", async (req, res) => {
   try {
-    console.log("request body: ", req.body);
+    console.log("request data: ", req);
 
     if (!req.body || !req.body.userId) {
       return res.status(400).json({ error: "Missing userId in request body" });
