@@ -5,15 +5,12 @@ const Notification = require("../modules/Notification");
 // POST /notifications/create
 router.post("/create", async (req, res) => {
   try {
-    console.log("request data: ", req);
-
     if (!req.body || !req.body.userId) {
       return res.status(400).json({ error: "Missing userId in request body" });
     }
 
     // const { userId, type, message, channelId, data } = req.body; // Extract new fields
     const userId = req.body.userId;
-    console.log(userId);
 
     const notification = new Notification({
       userId: req.body.userId,

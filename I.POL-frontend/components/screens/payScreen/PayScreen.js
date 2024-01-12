@@ -123,7 +123,13 @@ const PayScreen = () => {
       console.log(policyID);
       console.log(price);
 
-      createPolicyPaymentNotification(userId, policyID, price);
+      createPolicyPaymentNotification(
+        userId,
+        policyID,
+        price,
+        policyData.name,
+        policyData.policyNumber
+      );
     } catch (error) {
       console.error("Error creating policy:", error);
     }

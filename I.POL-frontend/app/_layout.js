@@ -127,7 +127,7 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io("ws://ipol-server.onrender.com:8800", {
+    const socket = io("ws://ipol-server.onrender.com", {
       reconnection: true,
       reconnectionDelay: 1000, // 1 second delay between each reconnection attempt
       reconnectionAttempts: Infinity, // Retry indefinitely
@@ -148,11 +148,12 @@ const Layout = () => {
 
     // Handle incoming notifications
     socket.emit("notification", (data) => {
-      setNotifications((prevNotifications) => [...prevNotifications, data]);
+      setNotifications(data);
     });
 
     handleNotifications(userId, socket);
     handleBroadcasts(socket);
+    console.log(notifications);
 
     // Cleanup function to close the socket
     return () => {
@@ -742,9 +743,9 @@ const schedulePushNotification = async (notificationArray) => {
   // Schedule a local notification
   for (const notification of notificationArray) {
     if (
-      !triggeredNotifications.includes(notification.id) &&
-      !notification.isTriggered &&
-      !notification.read
+      !triggeredNotifications.includes(notification._id) &&
+      !notification.triggered &&
+      !notification.seen
     ) {
       try {
         await Notifications.scheduleNotificationAsync({
@@ -756,7 +757,7 @@ const schedulePushNotification = async (notificationArray) => {
           },
           trigger: { seconds: 3 },
         });
-        notification.isTriggered = true;
+        notification.triggered = true;
         triggeredNotifications.push(notification.id); // Mark as triggered
         console.log("Notification scheduled:", notification.title);
       } catch (error) {
