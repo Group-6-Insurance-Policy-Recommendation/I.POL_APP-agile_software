@@ -50,13 +50,7 @@ export const markNotificationAsSeen = async (notificationId) => {
       `https://ipol-server.onrender.com/api/notifications/${notificationId}/mark-seen`
     )
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-    })
-    .then((data) => {
-      console.log("Notification marked as seen:", data.message);
-      // Update UI or perform any actions based on server response
+      console.log("Notification marked as seen:", response.data);
     })
     .catch((error) => {
       console.error("Error marking notification as seen:", error);

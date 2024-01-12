@@ -16,6 +16,7 @@ const NotificationCard = ({ notification, handleNavigate }) => {
       style={styles.container(notification)}
       onPress={() => {
         setFullDesc((prev) => !prev);
+        handleNavigate
       }}
     >
       {fullDesc ? (

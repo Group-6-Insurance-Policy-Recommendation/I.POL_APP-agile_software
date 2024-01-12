@@ -14,6 +14,7 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 import NotificationCard from "../../../common/card/notificationCard/NotificationCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { markNotificationAsSeen } from "../../../../redux/actions/notificationThunk";
 
 const Notification = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
@@ -28,9 +29,8 @@ const Notification = () => {
     setWidth(Dimensions.get("window").width);
 
     // Set up notifications data
-    // setNotifications(notification);
     const userId = user?._id;
-    console.log(userId)
+    console.log(userId);
     axios
       .get(`https://ipol-server.onrender.com/api/notifications/user/${userId}`)
       .then((response) => {
@@ -130,9 +130,8 @@ const Notification = () => {
   //   },
   // ];
 
-  // const renderNotificationCard = ({ item }) => (
-  //   <NotificationCard notification={item} handleNavigate={() => {}} />
-  // );
+  const seenNotification = (notificationId) =>
+    markNotificationAsSeen(notificationId);
 
   return (
     <SafeAreaView
@@ -156,7 +155,7 @@ const Notification = () => {
             <NotificationCard
               notification={notification}
               key={notification?._id}
-              handleNavigate={() => {}}
+              handleNavigate={seenNotification(notification._id)}
             />
           ))}
         </View>
