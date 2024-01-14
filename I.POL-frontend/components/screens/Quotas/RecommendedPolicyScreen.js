@@ -45,8 +45,8 @@ const RecommendedPolicyScreen = () => {
     }
   }, []);
 
-  const handleSelectPlan = (policyID) => {
-    router.push(`screens/other/policyPlanScreen_/${policyID}`);
+  const handleInsuranceInfo = (policyID) => {
+    router.push(`screens/other/insuranceInfo_/${policyID}`);
   };
 
   return (
@@ -153,13 +153,13 @@ const RecommendedPolicyScreen = () => {
             ) : (
               <View>
                 <TouchableOpacity
-                  onPress={() => handleSelectPlan(selectedPolicy?.id)}
+                  onPress={() => handleInsuranceInfo(selectedPolicy?.id)}
                   style={styles.pageBtn}
                 >
                   <Text
                     style={{ color: COLORS.white, fontFamily: FONT.medium }}
                   >
-                    Select Plan
+                    Proceed
                   </Text>
                 </TouchableOpacity>
 

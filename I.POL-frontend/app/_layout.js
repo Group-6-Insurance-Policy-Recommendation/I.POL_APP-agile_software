@@ -48,14 +48,14 @@ const Layout = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [ws, setWs] = useState(null);
+  // const [ws, setWs] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
   // const notifications = [
   //   {
   //     id: 1,
   //     title: "Policy Renewal Reminder",
-  //     body: "Your policy is up for renewal in 3 days. Review your options and ensure uninterrupted coverage.",
+  //     message: "Your policy is up for renewal in 3 days. Review your options and ensure uninterrupted coverage.",
   //     channelId: "policy_reminders",
   //     data: {
   //       policyId: "ABC123",
@@ -68,7 +68,7 @@ const Layout = () => {
   //   {
   //     id: 2,
   //     title: "Payment Reminder",
-  //     body: "Your next premium payment of $49.99 is due on 09/15/2023. Avoid late fees by paying on time.",
+  //     message: "Your next premium payment of $49.99 is due on 09/15/2023. Avoid late fees by paying on time.",
   //     channelId: "payment_reminders",
   //     data: {
   //       invoiceId: "XYZ456",
@@ -81,7 +81,7 @@ const Layout = () => {
   //   {
   //     id: 3,
   //     title: "Claim Status Update",
-  //     body: "Your claim #7890 has been approved! Your payment will be processed within 5 business days.",
+  //     message: "Your claim #7890 has been approved! Your payment will be processed within 5 business days.",
   //     channelId: "claim_updates",
   //     data: {
   //       claimId: "7890",
@@ -94,7 +94,7 @@ const Layout = () => {
   //   {
   //     id: 4,
   //     title: "Benefit Utilization Reminder",
-  //     body: "Did you know your plan includes dental checkups? Schedule your next appointment and maximize your benefits!",
+  //     message: "Did you know your plan includes dental checkups? Schedule your next appointment and maximize your benefits!",
   //     channelId: "benefit_reminders",
   //     data: {},
   //     timestamp: 1662544000, // Same timestamp as the first notification (for demonstration)

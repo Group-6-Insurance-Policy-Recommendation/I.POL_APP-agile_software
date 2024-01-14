@@ -15,6 +15,7 @@ router.post("/create", async (req, res) => {
     const notification = new Notification({
       userId: req.body.userId,
       type: req.body.type,
+      title: req.body.title,
       message: req.body.message,
       channelId: req.body.channelId,
       data: req.body.data,
