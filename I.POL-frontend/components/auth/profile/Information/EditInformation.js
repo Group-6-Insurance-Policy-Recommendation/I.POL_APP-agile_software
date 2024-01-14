@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Dimensions,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, images, SIZES } from "../../../../constants";
@@ -77,23 +78,30 @@ const EditInformation = () => {
 
   // Function to pick image and store in AsyncStorage
   const pickAndStoreImage = async () => {
-    await ImagePicker.requestMediaLibraryPermissionsAsync();
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    // ImagePicker.requestCameraPermissionsAsync();
-    // let result = await ImagePicker.launchCameraAsync({
-    //   cameraType: ImagePicker.CameraType.front,
-    //   allowsEditing: true,
-    //   aspect: [4, 3],
-    //   quality: 1,
-    // });
+    if (Platform.OS === "android") {
+      ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.front,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      setStoredImageUri(result.assets[0].uri);
+      if (!result.canceled) {
+        setStoredImageUri(result.assets[0].uri);
+      }
+    } else {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setStoredImageUri(result.assets[0].uri);
+      }
     }
   };
 

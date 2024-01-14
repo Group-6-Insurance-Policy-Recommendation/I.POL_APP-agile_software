@@ -70,9 +70,10 @@ try {
   console.error(err);
   // Handle error and send feedback to client if needed
   console.error(err);
-  res
-    .status(500)
-    .json({ error: "Failed to get notifications", details: err.message });
+  io.emit("error", {
+    message: "Failed to get notifications",
+    details: err.message,
+  });
 }
 
 try {
@@ -109,9 +110,10 @@ try {
   console.error(err);
   // Handle error and send feedback to client if needed
   console.error(err);
-  res
-    .status(500)
-    .json({ error: "Failed to broadcast notifications", details: err.message });
+  io.emit("error", {
+    message: "Failed to get notifications",
+    details: err.message,
+  });
 }
 
 // try {
@@ -137,6 +139,7 @@ try {
 // }
 
 // Integrate WebSocket into your Express app
+
 app.use((req, res, next) => {
   req.io = io;
   next();

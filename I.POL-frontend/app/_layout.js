@@ -133,7 +133,6 @@ const Layout = () => {
       reconnectionAttempts: Infinity, // Retry indefinitely
     });
 
-    // Handle connection events
     socket.on("connect", () => {
       console.log("Socket.io connected");
     });
@@ -146,14 +145,8 @@ const Layout = () => {
       console.error("Socket.io error:", error);
     });
 
-    // Handle incoming notifications
-    socket.emit("notification", (data) => {
-      setNotifications(data);
-    });
-
     handleNotifications(userId, socket);
     handleBroadcasts(socket);
-    console.log(notifications);
 
     // Cleanup function to close the socket
     return () => {
@@ -162,16 +155,18 @@ const Layout = () => {
   }, [notifications]);
 
   const handleNotifications = (userId, socket) => {
-    socket.emit("notification", { userId }, (data) => {
+    socket.on("notification", { userId }, (data) => {
       // Handle server response
       setNotifications(data.data); // Update state with received notifications
+      console.log(data);
     });
   };
 
   const handleBroadcasts = (socket) => {
-    socket.emit("notification", (data) => {
+    socket.on("broadcast", (data) => {
       // Handle server response
       setNotifications(data.data); // Update state with received notifications
+      console.log(data);
     });
   };
 
@@ -686,7 +681,7 @@ const registerForPushNotificationsAsync = async () => {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
+      console.log("Failed to get push token for push notification!");
       return;
     }
     // Learn more about projectId:
@@ -694,7 +689,7 @@ const registerForPushNotificationsAsync = async () => {
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
-    alert("Must use physical device for Push Notifications");
+    console.log("Must use physical device for Push Notifications");
   }
 
   return token;
@@ -751,14 +746,14 @@ const schedulePushNotification = async (notificationArray) => {
         await Notifications.scheduleNotificationAsync({
           content: {
             title: notification.title,
-            body: notification.body,
+            body: notification.message,
             data: notification.data,
             channelId: notification.channelId,
           },
           trigger: { seconds: 3 },
         });
         notification.triggered = true;
-        triggeredNotifications.push(notification.id); // Mark as triggered
+        triggeredNotifications.push(notification._id); // Mark as triggered
         console.log("Notification scheduled:", notification.title);
       } catch (error) {
         console.error("Error scheduling notification:", error);
