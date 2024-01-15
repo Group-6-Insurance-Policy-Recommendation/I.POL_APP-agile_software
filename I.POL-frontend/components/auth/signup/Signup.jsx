@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./signup.style";
 import { router } from "expo-router";
-import { COLORS, SIZES, images, icons } from "../../../constants";
+import { COLORS, SIZES } from "../../../constants";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../../redux/actions/authThunk";
 

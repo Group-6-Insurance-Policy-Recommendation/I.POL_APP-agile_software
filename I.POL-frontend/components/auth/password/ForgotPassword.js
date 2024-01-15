@@ -7,11 +7,10 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   initiateForgotPassword,
   setForgotPassword,
@@ -19,14 +18,10 @@ import {
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  const user = useSelector((state) => state.user);
-  const userId = user?._id;
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [OTPFocus, setOTPFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -70,56 +65,54 @@ const ForgotPassword = () => {
         secure link to set a new one.
       </Text>
 
-      <KeyboardAvoidingView style={styles.formArea} behavior="padding">
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={[styles.formInput, emailFocus && styles.focusedInput]}
-          placeholder="Enter email"
-          keyboardType="email-address"
-          onChangeText={setEmail}
-          value={email}
-          onFocus={handleEmailFocus}
-          onBlur={handleEmailBlur}
-        />
-        {showInput && (
-          <View>
-            <Text style={styles.label}>OTP</Text>
-            <TextInput
-              style={[styles.formInput, OTPFocus && styles.focusedInput]}
-              placeholder="Enter OTP"
-              keyboardType="default"
-              onChangeText={setOTP}
-              value={OTP}
-              onFocus={() => setOTPFocus(true)}
-              onBlur={() => setOTPFocus(false)}
-            />
+      {showInput ? (
+        <KeyboardAvoidingView style={styles.formArea} behavior="padding">
+          <Text style={styles.label}>OTP</Text>
+          <TextInput
+            style={[styles.formInput, OTPFocus && styles.focusedInput]}
+            placeholder="Enter OTP"
+            keyboardType="default"
+            onChangeText={setOTP}
+            value={OTP}
+            onFocus={() => setOTPFocus(true)}
+            onBlur={() => setOTPFocus(false)}
+          />
 
-            <Text style={styles.label}>New Password</Text>
-            <TextInput
-              style={[styles.formInput, passwordFocus && styles.focusedInput]}
-              placeholder="Enter new password"
-              secureTextEntry
-              onChangeText={setPassword}
-              value={password}
-              onFocus={() => setPasswordFocus(true)}
-              onBlur={() => setPasswordFocus(false)}
-            />
-          </View>
-        )}
+          <Text style={styles.label}>New Password</Text>
+          <TextInput
+            style={[styles.formInput, passwordFocus && styles.focusedInput]}
+            placeholder="Enter new password"
+            secureTextEntry
+            onChangeText={setPassword}
+            value={password}
+            onFocus={() => setPasswordFocus(true)}
+            onBlur={() => setPasswordFocus(false)}
+          />
 
-        {showInput ? (
           <TouchableOpacity style={styles.authBtn} onPress={setPasswordHandler}>
-            <Text style={styles.authBtnText}>Set Password</Text>
+            <Text style={styles.authBtnText}>Reset Password</Text>
           </TouchableOpacity>
-        ) : (
+        </KeyboardAvoidingView>
+      ) : (
+        <KeyboardAvoidingView style={styles.formArea} behavior="padding">
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={[styles.formInput, emailFocus && styles.focusedInput]}
+            placeholder="Enter email"
+            keyboardType="email-address"
+            onChangeText={setEmail}
+            value={email}
+            onFocus={handleEmailFocus}
+            onBlur={handleEmailBlur}
+          />
           <TouchableOpacity
             style={styles.authBtn}
             onPress={forgotPasswordHandler}
           >
             <Text style={styles.authBtnText}>Send</Text>
           </TouchableOpacity>
-        )}
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      )}
     </SafeAreaView>
   );
 };

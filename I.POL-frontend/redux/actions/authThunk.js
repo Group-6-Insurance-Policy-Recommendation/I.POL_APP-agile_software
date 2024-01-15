@@ -19,7 +19,6 @@ import axios from "axios";
 import { router } from "expo-router";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 
 export const loginUser = (credentials, idToken) => async (dispatch) => {
   try {
@@ -55,7 +54,7 @@ export const loginUser = (credentials, idToken) => async (dispatch) => {
       // Handle error and dispatch appropriate actions
       alert(error.response.data.error);
     } else {
-      alert("An Error Occurred. Try Again!");
+      alert("Login failed. Try Again!");
     }
   }
 };
@@ -87,7 +86,13 @@ export const signUp = (credentials, idToken) => async (dispatch) => {
     }
   } catch (error) {
     // Handle error
-    alert("Something went wrong. Try again.");
+    if (error?.response?.data) {
+      console.error("Signup failed:", error.response.data);
+      // Handle error and dispatch appropriate actions
+      alert(error.response.data.error);
+    } else {
+      alert("Signup failed. Try again!");
+    }
   }
 };
 

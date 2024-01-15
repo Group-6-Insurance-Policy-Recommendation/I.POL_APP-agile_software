@@ -1,24 +1,15 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
-import { markNotificationAsSeen } from "../../../../redux/actions/notificationThunk";
 
 const NotificationCard = ({ notification }) => {
-  const seenNotification = (notificationId) =>
-    markNotificationAsSeen(notificationId);
   const [fullDesc, setFullDesc] = useState(false);
   return (
     <TouchableOpacity
       style={styles.container(notification)}
       onPress={() => {
         setFullDesc((prev) => !prev);
-        seenNotification(notification._id);
       }}
     >
       {fullDesc ? (

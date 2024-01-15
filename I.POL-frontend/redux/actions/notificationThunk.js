@@ -46,7 +46,7 @@ export const createPolicyPaymentNotification = async (
 
 export const markNotificationAsSeen = async (notificationId) => {
   await axios
-    .post(
+    .put(
       `https://ipol-server.onrender.com/api/notifications/${notificationId}/mark-seen`
     )
     .then((response) => {

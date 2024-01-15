@@ -86,7 +86,7 @@ const sendPasswordResetEmail = async (user, resetToken) => {
     to: user.email,
     subject: "Insurance Policy 🚀✨ - Password Reset Code",
     text:
-      `Hi ${user.name},\n\n` +
+      `Hi ${user.profile.username},\n\n` +
       `You (or someone else) has requested a password reset for your account. To complete the process, please enter the following 6-digit code:\n\n` +
       `**${resetToken}**\n\n` +
       `This code is valid for 15 minutes.\n\n` +

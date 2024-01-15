@@ -12,7 +12,7 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import styles from "./signin.style";
 import { router } from "expo-router";
@@ -21,8 +21,6 @@ import { loginUser } from "../../../redux/actions/authThunk";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  const user = useSelector((state) => state.user);
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -114,7 +112,9 @@ const Signin = () => {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.authBtn} onPress={handleSignIn}>
-                <Text style={styles.authBtnText} onPress={handleSignIn}>Log in</Text>
+                <Text style={styles.authBtnText} onPress={handleSignIn}>
+                  Log in
+                </Text>
               </TouchableOpacity>
             )}
 

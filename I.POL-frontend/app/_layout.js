@@ -2,7 +2,7 @@ import { Stack, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { COLORS, FONT, SIZES, images, icons } from "../constants";
+import { COLORS, images, icons } from "../constants";
 
 SplashScreen.preventAutoHideAsync();
 import * as Device from "expo-device";
@@ -28,24 +28,6 @@ import axios from "axios";
 const Layout = () => {
   const router = useRouter();
 
-  const [fontsLoaded] = useFonts({
-    DMBold: require("../assets/fonts/DMSans-Bold.ttf"),
-    DMMedium: require("../assets/fonts/DMSans-Medium.ttf"),
-    DMRegular: require("../assets/fonts/DMSans-Regular.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-
-    if (notifications.length > 0) {
-      schedulePushNotification(notifications);
-    }
-  }, [fontsLoaded, notifications]);
-
-  // if (!fontsLoaded) return null;
-
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -53,62 +35,24 @@ const Layout = () => {
   const responseListener = useRef();
   const [notifications, setNotifications] = useState([]);
 
-  // const notifications = [
-  //   {
-  //     id: 1,
-  //     title: "Policy Renewal Reminder",
-  //     message: "Your policy is up for renewal in 3 days. Review your options and ensure uninterrupted coverage.",
-  //     channelId: "policy_reminders",
-  //     data: {
-  //       policyId: "ABC123",
-  //       renewalDate: "2024-01-15",
-  //     },
-  //     timestamp: 1662544000, // Unix timestamp representing 2023-09-10 00:00:00 UTC
-  //     read: false,
-  //     isTriggered: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Payment Reminder",
-  //     message: "Your next premium payment of $49.99 is due on 09/15/2023. Avoid late fees by paying on time.",
-  //     channelId: "payment_reminders",
-  //     data: {
-  //       invoiceId: "XYZ456",
-  //       dueAmount: 49.99,
-  //     },
-  //     timestamp: 1664054400, // Unix timestamp representing 2023-09-15 00:00:00 UTC
-  //     read: false,
-  //     isTriggered: true,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Claim Status Update",
-  //     message: "Your claim #7890 has been approved! Your payment will be processed within 5 business days.",
-  //     channelId: "claim_updates",
-  //     data: {
-  //       claimId: "7890",
-  //       status: "approved",
-  //     },
-  //     timestamp: 1664140800, // Unix timestamp representing 2023-09-16 00:00:00 UTC
-  //     read: true,
-  //     isTriggered: true,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Benefit Utilization Reminder",
-  //     message: "Did you know your plan includes dental checkups? Schedule your next appointment and maximize your benefits!",
-  //     channelId: "benefit_reminders",
-  //     data: {},
-  //     timestamp: 1662544000, // Same timestamp as the first notification (for demonstration)
-  //     read: false,
-  //     isTriggered: true,
-  //   },
-  // ];
+  const [fontsLoaded] = useFonts({
+    DMBold: require("../assets/fonts/DMSans-Bold.ttf"),
+    DMMedium: require("../assets/fonts/DMSans-Medium.ttf"),
+    DMRegular: require("../assets/fonts/DMSans-Regular.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  // if (!fontsLoaded) return null;
 
   useEffect(() => {
     // Set up notifications data
     const userId = user?._id;
-    console.log("userId", userId);
+
     if (userId !== undefined) {
       axios
         .get(
@@ -116,7 +60,6 @@ const Layout = () => {
         )
         .then((response) => {
           setNotifications(response.data);
-          // Process and display notifications
           // console.log("Fetched notifications:", response.data);
         })
         .catch((error) => {
@@ -137,7 +80,9 @@ const Layout = () => {
     };
 
     getUserData();
-  }, []);
+
+    schedulePushNotification(notifications);
+  }, [notifications]);
 
   useEffect(() => {
     // Request notification permissions and set up listeners
@@ -182,30 +127,24 @@ const Layout = () => {
     });
 
     const userId = user?._id;
-    handleNotifications(userId, socket);
-    handleBroadcasts(socket);
+
+    socket.on("notification", { userId }, (data) => {
+      // Handle server response
+      // setNotifications(data.data); // Update state with received notifications
+      console.log(data);
+    });
+
+    socket.on("broadcast", (data) => {
+      // Handle server response
+      // setNotifications(data.data); // Update state with received notifications
+      console.log(data);
+    });
 
     // Cleanup function to close the socket
     return () => {
       socket.disconnect();
     };
   }, [notifications]);
-
-  const handleNotifications = (userId, socket) => {
-    socket.on("notification", { userId }, (data) => {
-      // Handle server response
-      // setNotifications(data.data); // Update state with received notifications
-      console.log(data);
-    });
-  };
-
-  const handleBroadcasts = (socket) => {
-    socket.on("broadcast", (data) => {
-      // Handle server response
-      // setNotifications(data.data); // Update state with received notifications
-      console.log(data);
-    });
-  };
 
   return (
     <Provider store={store}>
@@ -435,6 +374,13 @@ const Layout = () => {
               headerShadowVisible: false,
               headerTitle: "",
               presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
             }}
           />
 
@@ -447,6 +393,13 @@ const Layout = () => {
               headerShadowVisible: false,
               headerTitle: "",
               presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
             }}
           />
 
@@ -459,6 +412,13 @@ const Layout = () => {
               headerShadowVisible: false,
               headerTitle: "",
               presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
             }}
           />
 

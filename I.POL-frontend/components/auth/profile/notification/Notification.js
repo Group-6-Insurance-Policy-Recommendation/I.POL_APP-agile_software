@@ -4,13 +4,13 @@ import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  FlatList,
-  Button,
   ScrollView,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
-import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
+import { COLORS, FONT, icons, SHADOWS, SIZES } from "../../../../constants";
 import NotificationCard from "../../../common/card/notificationCard/NotificationCard";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -30,18 +30,13 @@ const Notification = () => {
 
     // Set up notifications data
     const userId = user?._id;
-    console.log(userId);
+
     axios
       .get(`https://ipol-server.onrender.com/api/notifications/user/${userId}`)
       .then((response) => {
-        // if (!response.ok) {
-        //   console.log(response.data)
-        //   throw new Error(`HTTP error! Status: ${response.status}`);
-        // }
         setNotifications(response.data);
         // Process and display notifications
         console.log("Fetched notifications:", response.data);
-        // Update UI or perform other actions with notifications
       })
       .catch((error) => {
         console.error("Error fetching notifications:", error);
@@ -130,8 +125,26 @@ const Notification = () => {
   //   },
   // ];
 
-  const seenNotification = (notificationId) =>
-    markNotificationAsSeen(notificationId);
+  const seenNotification = (notification) => {
+    // Only make API call and update state if notification is unseen
+    if (notification.seen === false) {
+      markNotificationAsSeen(notification._id)
+        .then(() => {
+          // Update notification state after successful API call
+          setNotifications((prevNotifications) =>
+            prevNotifications.map((prevNotification) =>
+              prevNotification._id === notification._id
+                ? { ...prevNotification, seen: true }
+                : prevNotification
+            )
+          );
+        })
+        .catch((error) => {
+          // Handle errors gracefully
+          console.error("Error marking notification as seen:", error);
+        });
+    }
+  };
 
   return (
     <SafeAreaView
@@ -150,12 +163,28 @@ const Notification = () => {
         <View style={styles.HeaderContainer}>
           <Text style={styles.HeaderText}>Notifications</Text>
         </View>
+        {notifications.length === 0 && (
+          <View style={styles.notificationContainer}>
+            <Image
+              source={icons.feedback}
+              resizeMode="contain"
+              style={styles.notificationImage}
+            />
+            <Text style={styles.notificationMsg} numberOfLines={6}>
+              Your notifications will be displayed here. You have no
+              notifications.
+            </Text>
+          </View>
+        )}
+
         <View style={styles.cardsContainer}>
           {notifications.map((notification) => (
-            <NotificationCard
-              notification={notification}
-              key={notification?._id}
-            />
+            <TouchableOpacity onPress={seenNotification(notification)}>
+              <NotificationCard
+                notification={notification}
+                key={notification?._id}
+              />
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
@@ -188,5 +217,29 @@ const styles = StyleSheet.create({
   cardsContainer: {
     marginVertical: SIZES.medium,
     gap: SIZES.small,
+  },
+  notificationContainer: {
+    width: "100%",
+    // height: "100%",
+    backgroundColor: COLORS.lightWhite,
+    borderRadius: SIZES.medium,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    gap: 20,
+  },
+  notificationImage: {
+    width: 50,
+    height: 50,
+    // tintColor: COLORS.primary,
+  },
+  notificationMsg: {
+    width: "60%",
+    fontSize: SIZES.small + 2,
+    fontFamily: FONT.regular,
+    color: COLORS.text2,
+    paddingVertical: SIZES.small,
+    textTransform: "capitalize",
   },
 });

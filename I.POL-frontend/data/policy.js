@@ -3,7 +3,7 @@
 const policies = [
   {
     id: "1",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iHealth.png"),
     name: "Health Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
@@ -12,7 +12,7 @@ const policies = [
   },
   {
     id: "2",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iAuto.png"),
     name: "Auto Insurance",
     coverage: "Collision, Liability, Comprehensive",
     premium: "$75 per month",
@@ -21,7 +21,7 @@ const policies = [
   },
   {
     id: "3",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iHome.png"),
     name: "Home Insurance",
     coverage: "Property Damage, Theft, Personal Liability",
     premium: "$100 per month",
@@ -30,7 +30,7 @@ const policies = [
   },
   {
     id: "4",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iLife.png"),
     name: "Life Insurance",
     coverage: "Hospitalization, Doctor Visits, Medications",
     premium: "$50 per month",
@@ -39,7 +39,7 @@ const policies = [
   },
   {
     id: "5",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iBusiness.png"),
     name: "Business Insurance",
     coverage: "Collision, Liability, Comprehensive",
     premium: "$75 per month",
@@ -48,7 +48,7 @@ const policies = [
   },
   {
     id: "6",
-    logo: "/assets/icons/iAuto",
+    logo: require("../../../assets/icons/iTravel.png"),
     name: "Travel Insurance",
     coverage: "Natural Misfortune, Theft, Personal Liability",
     premium: "$100 per month",

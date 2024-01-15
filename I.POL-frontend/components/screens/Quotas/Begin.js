@@ -26,24 +26,6 @@ const Begin = () => {
         backgroundColor: COLORS.white,
       }}
     >
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: COLORS.white,
-          },
-          headerShadowVisible: false,
-          headerTitle: "",
-          presentation: "modal",
-          headerRight: () => (
-            <ProfileHeaderBtn
-              iconUrl={images.profile}
-              dimension="100%"
-              handlePress={() => router.push(`profile`)}
-            />
-          ),
-        }}
-      />
-
       <View
         style={{
           width: width,
