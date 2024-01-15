@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { COLORS, FONT, SIZES, images, icons } from "../constants";
@@ -20,14 +20,13 @@ Notifications.setNotificationHandler({
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
 import { ProfileHeaderBtn } from "../components";
-import { View, Text, StatusBar, Platform } from "react-native";
+import { View, StatusBar, Platform } from "react-native";
 import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const Layout = () => {
   const router = useRouter();
-  const user = AsyncStorage.getItem("userData");
-  const userId = user?._id;
 
   const [fontsLoaded] = useFonts({
     DMBold: require("../assets/fonts/DMSans-Bold.ttf"),
@@ -35,20 +34,23 @@ const Layout = () => {
     DMRegular: require("../assets/fonts/DMSans-Regular.ttf"),
   });
 
-  const onLayoutRootView = useEffect(() => {
+  const onLayoutRootView = useCallback(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-    schedulePushNotification(notifications);
+
+    if (notifications.length > 0) {
+      schedulePushNotification(notifications);
+    }
   }, [fontsLoaded, notifications]);
 
   // if (!fontsLoaded) return null;
+
+  const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState("");
   const notificationListener = useRef();
   const responseListener = useRef();
-
-  // const [ws, setWs] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
   // const notifications = [
@@ -104,6 +106,40 @@ const Layout = () => {
   // ];
 
   useEffect(() => {
+    // Set up notifications data
+    const userId = user?._id;
+    console.log("userId", userId);
+    if (userId !== undefined) {
+      axios
+        .get(
+          `https://ipol-server.onrender.com/api/notifications/user/${userId}`
+        )
+        .then((response) => {
+          setNotifications(response.data);
+          // Process and display notifications
+          // console.log("Fetched notifications:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching notifications:", error);
+        });
+    }
+
+    const getUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        if (userData !== null) {
+          const parsedUserData = JSON.parse(userData);
+          setUser(parsedUserData);
+        }
+      } catch (error) {
+        console.error("Error retrieving user data:", error);
+      }
+    };
+
+    getUserData();
+  }, []);
+
+  useEffect(() => {
     // Request notification permissions and set up listeners
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
@@ -145,6 +181,7 @@ const Layout = () => {
       console.error("Socket.io error:", error);
     });
 
+    const userId = user?._id;
     handleNotifications(userId, socket);
     handleBroadcasts(socket);
 
@@ -157,7 +194,7 @@ const Layout = () => {
   const handleNotifications = (userId, socket) => {
     socket.on("notification", { userId }, (data) => {
       // Handle server response
-      setNotifications(data.data); // Update state with received notifications
+      // setNotifications(data.data); // Update state with received notifications
       console.log(data);
     });
   };
@@ -165,7 +202,7 @@ const Layout = () => {
   const handleBroadcasts = (socket) => {
     socket.on("broadcast", (data) => {
       // Handle server response
-      setNotifications(data.data); // Update state with received notifications
+      // setNotifications(data.data); // Update state with received notifications
       console.log(data);
     });
   };
@@ -628,50 +665,6 @@ const registerForPushNotificationsAsync = async () => {
     });
   }
 
-  // try {
-  //   await Notifications.createChannelAsync({
-  //     channelId: "policy_reminders",
-  //     name: "Policy Renewals",
-  //     importance: Notifications.Importance.HIGH,
-  //     sound: true,
-  //     vibrate: true,
-  //   });
-
-  //   await Notifications.createChannelAsync({
-  //     channelId: "payment_reminders",
-  //     name: "Payment Reminders",
-  //     importance: Notifications.Importance.HIGH,
-  //     sound: true,
-  //     vibrate: true,
-  //   });
-
-  //   await Notifications.createChannelAsync({
-  //     channelId: "claim_status",
-  //     name: "Claim Status Updates",
-  //     importance: Notifications.Importance.DEFAULT,
-  //     sound: true,
-  //     vibrate: false, // Optional vibration
-  //   });
-
-  //   await Notifications.createChannelAsync({
-  //     channelId: "benefit_remiders",
-  //     name: "Benefit Remiders",
-  //     importance: Notifications.Importance.DEFAULT,
-  //     sound: true,
-  //     vibrate: false, // Optional vibration
-  //   });
-
-  //   await Notifications.createChannelAsync({
-  //     channelId: "important_announcements",
-  //     name: "Important Announcements",
-  //     importance: Notifications.Importance.HIGH,
-  //     sound: true,
-  //     vibrate: true,
-  //   });
-  // } catch (error) {
-  //   console.error("Error creating notification channels:", error);
-  // }
-
   if (Device.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
@@ -684,8 +677,6 @@ const registerForPushNotificationsAsync = async () => {
       console.log("Failed to get push token for push notification!");
       return;
     }
-    // Learn more about projectId:
-    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
@@ -696,54 +687,21 @@ const registerForPushNotificationsAsync = async () => {
 };
 
 const handleNotificationResponse = async (response) => {
-  console.log(response); // Log the response data
-
-  // Access response details:
-  // const notificationId = response.notificationId;
-  // const actionIdentifier = response.actionIdentifier;
-  // const buttonIndex = response.buttonIndex;
-
-  // // Perform actions based on the response:
-  // if (actionIdentifier === "mark_as_read") {
-  //   // Find and update the corresponding notification in your state or data source:
-  //   const updatedNotifications = notifications.map((notification) => {
-  //     if (notification.id === notificationId) {
-  //       return { ...notification, read: true };
-  //     }
-  //     return notification;
-  //   });
-  //   setNotifications(updatedNotifications); // Assuming you're using state management
-  // } else if (actionIdentifier === "view_details") {
-  //   // Retrieve relevant data from the notification and navigate to the appropriate screen:
-  //   const { policyId, renewalDate } = notificationData; // Assuming notification data is accessible
-  //   navigation.navigate("PolicyDetailsScreen", { policyId, renewalDate }); // Example navigation
-  // } else if (actionIdentifier === "snooze") {
-  //   // Reschedule the notification using Notifications.scheduleNotificationAsync():
-  //   await Notifications.scheduleNotificationAsync({
-  //     content: notificationContent, // Assuming you have the notification content
-  //     trigger: {
-  //       // Delay notification by 15 minutes (adjust as needed)
-  //       seconds: 15 * 60,
-  //     },
-  //   });
-  // } else {
-  //   // Handle other custom actions based on your app's logic
-  //   console.log("Unknown action identifier:", actionIdentifier);
-  // }
+  console.log("Notification Response", response); // Log the response data
 };
 
 const triggeredNotifications = []; // Array to track triggered notifications
 
 const schedulePushNotification = async (notificationArray) => {
-  // Schedule a local notification
-  for (const notification of notificationArray) {
+  const updatedNotifications = notificationArray.map((notification) => {
     if (
       !triggeredNotifications.includes(notification._id) &&
       !notification.triggered &&
       !notification.seen
     ) {
       try {
-        await Notifications.scheduleNotificationAsync({
+        // Schedule notification code remains the same...
+        Notifications.scheduleNotificationAsync({
           content: {
             title: notification.title,
             body: notification.message,
@@ -752,14 +710,19 @@ const schedulePushNotification = async (notificationArray) => {
           },
           trigger: { seconds: 3 },
         });
-        notification.triggered = true;
-        triggeredNotifications.push(notification._id); // Mark as triggered
+
         console.log("Notification scheduled:", notification.title);
+        return { ...notification, triggered: true };
       } catch (error) {
         console.error("Error scheduling notification:", error);
+        return notification; // Return original notification on error
       }
     }
-  }
+
+    return notification; // Return original notification if conditions are not met
+  });
+
+  triggeredNotifications.push(updatedNotifications); // Mark as triggered
 };
 
 export default Layout;

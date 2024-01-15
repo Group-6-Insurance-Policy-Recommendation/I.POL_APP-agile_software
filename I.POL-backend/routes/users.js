@@ -171,30 +171,13 @@ router.get("/reset-password/:resetToken", async (req, res) => {
       return res.status(404).json({ error: "Reset token has expired" });
     }
 
-    // Prompt for new password
-    const prompt = await import("inquirer");
-    const { newPassword } = await prompt("Enter your new password:");
-
     // Render the password reset form view
-    res.render("reset-password"); // Adjust view name and data
-
-    // Call the reset-forgot-password route
-    const response = await fetch(`/reset-forgot-password`, {
-      method: "PUT",
-      body: JSON.stringify({ newPassword, resetToken }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      // res.render("reset-password-success");
-      res.redirect("/password-reset-success"); // Redirect to success page
-      // Close the window after 5 seconds
-      setTimeout(() => {
-        window.close();
-      }, 5000);
-    } else {
-      res.status(response.status).json(await response.json()); // Handle errors
-    }
+    res.render("reset-password", { resetToken }); // Adjust view name and data
+    // res.redirect("/password-reset-success"); // Redirect to success page
+    // // Close the window after 5 seconds
+    // setTimeout(() => {
+    //   window.close();
+    // }, 5000);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -205,13 +188,12 @@ router.get("/reset-password/:resetToken", async (req, res) => {
 });
 
 // RESET PASSWORD
-router.put("/reset-forgot-password", async (req, res) => {
+router.post("/reset-forgot-password", async (req, res) => {
   try {
     // Get reset token and new password from request body
     const { newPassword, resetToken } = req.body;
-    // const resetToken = req.body.resetToken;
-    // const newPassword = req.body.newPassword;
-    console.log(newPassword);
+
+    console.log("new password", newPassword);
     // Find the user associated with the token
     const user = await User.findOne({ resetToken });
 
@@ -229,7 +211,13 @@ router.put("/reset-forgot-password", async (req, res) => {
     user.resetExpires = undefined;
     await user.save();
 
-    res.status(200).json({ message: "Password changed successfully" });
+    // Redirect to success page
+    res.redirect("/password-reset-success");
+
+    // Close the window after 5 seconds
+    setTimeout(() => {
+      window.close();
+    }, 5000);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -238,20 +226,6 @@ router.put("/reset-forgot-password", async (req, res) => {
     });
   }
 });
-
-// const multer = require("multer");
-// const storage = multer.memoryStorage(); // Store uploaded files in memory temporarily
-// const upload = multer({
-//   fileFilter: (req, file, callback) => {
-//     if (file.mimetype.startsWith("image/")) {
-//       const base64Data = req.body.profileImage.split(",").pop();
-//       const imageBuffer = Buffer.from(base64Data, "base64");
-//       callback(null, imageBuffer);
-//     } else {
-//       callback(new Error("Invalid image type"));
-//     }
-//   },
-// });
 
 // CREATE PROFILE
 router.post("/profile", async (req, res) => {
@@ -312,12 +286,6 @@ router.post("/profile", async (req, res) => {
 router.put("/profile/:id", async (req, res) => {
   try {
     const userId = req.params.id;
-
-    // profilePicture = req.file
-    //   ? req.file.buffer
-    //   : req.body.profileImage
-    //   ? Buffer.from(req.body.profileImage.split(",").pop(), "base64")
-    //   : null;
 
     const updatedProfileData = {
       profilePicture: req.body.profilePicture || "",

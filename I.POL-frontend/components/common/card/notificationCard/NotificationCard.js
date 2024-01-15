@@ -3,20 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
+import { markNotificationAsSeen } from "../../../../redux/actions/notificationThunk";
 
-const NotificationCard = ({ notification, handleNavigate }) => {
+const NotificationCard = ({ notification }) => {
+  const seenNotification = (notificationId) =>
+    markNotificationAsSeen(notificationId);
   const [fullDesc, setFullDesc] = useState(false);
   return (
     <TouchableOpacity
       style={styles.container(notification)}
       onPress={() => {
         setFullDesc((prev) => !prev);
-        handleNavigate
+        seenNotification(notification._id);
       }}
     >
       {fullDesc ? (
@@ -28,7 +30,7 @@ const NotificationCard = ({ notification, handleNavigate }) => {
             {notification.message}
           </Text>
           <Text style={styles.time(notification)} numberOfLines={2}>
-            {notification.timestamp}
+            {notification.createdAt.slice(11, 16)}
           </Text>
         </View>
       ) : (
@@ -40,7 +42,7 @@ const NotificationCard = ({ notification, handleNavigate }) => {
             {notification.message}
           </Text>
           <Text style={styles.time(notification)} numberOfLines={2}>
-            {notification.timestamp}
+            {notification.createdAt.slice(11, 16)}
           </Text>
         </View>
       )}

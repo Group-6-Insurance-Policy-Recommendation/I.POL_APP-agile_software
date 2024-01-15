@@ -155,7 +155,6 @@ const Notification = () => {
             <NotificationCard
               notification={notification}
               key={notification?._id}
-              handleNavigate={seenNotification(notification._id)}
             />
           ))}
         </View>
