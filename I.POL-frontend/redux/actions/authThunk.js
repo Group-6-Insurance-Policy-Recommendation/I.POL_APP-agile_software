@@ -251,6 +251,42 @@ export const initiateForgotPassword = (email) => async (dispatch) => {
   }
 };
 
+// Action thunk for setting forgot password
+export const setForgotPassword =
+  (newPassword, resetToken) => async (dispatch) => {
+    try {
+      // Make API request to set forgot password
+      const response = await axios.post(
+        "https://ipol-server.onrender.com/api/users/reset-forgot-password",
+        {
+          newPassword,
+          resetToken,
+        }
+      );
+
+      if (response.status === 200) {
+        // Dispatch success action if setting forgot password is successful
+        dispatch(forgotPasswordSuccess(response.data.message));
+        alert(response.data.message);
+        setTimeout(() => {
+          router.push(`/auth/signIn_`);
+        }, 3000);
+      } else {
+        // Dispatch failure action with the error message
+        dispatch(forgotPasswordFailure(response.data.error));
+      }
+    } catch (error) {
+      // Handle network errors or unexpected errors
+      console.error("Error:", error);
+      dispatch(
+        forgotPasswordFailure(
+          "Failed to initiate password reset. Please try again."
+        )
+      );
+      alert("Failed To Initiate Password Reset. ", error.response.data.error);
+    }
+  };
+
 // Action thunk for deleting a user
 export const deleteUser = (userId, password) => async (dispatch) => {
   try {

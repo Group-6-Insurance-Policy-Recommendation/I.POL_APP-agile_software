@@ -2,8 +2,8 @@ const router = require("express").Router();
 const User = require("../modules/User");
 const bcrypt = require("bcrypt");
 const {
-  generatePasswordResetToken,
   sendPasswordResetEmail,
+  generatePasswordResetOTP,
 } = require("../hook/resetToken");
 
 // DELETE USER
@@ -136,7 +136,7 @@ router.post("/forgot-password", async (req, res) => {
     }
 
     // Generate a password reset token
-    const resetToken = await generatePasswordResetToken(user);
+    const resetToken = await generatePasswordResetOTP(user);
 
     // Send password reset email with token
     await sendPasswordResetEmail(user, resetToken);
@@ -152,40 +152,40 @@ router.post("/forgot-password", async (req, res) => {
 });
 
 // RESET URL
-router.get("/reset-password/:resetToken", async (req, res) => {
-  try {
-    // Extract reset token from URL parameter
-    const resetToken = req.params.resetToken;
+// router.get("/reset-password/:resetToken", async (req, res) => {
+//   try {
+//     // Extract reset token from URL parameter
+//     const resetToken = req.params.resetToken;
 
-    // Find the user associated with the token
-    const isValidToken = await User.findOne({ resetToken });
-    const isTokenExpired = await User.findOne({ resetToken });
+//     // Find the user associated with the token
+//     const isValidToken = await User.findOne({ resetToken });
+//     const isTokenExpired = await User.findOne({ resetToken });
 
-    if (!isValidToken) {
-      return res.status(404).json({ error: "Invalid reset token" });
-    }
+//     if (!isValidToken) {
+//       return res.status(404).json({ error: "Invalid reset token" });
+//     }
 
-    // Check if the token has expired
-    const now = Date.now();
-    if (isTokenExpired.resetExpires < now) {
-      return res.status(404).json({ error: "Reset token has expired" });
-    }
+//     // Check if the token has expired
+//     const now = Date.now();
+//     if (isTokenExpired.resetExpires < now) {
+//       return res.status(404).json({ error: "Reset token has expired" });
+//     }
 
-    // Render the password reset form view
-    res.render("reset-password", { resetToken }); // Adjust view name and data
-    // res.redirect("/password-reset-success"); // Redirect to success page
-    // // Close the window after 5 seconds
-    // setTimeout(() => {
-    //   window.close();
-    // }, 5000);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      error: "Failed to reset password.",
-      details: err.message, // Include error message in response
-    });
-  }
-});
+//     // Render the password reset form view
+//     res.render("reset-password", { resetToken }); // Adjust view name and data
+//     // res.redirect("/password-reset-success"); // Redirect to success page
+//     // // Close the window after 5 seconds
+//     // setTimeout(() => {
+//     //   window.close();
+//     // }, 5000);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       error: "Failed to reset password.",
+//       details: err.message, // Include error message in response
+//     });
+//   }
+// });
 
 // RESET PASSWORD
 router.post("/reset-forgot-password", async (req, res) => {
@@ -211,13 +211,7 @@ router.post("/reset-forgot-password", async (req, res) => {
     user.resetExpires = undefined;
     await user.save();
 
-    // Redirect to success page
-    res.redirect("/password-reset-success");
-
-    // Close the window after 5 seconds
-    setTimeout(() => {
-      window.close();
-    }, 5000);
+    res.status(200).json({ message: "Password changed successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({

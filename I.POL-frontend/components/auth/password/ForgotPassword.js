@@ -12,7 +12,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { initiateForgotPassword } from "../../../redux/actions/authThunk";
+import {
+  initiateForgotPassword,
+  setForgotPassword,
+} from "../../../redux/actions/authThunk";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -21,9 +24,14 @@ const ForgotPassword = () => {
   const userId = user?._id;
 
   const [emailFocus, setEmailFocus] = useState(false);
+  const [OTPFocus, setOTPFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   const [email, setEmail] = useState("");
+  const [OTP, setOTP] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleEmailFocus = () => setEmailFocus(true);
   const handleEmailBlur = () => setEmailFocus(false);
@@ -35,9 +43,15 @@ const ForgotPassword = () => {
     setWidth(Dimensions.get("window").width);
   }, []);
 
-  const forgotPasswordHandler = () => {
+  const forgotPasswordHandler = async () => {
     dispatch(initiateForgotPassword(email));
+    setShowInput(true);
   };
+
+  const setPasswordHandler = async () => {
+    dispatch(setForgotPassword(password, OTP));
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -67,10 +81,35 @@ const ForgotPassword = () => {
           onFocus={handleEmailFocus}
           onBlur={handleEmailBlur}
         />
+        {showInput && (
+          <View>
+            <Text style={styles.label}>OTP</Text>
+            <TextInput
+              style={[styles.formInput, OTPFocus && styles.focusedInput]}
+              placeholder="Enter OTP"
+              keyboardType="default"
+              onChangeText={setOTP}
+              value={OTP}
+              onFocus={() => setOTPFocus(true)}
+              onBlur={() => setOTPFocus(false)}
+            />
 
-        {isLoading ? (
-          <TouchableOpacity style={styles.focussedBtn}>
-            <ActivityIndicator size={SIZES.large} color={COLORS.primary} />
+            <Text style={styles.label}>New Password</Text>
+            <TextInput
+              style={[styles.formInput, passwordFocus && styles.focusedInput]}
+              placeholder="Enter new password"
+              secureTextEntry
+              onChangeText={setPassword}
+              value={password}
+              onFocus={() => setPasswordFocus(true)}
+              onBlur={() => setPasswordFocus(false)}
+            />
+          </View>
+        )}
+
+        {showInput ? (
+          <TouchableOpacity style={styles.authBtn} onPress={setPasswordHandler}>
+            <Text style={styles.authBtnText}>Set Password</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
