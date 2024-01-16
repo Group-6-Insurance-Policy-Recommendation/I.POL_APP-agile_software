@@ -151,8 +151,65 @@ const Layout = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Stack onLayout={onLayoutRootView}>
           <StatusBar backgroundColor={COLORS.white} />
+
+          {/* {user ? (
+            <> */}
           <Stack.Screen
-            name="index"
+            name="home/index"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+                color: COLORS.primary,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ProfileHeaderBtn
+                    iconUrl={images.logo}
+                    dimension={35}
+                    handlePress={() => router.push(`home`)}
+                  />
+                </View>
+              ),
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="home/recommendation_/[urlInsuranceType]"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              presentation: "modal",
+              headerRight: () => (
+                <ProfileHeaderBtn
+                  iconUrl={images.profile}
+                  dimension="100%"
+                  handlePress={() => router.push(`profile`)}
+                />
+              ),
+            }}
+          />
+
+          <Stack.Screen
+            name="home/specialPackage_"
             options={{
               headerStyle: {
                 backgroundColor: COLORS.white,
@@ -163,44 +220,9 @@ const Layout = () => {
                 <ProfileHeaderBtn
                   iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`/_sitemap`)}
+                  handlePress={() => router.push(`profile`)}
                 />
               ),
-            }}
-          />
-
-          <Stack.Screen
-            name="auth/signIn_"
-            options={{
-              headerStyle: {
-                backgroundColor: COLORS.white,
-              },
-              headerShadowVisible: false,
-              headerTitle: "",
-              headerLeft: () => {},
-            }}
-          />
-
-          <Stack.Screen
-            name="auth/signUp_"
-            options={{
-              headerStyle: {
-                backgroundColor: COLORS.white,
-              },
-              headerShadowVisible: false,
-              headerTitle: "",
-              headerLeft: () => {},
-            }}
-          />
-
-          <Stack.Screen
-            name="auth/forgotPassword_"
-            options={{
-              headerStyle: {
-                backgroundColor: COLORS.white,
-              },
-              headerShadowVisible: false,
-              headerTitle: "",
             }}
           />
 
@@ -570,28 +592,11 @@ const Layout = () => {
               ),
             }}
           />
-
+          {/* </>
+          ) : (
+            <> */}
           <Stack.Screen
-            name="home/recommendation_/[urlInsuranceType]"
-            options={{
-              headerStyle: {
-                backgroundColor: COLORS.white,
-              },
-              headerShadowVisible: false,
-              headerTitle: "",
-              presentation: "modal",
-              headerRight: () => (
-                <ProfileHeaderBtn
-                  iconUrl={images.profile}
-                  dimension="100%"
-                  handlePress={() => router.push(`profile`)}
-                />
-              ),
-            }}
-          />
-
-          <Stack.Screen
-            name="home/specialPackage_"
+            name="index"
             options={{
               headerStyle: {
                 backgroundColor: COLORS.white,
@@ -602,11 +607,48 @@ const Layout = () => {
                 <ProfileHeaderBtn
                   iconUrl={images.profile}
                   dimension="100%"
-                  handlePress={() => router.push(`profile`)}
+                  handlePress={() => router.push(`/_sitemap`)}
                 />
               ),
             }}
           />
+
+          <Stack.Screen
+            name="auth/signIn_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => {},
+            }}
+          />
+
+          <Stack.Screen
+            name="auth/signUp_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+              headerLeft: () => {},
+            }}
+          />
+
+          <Stack.Screen
+            name="auth/forgotPassword_"
+            options={{
+              headerStyle: {
+                backgroundColor: COLORS.white,
+              },
+              headerShadowVisible: false,
+              headerTitle: "",
+            }}
+          />
+          {/* </>
+          )} */}
         </Stack>
       </PersistGate>
     </Provider>
