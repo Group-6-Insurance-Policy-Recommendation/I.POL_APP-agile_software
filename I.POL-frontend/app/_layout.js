@@ -242,7 +242,7 @@ const Layout = () => {
                   <ProfileHeaderBtn
                     iconUrl={icons.feedback}
                     dimension="100%"
-                    handlePress={() => router.push(`/_sitemap`)}
+                    handlePress={() => router.push(`profile/feedback_`)}
                   />
                 ),
               }}

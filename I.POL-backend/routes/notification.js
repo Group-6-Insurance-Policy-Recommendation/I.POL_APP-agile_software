@@ -36,6 +36,21 @@ router.get("/user/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const notifications = await Notification.find({ userId });
+
+    // Update triggered to false for emitted notifications
+    const updatedNotifications = notifications.map((notification) => ({
+      ...notification,
+      triggered: true,
+    }));
+
+    await Promise.all(
+      updatedNotifications.map((notification) =>
+        Notification.findByIdAndUpdate(notification._id, notification, {
+          new: true,
+        })
+      )
+    );
+
     res.json(notifications);
   } catch (err) {
     console.error(err);

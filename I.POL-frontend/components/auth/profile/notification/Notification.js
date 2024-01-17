@@ -126,24 +126,18 @@ const Notification = () => {
   // ];
 
   const seenNotification = (notification) => {
-    console.log("seen")
+    console.log("seen");
     // Only make API call and update state if notification is unseen
     if (notification.seen === false) {
-      markNotificationAsSeen(notification._id)
-        .then(() => {
-          // Update notification state after successful API call
-          setNotifications((prevNotifications) =>
-            prevNotifications.map((prevNotification) =>
-              prevNotification._id === notification._id
-                ? { ...prevNotification, seen: true }
-                : prevNotification
-            )
-          );
-        })
-        .catch((error) => {
-          // Handle errors gracefully
-          console.error("Error marking notification as seen:", error);
-        });
+      // Update notification state before successful API call
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((prevNotification) =>
+          prevNotification._id === notification._id
+            ? { ...prevNotification, seen: true }
+            : prevNotification
+        )
+      );
+      markNotificationAsSeen(notification._id);
     }
   };
 
