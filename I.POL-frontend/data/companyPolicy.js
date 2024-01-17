@@ -1920,7 +1920,630 @@ const companyPolicies = [
         "expiration": "Annual Renewal",
       },
     }
-  }
+  },
+  {
+    "id": "16",
+    "logo": "https://via.placeholder.com/150/20B2AA/FFFFFF?text=VoyageCare+Insure",
+    "company": "VoyageCare Insurance",
+    "location": "Worldwide",
+    "insuranceType": "Travel Insurance",
+    "coverage": "Trip Interruption, Emergency Medical Coverage, Baggage Protection",
+    "premium": "$40 per month",
+    "description": "Tailored travel insurance plans providing comprehensive coverage for trip interruption, emergency medical situations, and baggage protection, ensuring worry-free travels worldwide.",
+    "additionalBenefits": [
+      "Trip Delay Reimbursement",
+      "Coverage for Adventure Sports",
+      "Emergency Assistance Services",
+    ],
+    "exclusions": [
+      "Pre-existing medical conditions",
+      "Participation in illegal activities",
+      "Losses due to war or civil unrest",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "VoyageGuard Explorer",
+        "type": "Travel Insurance",
+        "coverage": "All-encompassing Travel Security",
+        "policyholderName": "Lily Thompson",
+        "policyNumber": "T567891234",
+        "effectiveDate": "2023-07-01",
+        "expirationDate": "2024-06-30",
+        "insuredEntities": ["Lily Thompson", "Family Members"],
+      },
+      "coverageDetails": {
+        "tripInterruption": {
+          "description": "Coverage for unexpected interruptions to planned trips.",
+          "coverageLimit": 8000,
+          "deductible": 150,
+        },
+        "emergencyMedical": {
+          "description": "Emergency medical coverage for illnesses or accidents during travels.",
+          "coverageLimit": 150000,
+          "deductible": 75,
+        },
+        "baggageProtection": {
+          "description": "Protection against loss, theft, or damage to baggage and personal belongings.",
+          "coverageLimit": 3000,
+          "deductible": 50,
+        },
+      },
+      "benefits": ["Trip Interruption Coverage", "Emergency Medical Coverage", "Baggage Protection"],
+      "exclusions": [
+        "Participation in extreme sports without approval",
+        "Losses due to war or civil unrest",
+        "Pre-existing medical conditions",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "15th of each month",
+          "acceptedPaymentMethods": ["Credit card", "PayPal"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first three months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@voyagecare.com",
+            "phone": "1-800-789-0123",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Notifying changes in travel plans",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "VoyageCare Insurance",
+        "customerService": {
+          "email": "support@voyagecare.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@voyagecare.com",
+          "phone": "1-800-789-0123",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Travel Security",
+        "coverage": "Basic coverage for common travel risks",
+        "cost": "30",
+        "benefits": ["Trip Interruption Coverage", "Emergency Medical Coverage"],
+        "fees": "12",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Voyager",
+        "coverage": "Enhanced coverage for comprehensive travel protection",
+        "cost": "50",
+        "benefits": ["Trip Interruption Coverage", "Emergency Medical Coverage", "Baggage Protection"],
+        "fees": "20",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Explorer",
+        "coverage": "Top-tier protection for global travelers",
+        "cost": "80",
+        "benefits": ["Trip Interruption Coverage", "Emergency Medical Coverage", "Baggage Protection", "Emergency Assistance Services"],
+        "fees": "30",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "17",
+    "logo": "https://via.placeholder.com/150/FFA07A/FFFFFF?text=CorporateGuard+Insure",
+    "company": "CorporateGuard Insurance",
+    "location": "Global",
+    "insuranceType": "Business Insurance",
+    "coverage": "Property Insurance, Liability Coverage, Business Interruption",
+    "premium": "$80 per month",
+    "description": "Tailored business insurance plans providing comprehensive coverage for property, liability, and business interruption, safeguarding your corporate assets and operations.",
+    "additionalBenefits": [
+      "Professional Liability Protection",
+      "Cybersecurity Insurance",
+      "Employee Benefits Coverage",
+    ],
+    "exclusions": [
+      "Willful misconduct by insured",
+      "Acts of terrorism",
+      "Pre-existing business liabilities",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "CorporateShield Elite",
+        "type": "Business Insurance",
+        "coverage": "Complete Corporate Security",
+        "policyholderName": "Alex Rodriguez",
+        "policyNumber": "B789012345",
+        "effectiveDate": "2023-08-01",
+        "expirationDate": "2024-07-31",
+        "insuredEntities": ["Alex Rodriguez's Company", "Corporate Assets"],
+      },
+      "coverageDetails": {
+        "propertyInsurance": {
+          "description": "Coverage for physical assets, including buildings and equipment.",
+          "coverageLimit": 500000,
+          "deductible": 1000,
+        },
+        "liabilityCoverage": {
+          "description": "Protection against legal liabilities arising from business operations.",
+          "coverageLimit": 1000000,
+          "deductible": 500,
+        },
+        "businessInterruption": {
+          "description": "Compensation for lost income during business interruption events.",
+          "coverageLimit": 200000,
+          "deductible": 1000,
+        },
+      },
+      "benefits": ["Property Insurance", "Liability Coverage", "Business Interruption Compensation"],
+      "exclusions": [
+        "Acts of terrorism",
+        "Pre-existing business liabilities",
+        "Willful misconduct by insured",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "10th of each month",
+          "acceptedPaymentMethods": ["Bank transfer", "Corporate credit card"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 60-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@corporateguard.com",
+            "phone": "1-800-987-6543",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Reporting changes in business operations",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "CorporateGuard Insurance",
+        "customerService": {
+          "email": "support@corporateguard.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@corporateguard.com",
+          "phone": "1-800-987-6543",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Business Protection",
+        "coverage": "Basic coverage for common business risks",
+        "cost": "60",
+        "benefits": ["Property Insurance", "Liability Coverage"],
+        "fees": "20",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Shield",
+        "coverage": "Enhanced coverage for comprehensive business protection",
+        "cost": "90",
+        "benefits": ["Property Insurance", "Liability Coverage", "Business Interruption Compensation"],
+        "fees": "30",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium CorporateGuard",
+        "coverage": "Top-tier protection for corporate assets and operations",
+        "cost": "120",
+        "benefits": ["Property Insurance", "Liability Coverage", "Business Interruption Compensation", "Professional Liability Protection", "Cybersecurity Insurance"],
+        "fees": "40",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "18",
+    "logo": "https://via.placeholder.com/150/8A2BE2/FFFFFF?text=HomeSecure+Assure",
+    "company": "HomeSecure Assurance",
+    "location": "Nationwide",
+    "insuranceType": "Home Insurance",
+    "coverage": "Fire and Theft Protection, Personal Liability, Natural Disaster Coverage",
+    "premium": "$55 per month",
+    "description": "Tailored home insurance plans offering comprehensive coverage for fire and theft protection, personal liability, and natural disaster events, ensuring the security of your home and peace of mind for your family.",
+    "additionalBenefits": [
+      "Temporary Accommodation Coverage",
+      "Valuables Replacement",
+      "Legal Expenses Protection",
+    ],
+    "exclusions": [
+      "Negligence leading to damages",
+      "Acts of terrorism",
+      "Pre-existing property damages",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "HomeGuard Supreme",
+        "type": "Home Insurance",
+        "coverage": "Total Home Security",
+        "policyholderName": "Emily Johnson",
+        "policyNumber": "H567890123",
+        "effectiveDate": "2023-09-01",
+        "expirationDate": "2024-08-31",
+        "insuredEntities": ["Emily Johnson's Residence", "Personal Belongings"],
+      },
+      "coverageDetails": {
+        "fireAndTheftProtection": {
+          "description": "Coverage for damages caused by fire, theft, or burglary.",
+          "coverageLimit": 300000,
+          "deductible": 750,
+        },
+        "personalLiability": {
+          "description": "Liability coverage for personal injury or property damage claims.",
+          "coverageLimit": 750000,
+          "deductible": 300,
+        },
+        "naturalDisasterCoverage": {
+          "description": "Protection against damages caused by natural disasters such as floods or earthquakes.",
+          "coverageLimit": 100000,
+          "deductible": 500,
+        },
+      },
+      "benefits": ["Fire and Theft Protection", "Personal Liability Coverage", "Natural Disaster Coverage"],
+      "exclusions": [
+        "Acts of terrorism",
+        "Pre-existing property damages",
+        "Negligence leading to damages",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "5th of each month",
+          "acceptedPaymentMethods": ["Debit card", "Bank transfer"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 45-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@homesecure.com",
+            "phone": "1-800-555-9876",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Notifying changes in property details",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "HomeSecure Assurance",
+        "customerService": {
+          "email": "support@homesecure.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@homesecure.com",
+          "phone": "1-800-555-9876",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Home Protection",
+        "coverage": "Basic coverage for common home risks",
+        "cost": "40",
+        "benefits": ["Fire and Theft Protection", "Personal Liability Coverage"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Guardian",
+        "coverage": "Enhanced coverage for comprehensive home protection",
+        "cost": "70",
+        "benefits": ["Fire and Theft Protection", "Personal Liability Coverage", "Natural Disaster Coverage"],
+        "fees": "25",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Haven",
+        "coverage": "Top-tier protection for your home and valuables",
+        "cost": "100",
+        "benefits": ["Fire and Theft Protection", "Personal Liability Coverage", "Natural Disaster Coverage", "Temporary Accommodation Coverage"],
+        "fees": "35",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "19",
+    "logo": "https://via.placeholder.com/150/FFD700/000000?text=BusinessGuard+Insurance",
+    "company": "BusinessGuard Insurance Solutions",
+    "location": "International",
+    "insuranceType": "Business Insurance",
+    "coverage": "Property Insurance, General Liability, Business Interruption",
+    "premium": "$90 per month",
+    "description": "Tailored business insurance solutions providing comprehensive coverage for property, general liability, and business interruption, safeguarding your business assets and ensuring continuity.",
+    "additionalBenefits": [
+      "Professional Indemnity Coverage",
+      "Cybersecurity Insurance",
+      "Employee Benefits Protection",
+    ],
+    "exclusions": [
+      "Fraudulent Activities by Insured",
+      "Acts of War or Terrorism",
+      "Pre-existing Business Liabilities",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "CorporateShield Pro",
+        "type": "Business Insurance",
+        "coverage": "Complete Business Security",
+        "policyholderName": "Jessica Williams",
+        "policyNumber": "B567890123",
+        "effectiveDate": "2023-10-01",
+        "expirationDate": "2024-09-30",
+        "insuredEntities": ["Jessica Williams' Company", "Corporate Assets"],
+      },
+      "coverageDetails": {
+        "propertyInsurance": {
+          "description": "Coverage for physical assets, including buildings and equipment.",
+          "coverageLimit": 750000,
+          "deductible": 1000,
+        },
+        "generalLiability": {
+          "description": "Protection against legal liabilities arising from business operations.",
+          "coverageLimit": 1500000,
+          "deductible": 500,
+        },
+        "businessInterruption": {
+          "description": "Compensation for lost income during business interruption events.",
+          "coverageLimit": 300000,
+          "deductible": 1000,
+        },
+      },
+      "benefits": ["Property Insurance", "General Liability Coverage", "Business Interruption Compensation"],
+      "exclusions": [
+        "Acts of War or Terrorism",
+        "Pre-existing Business Liabilities",
+        "Fraudulent Activities by Insured",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "15th of each month",
+          "acceptedPaymentMethods": ["Bank Transfer", "Corporate Credit Card"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 60-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@businessguard.com",
+            "phone": "1-800-555-1234",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Reporting changes in business operations",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "BusinessGuard Insurance Solutions",
+        "customerService": {
+          "email": "support@businessguard.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@businessguard.com",
+          "phone": "1-800-555-1234",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Business Protection",
+        "coverage": "Basic coverage for common business risks",
+        "cost": "70",
+        "benefits": ["Property Insurance", "General Liability Coverage"],
+        "fees": "30",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Guard",
+        "coverage": "Enhanced coverage for comprehensive business protection",
+        "cost": "110",
+        "benefits": ["Property Insurance", "General Liability Coverage", "Business Interruption Compensation"],
+        "fees": "40",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium CorporateGuard",
+        "coverage": "Top-tier protection for corporate assets and operations",
+        "cost": "150",
+        "benefits": ["Property Insurance", "General Liability Coverage", "Business Interruption Compensation", "Professional Indemnity Coverage", "Cybersecurity Insurance"],
+        "fees": "50",
+        "duration": "12 months",
+        "insuranceType": "Business Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "20",
+    "logo": "https://via.placeholder.com/150/4CAF50/FFFFFF?text=LifeSure+Insurance",
+    "company": "LifeSure Insurance Solutions",
+    "location": "National",
+    "insuranceType": "Life Insurance",
+    "coverage": "Term Life, Whole Life, Critical Illness",
+    "premium": "$40 per month",
+    "description": "Tailored life insurance solutions providing comprehensive coverage for term life, whole life, and critical illness, ensuring financial security for you and your loved ones.",
+    "additionalBenefits": [
+      "Accidental Death Benefit",
+      "Waiver of Premium",
+      "Cash Value Accumulation",
+    ],
+    "exclusions": [
+      "Suicide within the first two years of coverage",
+      "Participation in hazardous activities",
+      "Pre-existing critical illnesses",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "LifeShield Plus",
+        "type": "Life Insurance",
+        "coverage": "Complete Life Security",
+        "policyholderName": "Michael Anderson",
+        "policyNumber": "L678901234",
+        "effectiveDate": "2023-11-01",
+        "expirationDate": "2024-10-31",
+        "insuredEntities": ["Michael Anderson", "Spouse", "Children"],
+      },
+      "coverageDetails": {
+        "termLife": {
+          "description": "Coverage for a specified term with death benefits payable to beneficiaries.",
+          "coverageLimit": 500000,
+          "premiumIncreaseAfterRenewal": true,
+        },
+        "wholeLife": {
+          "description": "Lifetime coverage with cash value accumulation and guaranteed death benefits.",
+          "coverageLimit": "Variable based on policyholder's age and premium payments.",
+          "premiumIncreaseAfterRenewal": false,
+        },
+        "criticalIllness": {
+          "description": "Coverage for specific critical illnesses with lump-sum payouts upon diagnosis.",
+          "coveredIllnesses": ["Cancer", "Heart Attack", "Stroke"],
+        },
+      },
+      "benefits": ["Term Life Coverage", "Whole Life Coverage", "Critical Illness Protection"],
+      "exclusions": [
+        "Suicide within the first two years of coverage",
+        "Participation in hazardous activities",
+        "Pre-existing critical illnesses",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "5th of each month",
+          "acceptedPaymentMethods": ["Credit Card", "Bank Transfer"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first three months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@lifesure.com",
+            "phone": "1-800-777-1234",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Notification of changes in family composition",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "LifeSure Insurance Solutions",
+        "customerService": {
+          "email": "support@lifesure.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@lifesure.com",
+          "phone": "1-800-777-1234",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Life Security",
+        "coverage": "Basic coverage for common life risks",
+        "cost": "30",
+        "benefits": ["Term Life Coverage"],
+        "fees": "10",
+        "duration": "12 months",
+        "insuranceType": "Life Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Shield",
+        "coverage": "Enhanced coverage for comprehensive life protection",
+        "cost": "50",
+        "benefits": ["Term Life Coverage", "Critical Illness Protection"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Life Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium LifeGuard",
+        "coverage": "Top-tier protection for lifelong security",
+        "cost": "80",
+        "benefits": ["Whole Life Coverage", "Critical Illness Protection", "Accidental Death Benefit"],
+        "fees": "25",
+        "duration": "12 months",
+        "insuranceType": "Life Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  
+  
+  
+  
   
   
 
