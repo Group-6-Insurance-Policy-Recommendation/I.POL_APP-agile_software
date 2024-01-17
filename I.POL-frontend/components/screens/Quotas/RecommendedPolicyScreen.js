@@ -20,14 +20,12 @@ const RecommendedPolicyScreen = () => {
   // At most one policy that suits the preferences
   const selectedPolicy = policies.length > 0 ? policies[0] : null;
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
     setWidth(Dimensions.get("window").width);
-    console.log(minBudget);
-    console.log(maxBudget);
     if (insuranceType !== null) {
       // Fetch suitable policy details based on selected insurance type and budget
       const suitablePolicies = companyPolicies.filter((policy) => {
@@ -41,7 +39,6 @@ const RecommendedPolicyScreen = () => {
         );
       });
       setPolicies(suitablePolicies);
-      console.log(suitablePolicies);
     }
   }, []);
 

@@ -20,8 +20,8 @@ const Notification = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const user = useSelector((state) => state.user);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -126,6 +126,7 @@ const Notification = () => {
   // ];
 
   const seenNotification = (notification) => {
+    console.log("seen")
     // Only make API call and update state if notification is unseen
     if (notification.seen === false) {
       markNotificationAsSeen(notification._id)
@@ -179,7 +180,11 @@ const Notification = () => {
 
         <View style={styles.cardsContainer}>
           {notifications.map((notification) => (
-            <TouchableOpacity onPress={seenNotification(notification)}>
+            <TouchableOpacity
+              onPress={() => {
+                seenNotification(notification);
+              }}
+            >
               <NotificationCard
                 notification={notification}
                 key={notification?._id}

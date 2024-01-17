@@ -34,8 +34,8 @@ const Signin = () => {
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);

@@ -13,8 +13,8 @@ import { COLORS, FONT, images, SIZES } from "../../../../constants";
 import { Entypo } from "@expo/vector-icons";
 
 const Faqs = () => {
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -102,12 +102,15 @@ const Faqs = () => {
   };
 
   return (
-    <ScrollView showsHorizontalScrollIndicator={false}>
-      <SafeAreaView
+    <SafeAreaView
+      style={{
+        width: width,
+        backgroundColor: COLORS.tertiary,
+      }}
+    >
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
         style={{
-          width: width,
-          //   height: height,
-          backgroundColor: COLORS.tertiary,
           padding: SIZES.medium,
         }}
       >
@@ -147,8 +150,8 @@ const Faqs = () => {
           />
           <Text style={styles.logoText}>Insurance Policy.Inc</Text>
         </TouchableOpacity>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -29,8 +29,8 @@ const Recommendation = () => {
   const handleSearchFocus = () => setSearchFocus(true);
   const handleSearchBlur = () => setSearchFocus(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -76,7 +76,6 @@ const Recommendation = () => {
   const { urlInsuranceType } = useLocalSearchParams();
 
   useEffect(() => {
-    console.log(urlInsuranceType);
     if (urlInsuranceType && urlInsuranceType !== "InsuranceType") {
       setSearchInputs((prevInputs) => ({
         ...prevInputs,

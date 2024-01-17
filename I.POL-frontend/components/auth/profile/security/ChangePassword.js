@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
@@ -32,8 +33,8 @@ const ChangePassword = () => {
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -41,7 +42,6 @@ const ChangePassword = () => {
   }, []);
 
   const changePasswordHandler = () => {
-    console.log(isAuthenticated);
     dispatch(changePassword(userId, current, password));
   };
 
@@ -51,6 +51,11 @@ const ChangePassword = () => {
         width: width,
         height: height,
         backgroundColor: COLORS.white,
+      }}
+    >
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{
         padding: SIZES.medium,
       }}
     >
@@ -93,6 +98,7 @@ const ChangePassword = () => {
           </TouchableOpacity>
         )}
       </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

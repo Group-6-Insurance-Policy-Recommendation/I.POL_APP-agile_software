@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, SIZES, SHADOWS, icons } from "../../../../constants";
@@ -13,8 +14,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 
 const SecuritySettings = () => {
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -27,52 +28,58 @@ const SecuritySettings = () => {
         width: width,
         height: height,
         backgroundColor: COLORS.tertiary,
-        padding: SIZES.medium,
       }}
     >
-      <View style={styles.HeaderContainer}>
-        <Text style={styles.HeaderText}>Security Settings</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.feedbackLabel}
-        onPress={() => router.push(`/profile/changePassword_`)}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{
+          padding: SIZES.medium,
+        }}
       >
-        <View style={styles.labelTab}>
-          <View style={styles.icon}>
-            <Ionicons
-              name="compass-outline"
-              color={COLORS.text2}
-              size={SIZES.large}
-            />
-          </View>
-          <Text style={styles.labelText}>Change Password</Text>
+        <View style={styles.HeaderContainer}>
+          <Text style={styles.HeaderText}>Security Settings</Text>
         </View>
-        <Image
-          source={icons.chevronRight}
-          resizeMode="contain"
-          style={styles.linkBtnImage}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.feedbackLabel}
-        onPress={() => router.push(`/profile/deleteAccount_`)}
-      >
-        <View style={styles.labelTab}>
-          <View style={styles.icon}>
-            <MaterialCommunityIcons
-              name="delete"
-              color={COLORS.text2}
-              size={SIZES.large}
-            />
+        <TouchableOpacity
+          style={styles.feedbackLabel}
+          onPress={() => router.push(`/profile/changePassword_`)}
+        >
+          <View style={styles.labelTab}>
+            <View style={styles.icon}>
+              <Ionicons
+                name="compass-outline"
+                color={COLORS.text2}
+                size={SIZES.large}
+              />
+            </View>
+            <Text style={styles.labelText}>Change Password</Text>
           </View>
-          <Text style={styles.labelText}>Delete Account</Text>
-        </View>
-        <Image
-          source={icons.chevronRight}
-          resizeMode="contain"
-          style={styles.linkBtnImage}
-        />
-      </TouchableOpacity>
+          <Image
+            source={icons.chevronRight}
+            resizeMode="contain"
+            style={styles.linkBtnImage}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.feedbackLabel}
+          onPress={() => router.push(`/profile/deleteAccount_`)}
+        >
+          <View style={styles.labelTab}>
+            <View style={styles.icon}>
+              <MaterialCommunityIcons
+                name="delete"
+                color={COLORS.text2}
+                size={SIZES.large}
+              />
+            </View>
+            <Text style={styles.labelText}>Delete Account</Text>
+          </View>
+          <Image
+            source={icons.chevronRight}
+            resizeMode="contain"
+            style={styles.linkBtnImage}
+          />
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };

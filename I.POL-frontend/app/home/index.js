@@ -1,8 +1,6 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import React from "react";
-import { router, Stack } from "expo-router";
-import { COLORS, FONT, images, SIZES } from "../../constants";
-import { Dashboard, ProfileHeaderBtn } from "../../components";
+import { Dashboard } from "../../components";
 
 const index = () => {
   return (

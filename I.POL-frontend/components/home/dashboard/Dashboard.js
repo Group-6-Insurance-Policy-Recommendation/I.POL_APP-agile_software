@@ -82,9 +82,9 @@ const Dashboard = () => {
                 styles.searchInput,
                 searchFocus && styles.searchInputFocus,
               ]}
-              onChangeText={setSearchText}
-              value={searchText}
               placeholder="What are you looking for?"
+              value={searchText}
+              onChangeText={setSearchText}
               onFocus={handleSearchFocus}
               onBlur={handleSearchBlur}
             />

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
+  ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
 import { COLORS, images, SIZES, FONT } from "../../../constants";
@@ -21,23 +22,22 @@ const BudgetScreen = () => {
   const handleInputFocus = () => setInputFocus(true);
   const handleInputBlur = () => setInputFocus(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
     setWidth(Dimensions.get("window").width);
-    console.log(insuranceType);
   }, []);
 
-  const [minBudget, setMinBudget] = useState("");
-  const [maxBudget, setMaxBudget] = useState("");
+  const [minBudget, setMinBudget] = useState("0");
+  const [maxBudget, setMaxBudget] = useState("0");
 
   const { insuranceType } = useLocalSearchParams();
 
   const handleBudgetSelect = () => {
     // Navigate to the next screen with selected budget details
-    if (minBudget === "" && maxBudget === "") {
+    if (minBudget === "0" && maxBudget === "0") {
       return alert("Budget preferences not set!");
     }
     router.push(
@@ -51,69 +51,71 @@ const BudgetScreen = () => {
         backgroundColor: COLORS.white,
       }}
     >
-      <View
-        style={{
-          width: width,
-          height: height,
-          padding: SIZES.medium,
-        }}
-      >
-        <View style={styles.pageImgContainer}>
-          <Image
-            source={start}
-            resizeMode="center"
-            style={{
-              width: width - 20,
-              height: height / 2,
-            }}
-          />
-        </View>
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <View
+          style={{
+            width: width,
+            height: height,
+            padding: SIZES.medium,
+          }}
+        >
+          <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
+            <View style={styles.pageImgContainer}>
+              <Image
+                source={start}
+                resizeMode="center"
+                style={{
+                  width: width - 20,
+                  height: height / 2,
+                }}
+              />
+            </View>
 
-        <View style={{ paddingVertical: SIZES.xLarge }}>
-          <Text style={styles.txt}>
-            Enter Your Minimum and Maximum Budgets...
-          </Text>
-          <KeyboardAvoidingView style={{ width: "100%" }} behavior="position">
-            <View style={styles.inputOuterContainer}>
-              <View style={styles.inputContainer}>
-                <Text style={styles.currencyLabel}>₵</Text>
-                <TextInput
-                  style={[styles.input, inputFocus && styles.focusedInput]}
-                  placeholder="min"
-                  keyboardType="numeric"
-                  onFocus={handleInputFocus}
-                  onBlur={handleInputBlur}
-                  value={minBudget}
-                  onChangeText={(text) => setMinBudget(text)}
-                />
+            <View style={{ paddingVertical: SIZES.xLarge }}>
+              <Text style={styles.txt}>
+                Enter Your Minimum and Maximum Budgets...
+              </Text>
+              <View style={styles.inputOuterContainer}>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.currencyLabel}>₵</Text>
+                  <TextInput
+                    style={[styles.input, inputFocus && styles.focusedInput]}
+                    placeholder="min"
+                    keyboardType="numeric"
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    value={minBudget}
+                    onChangeText={(text) => setMinBudget(text)}
+                  />
+                </View>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.currencyLabel}>₵</Text>
+                  <TextInput
+                    style={[styles.input, inputFocus && styles.focusedInput]}
+                    placeholder="max"
+                    keyboardType="numeric"
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    value={maxBudget}
+                    onChangeText={(text) => setMaxBudget(text)}
+                  />
+                </View>
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.currencyLabel}>₵</Text>
-                <TextInput
-                  style={[styles.input, inputFocus && styles.focusedInput]}
-                  placeholder="max"
-                  keyboardType="numeric"
-                  onFocus={handleInputFocus}
-                  onBlur={handleInputBlur}
-                  value={maxBudget}
-                  onChangeText={(text) => setMaxBudget(text)}
-                />
-              </View>
+
+              <TouchableOpacity
+                onPress={() => {
+                  handleBudgetSelect();
+                }}
+                style={styles.pageBtn}
+              >
+                <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
+                  Recommend
+                </Text>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
-
-          <TouchableOpacity
-            onPress={() => {
-              handleBudgetSelect();
-            }}
-            style={styles.pageBtn}
-          >
-            <Text style={{ color: COLORS.white, fontFamily: FONT.medium }}>
-              Recommend
-            </Text>
-          </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

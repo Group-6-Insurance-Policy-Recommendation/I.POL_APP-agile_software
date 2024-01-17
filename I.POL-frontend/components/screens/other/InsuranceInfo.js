@@ -157,8 +157,8 @@ const InsuranceInfo = () => {
   const [companyPolicy, setCompanyPolicy] = useState([]);
   const { policyID } = useLocalSearchParams();
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -169,7 +169,6 @@ const InsuranceInfo = () => {
 
     // Set the selected policy in the component state
     setCompanyPolicy(policy);
-    console.log(companyPolicy);
   }, [policyID]);
 
   const typeOfPropertyInfo = [

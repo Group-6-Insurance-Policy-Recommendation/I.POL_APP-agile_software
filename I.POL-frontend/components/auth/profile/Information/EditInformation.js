@@ -67,8 +67,8 @@ const EditInformation = () => {
   const [assetFocus, setAssetFocus] = useState(false);
   const [liabilityFocus, setLiabilityFocus] = useState(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
   const [storedImageUri, setStoredImageUri] = useState("");
 
   useEffect(() => {
@@ -79,9 +79,16 @@ const EditInformation = () => {
   // Function to pick image and store in AsyncStorage
   const pickAndStoreImage = async () => {
     if (Platform.OS === "android") {
-      ImagePicker.requestCameraPermissionsAsync();
-      let result = await ImagePicker.launchCameraAsync({
-        cameraType: ImagePicker.CameraType.front,
+      // await ImagePicker.requestCameraPermissionsAsync();
+      // let result = await ImagePicker.launchCameraAsync({
+      //   cameraType: ImagePicker.CameraType.front,
+      //   allowsEditing: true,
+      //   aspect: [4, 3],
+      //   quality: 1,
+      // });
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
@@ -126,8 +133,6 @@ const EditInformation = () => {
 
     // Check if the user already has a profile
     if (isAuthenticated) {
-      console.log(profileData);
-      console.log(isAuthenticated);
       if (
         username &&
         !firstname &&
@@ -314,7 +319,7 @@ const EditInformation = () => {
             <Text style={styles.textLabel}>Date of Birth</Text>
             <TextInput
               style={[styles.editInput, dobFocus && styles.focusedInput]}
-              placeholder="Date of Birth"
+              placeholder="YYYY-MM-DD"
               keyboardType="default"
               onFocus={() => setDobFocus(true)}
               onBlur={() => setDobFocus(false)}

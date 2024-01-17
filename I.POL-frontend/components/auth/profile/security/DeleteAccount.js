@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
@@ -27,8 +28,8 @@ const DeleteAccount = () => {
 
   const handlePasswordFocus = () => setPasswordFocus(true);
   const handlePasswordBlur = () => setPasswordFocus(false);
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("auto");
+  const [height, setHeight] = useState("auto");
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -36,7 +37,6 @@ const DeleteAccount = () => {
   }, []);
 
   const deleteHandler = () => {
-    console.log(isAuthenticated);
     dispatch(deleteUser(userId, password));
   };
 
@@ -46,6 +46,11 @@ const DeleteAccount = () => {
         width: width,
         height: height,
         backgroundColor: COLORS.white,
+      }}
+    >
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{
         padding: SIZES.medium,
       }}
     >
@@ -81,6 +86,7 @@ const DeleteAccount = () => {
           </TouchableOpacity>
         )}
       </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -18,6 +18,8 @@ import companyPolicies from "../../../data/companyPolicy";
 import { createPolicy } from "../../../redux/actions/policyThunk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createPolicyPaymentNotification } from "../../../redux/actions/notificationThunk";
+import { useStripe } from "@stripe/stripe-react-native";
+import axios from "axios";
 
 const PaymentList = [
   {
@@ -39,10 +41,9 @@ const PayScreen = () => {
   const user = useSelector((state) => state.user);
 
   const [paymentMode, setPaymentMode] = useState("Credit Card");
-  // const [showAnimation, setShowAnimation] = useState(false);
 
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  const [height, setHeight] = useState(Dimensions.get("window").height);
 
   useEffect(() => {
     setHeight(Dimensions.get("window").height);
@@ -50,8 +51,9 @@ const PayScreen = () => {
   }, []);
 
   const dispatch = useDispatch();
-  const { policyID, price } = useLocalSearchParams();
   const [companyPolicy, setCompanyPolicy] = useState([]);
+  const { policyID, price } = useLocalSearchParams();
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
   useEffect(() => {
     // Find the policy with the matching policyId
@@ -60,6 +62,45 @@ const PayScreen = () => {
     // Set the selected policy in the component state
     setCompanyPolicy(policy);
   }, [policyID]);
+
+  const onPayment = async () => {
+    // 1. Create a payment intent
+    const response = await axios.post(
+      "https://ipol-server.onrender.com/api/payment/intents",
+      {
+        amount: Math.floor(parseInt(price) * 100),
+      }
+    );
+    if (response.error) {
+      alert("Something went wrong.");
+      return;
+    }
+
+    // 2. Initialize the Payment sheet
+    const initResponse = await initPaymentSheet({
+      merchantDisplayName: "Insurance Policy 🚀✨",
+      paymentIntentClientSecret: response.data.paymentIntent,
+    });
+    if (initResponse.error) {
+      console.log(initResponse.error);
+      alert("Something went wrong.");
+      return;
+    }
+
+    // 3. Present the Payment Sheet from Stripe
+    const paymentResponse = await presentPaymentSheet();
+
+    if (paymentResponse.error) {
+      alert(
+        `Error code: ${paymentResponse.error.code}`,
+        paymentResponse.error.message
+      );
+      return;
+    }
+
+    // 4. If payment ok -> create the policy
+    handleCreatePolicy();
+  };
 
   const handleCreatePolicy = async () => {
     try {
@@ -76,7 +117,6 @@ const PayScreen = () => {
       }
 
       const userId = user?._id;
-      console.log("userid", user?._id);
 
       // Get current date
       const currentDate = new Date();
@@ -116,12 +156,8 @@ const PayScreen = () => {
       const parsedInsuranceData = JSON.parse(insuranceData);
 
       policyData[storageKey] = parsedInsuranceData;
-      console.log(policyData);
 
       dispatch(createPolicy(policyData));
-      console.log(userId);
-      console.log(policyID);
-      console.log(price);
 
       createPolicyPaymentNotification(
         userId,
@@ -191,10 +227,10 @@ const PayScreen = () => {
                     />
                   </View>
                   <View style={styles.CreditCardNumberContainer}>
-                    <Text style={styles.CreditCardNumber}>3879</Text>
+                    <Text style={styles.CreditCardNumber}>4242</Text>
                     <Text style={styles.CreditCardNumber}>****</Text>
                     <Text style={styles.CreditCardNumber}>****</Text>
-                    <Text style={styles.CreditCardNumber}>4638</Text>
+                    <Text style={styles.CreditCardNumber}>4242</Text>
                   </View>
                   <View style={styles.CreditCardRow}>
                     <View style={styles.CreditCardNameContainer}>
@@ -209,7 +245,7 @@ const PayScreen = () => {
                       <Text style={styles.CreditCardNameSubitle}>
                         Expiry Date
                       </Text>
-                      <Text style={styles.CreditCardNameTitle}>02/30</Text>
+                      <Text style={styles.CreditCardNameTitle}>02/24</Text>
                     </View>
                   </View>
                 </LinearGradient>
@@ -235,7 +271,7 @@ const PayScreen = () => {
         <PaymentCall
           buttonTitle={`Pay with ${paymentMode}`}
           price={{ price: price, currency: "₵" }}
-          buttonPressHandler={handleCreatePolicy}
+          buttonPressHandler={onPayment}
         />
       </ScrollView>
     </View>

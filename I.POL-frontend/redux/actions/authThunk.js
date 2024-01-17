@@ -197,7 +197,6 @@ export const changePassword =
   (userId, currentPassword, newPassword) => async (dispatch) => {
     try {
       // Make API request to change password
-      console.log(userId);
       const response = await axios.put(
         "https://ipol-server.onrender.com/api/users/change-password",
         {
@@ -296,7 +295,6 @@ export const setForgotPassword =
 export const deleteUser = (userId, password) => async (dispatch) => {
   try {
     // Make API request to delete user
-    console.log(userId);
     const response = await axios.delete(
       "https://ipol-server.onrender.com/api/users/delete-user",
       {
