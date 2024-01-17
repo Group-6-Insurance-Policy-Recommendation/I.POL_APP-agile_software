@@ -1311,6 +1311,618 @@ const companyPolicies = [
       },
     },
   },
+  {
+    "id": "11",
+    "logo": "https://via.placeholder.com/150/FF5733/FFFFFF?text=Insurance+Hub",
+    "company": "Insurance Hub International",
+    "location": "Cityville",
+    "insuranceType": "Property Insurance",
+    "coverage": "Home Insurance, Renters Insurance, Natural Disaster Coverage",
+    "premium": "$40 per month",
+    "description": "Tailored property insurance plans offering comprehensive coverage for homes and rental properties, including protection against natural disasters.",
+    "additionalBenefits": [
+      "Personal Property Coverage",
+      "Liability Protection",
+      "Emergency Temporary Accommodation",
+    ],
+    "exclusions": [
+      "Damage caused by intentional actions",
+      "War or nuclear incidents",
+      "Pre-existing damages",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "SecureHome Plus",
+        "type": "Property Insurance",
+        "coverage": "Comprehensive Property Coverage",
+        "policyholderName": "Jane Smith",
+        "policyNumber": "P987654321",
+        "effectiveDate": "2023-02-01",
+        "expirationDate": "2024-01-31",
+        "insuredEntities": ["Jane Smith", "Spouse", "Dependent1"],
+      },
+      "coverageDetails": {
+        "propertyCoverage": {
+          "description": "Full coverage for property damages and losses.",
+          "coverageLimit": 500000,
+          "deductible": 250,
+        },
+        "naturalDisasterCoverage": {
+          "description": "Protection against natural disasters such as earthquakes and floods.",
+          "coverageLimit": 100000,
+          "deductible": 50,
+        },
+      },
+      "benefits": ["Property Damage", "Liability", "Natural Disaster Protection"],
+      "exclusions": [
+        "Negligence leading to damages",
+        "Losses due to business activities",
+        "Excluded perils as per policy terms",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "5th of each month",
+          "acceptedPaymentMethods": ["Credit card", "Bank transfer"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Refund applicable for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@insurehubintl.com",
+            "phone": "1-800-987-6543",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Reporting changes in property details",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "Insurance Hub International",
+        "customerService": {
+          "email": "support@insurehubintl.com",
+          "phone": "1-888-123-4567",
+        },
+        "claimsDepartment": {
+          "email": "claims@insurehubintl.com",
+          "phone": "1-800-987-6543",
+        },
+      },
+    },
+    "policyPlans": {
+      "standard": {
+        "plan": "Basic Home Coverage",
+        "coverage": "Essential coverage for home damages",
+        "cost": "30",
+        "benefits": ["Property Damage", "Liability"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Property Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "advanced": {
+        "plan": "Comprehensive Home Protection",
+        "coverage": "Extensive coverage for various perils",
+        "cost": "60",
+        "benefits": ["Property Damage", "Liability", "Natural Disaster Protection"],
+        "fees": "25",
+        "duration": "12 months",
+        "insuranceType": "Property Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Property Shield",
+        "coverage": "Top-tier protection for high-value properties",
+        "cost": "100",
+        "benefits": ["Property Damage", "Liability", "Natural Disaster Protection", "Emergency Accommodation"],
+        "fees": "40",
+        "duration": "12 months",
+        "insuranceType": "Property Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "12",
+    "logo": "https://via.placeholder.com/150/00CC66/FFFFFF?text=DriveSafe+Insurance",
+    "company": "DriveSafe Insurance",
+    "location": "MetroCity",
+    "insuranceType": "Auto Insurance",
+    "coverage": "Car Insurance, Roadside Assistance, Rental Car Coverage",
+    "premium": "$60 per month",
+    "description": "Tailored auto insurance plans providing comprehensive coverage for cars, including roadside assistance and rental car coverage in case of accidents or breakdowns.",
+    "additionalBenefits": [
+      "Accident Forgiveness",
+      "New Car Replacement",
+      "Custom Equipment Coverage",
+    ],
+    "exclusions": [
+      "Intentional damage to the insured vehicle",
+      "Racing or illegal activities",
+      "Unapproved modifications to the car",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "SafeDrive Plus",
+        "type": "Auto Insurance",
+        "coverage": "Complete Car Protection",
+        "policyholderName": "Alex Johnson",
+        "policyNumber": "A567890123",
+        "effectiveDate": "2023-03-01",
+        "expirationDate": "2024-02-29",
+        "insuredEntities": ["Alex Johnson", "Spouse"],
+      },
+      "coverageDetails": {
+        "carInsurance": {
+          "description": "Full coverage for car damages, accidents, and liabilities.",
+          "coverageLimit": 75000,
+          "deductible": 1000,
+        },
+        "roadsideAssistance": {
+          "description": "Emergency assistance for breakdowns, towing, and fuel delivery.",
+          "coverageLimit": "Unlimited",
+          "deductible": "None",
+        },
+      },
+      "benefits": ["Car Damage Coverage", "Liability Protection", "Roadside Assistance"],
+      "exclusions": [
+        "Uninsured motorist damages",
+        "Regular maintenance costs",
+        "Driving under the influence",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "10th of each month",
+          "acceptedPaymentMethods": ["Credit card", "Direct debit"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with premium adjustments based on driving record.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@drivesafeinsure.com",
+            "phone": "1-800-555-6789",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Reporting changes in vehicle details",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "DriveSafe Insurance",
+        "customerService": {
+          "email": "support@drivesafeinsure.com",
+          "phone": "1-888-987-6543",
+        },
+        "claimsDepartment": {
+          "email": "claims@drivesafeinsure.com",
+          "phone": "1-800-555-6789",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Basic Coverage",
+        "coverage": "Essential coverage for car damages and liabilities",
+        "cost": "40",
+        "benefits": ["Car Damage Coverage", "Liability Protection"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Auto Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Protection",
+        "coverage": "Enhanced coverage with roadside assistance",
+        "cost": "70",
+        "benefits": ["Car Damage Coverage", "Liability Protection", "Roadside Assistance"],
+        "fees": "25",
+        "duration": "12 months",
+        "insuranceType": "Auto Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "platinum": {
+        "plan": "Platinum Assurance",
+        "coverage": "Top-tier protection with additional benefits",
+        "cost": "120",
+        "benefits": ["Car Damage Coverage", "Liability Protection", "Roadside Assistance", "Rental Car Coverage"],
+        "fees": "40",
+        "duration": "12 months",
+        "insuranceType": "Auto Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "13",
+    "logo": "https://via.placeholder.com/150/FFD700/000000?text=VoyageGuard+Insure",
+    "company": "VoyageGuard Insurance",
+    "location": "Global",
+    "insuranceType": "Travel Insurance",
+    "coverage": "Trip Cancellation, Medical Emergencies, Baggage Loss",
+    "premium": "$30 per month",
+    "description": "Tailored travel insurance plans providing comprehensive coverage for unforeseen events during trips, including trip cancellation, medical emergencies, and baggage loss.",
+    "additionalBenefits": [
+      "Emergency Medical Evacuation",
+      "Travel Assistance Services",
+      "Coverage for Adventure Activities",
+    ],
+    "exclusions": [
+      "Pre-existing medical conditions",
+      "Participation in extreme sports without approval",
+      "War or acts of terrorism",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "SafeVoyage Explorer",
+        "type": "Travel Insurance",
+        "coverage": "All-encompassing Travel Protection",
+        "policyholderName": "Emily Turner",
+        "policyNumber": "T345678912",
+        "effectiveDate": "2023-04-01",
+        "expirationDate": "2024-03-31",
+        "insuredEntities": ["Emily Turner", "Travel Companion"],
+      },
+      "coverageDetails": {
+        "tripCancellation": {
+          "description": "Coverage for cancellation or interruption of trips due to unforeseen events.",
+          "coverageLimit": 5000,
+          "deductible": 100,
+        },
+        "medicalEmergency": {
+          "description": "Emergency medical coverage for accidents or illnesses during travels.",
+          "coverageLimit": 100000,
+          "deductible": 50,
+        },
+        "baggageLoss": {
+          "description": "Reimbursement for lost, stolen, or damaged baggage.",
+          "coverageLimit": 2000,
+          "deductible": 25,
+        },
+      },
+      "benefits": ["Trip Cancellation", "Medical Emergency Coverage", "Baggage Loss Reimbursement"],
+      "exclusions": [
+        "Participation in extreme sports without approval",
+        "War or acts of terrorism",
+        "Losses due to unattended baggage",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "15th of each month",
+          "acceptedPaymentMethods": ["Credit card", "PayPal"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Refund applicable for cancellations within the first three months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@voyageguard.com",
+            "phone": "1-800-789-0123",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Notifying changes in travel plans",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "VoyageGuard Insurance",
+        "customerService": {
+          "email": "support@voyageguard.com",
+          "phone": "1-888-555-7890",
+        },
+        "claimsDepartment": {
+          "email": "claims@voyageguard.com",
+          "phone": "1-800-789-0123",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Travel Protection",
+        "coverage": "Basic coverage for common travel risks",
+        "cost": "20",
+        "benefits": ["Trip Cancellation", "Medical Emergency Coverage"],
+        "fees": "10",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Explorer",
+        "coverage": "Enhanced coverage for comprehensive travel protection",
+        "cost": "40",
+        "benefits": ["Trip Cancellation", "Medical Emergency Coverage", "Baggage Loss Reimbursement"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Voyager",
+        "coverage": "Top-tier protection for global travelers",
+        "cost": "80",
+        "benefits": ["Trip Cancellation", "Medical Emergency Coverage", "Baggage Loss Reimbursement", "Emergency Medical Evacuation"],
+        "fees": "30",
+        "duration": "12 months",
+        "insuranceType": "Travel Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "14",
+    "logo": "https://via.placeholder.com/150/FF6347/FFFFFF?text=PawGuard+Assure",
+    "company": "PawGuard Assure",
+    "location": "Petropolis",
+    "insuranceType": "Pet Insurance",
+    "coverage": "Veterinary Expenses, Illness Coverage, Lost Pet Recovery",
+    "premium": "$20 per month",
+    "description": "Tailored pet insurance plans offering comprehensive coverage for veterinary expenses, illnesses, and lost pet recovery, ensuring the well-being of your furry companions.",
+    "additionalBenefits": [
+      "Wellness Exams Coverage",
+      "Prescription Medications",
+      "Emergency Boarding Coverage",
+    ],
+    "exclusions": [
+      "Pre-existing conditions",
+      "Cosmetic procedures",
+      "Breeding-related expenses",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "PawPal Guardian",
+        "type": "Pet Insurance",
+        "coverage": "Complete Pet Protection",
+        "policyholderName": "Sarah Anderson",
+        "policyNumber": "PET123456",
+        "effectiveDate": "2023-05-01",
+        "expirationDate": "2024-04-30",
+        "insuredEntities": ["Sarah Anderson's Dog", "Sarah Anderson's Cat"],
+      },
+      "coverageDetails": {
+        "veterinaryExpenses": {
+          "description": "Coverage for veterinary visits, surgeries, and treatments.",
+          "coverageLimit": 5000,
+          "deductible": 50,
+        },
+        "illnessCoverage": {
+          "description": "Protection against illnesses and associated medical expenses.",
+          "coverageLimit": 1000,
+          "deductible": 25,
+        },
+        "lostPetRecovery": {
+          "description": "Assistance in finding and recovering lost pets.",
+          "coverageLimit": "Unlimited",
+          "deductible": "None",
+        },
+      },
+      "benefits": ["Veterinary Expenses Coverage", "Illness Coverage", "Lost Pet Recovery Assistance"],
+      "exclusions": [
+        "Preventive care expenses",
+        "Breeding-related treatments",
+        "Cosmetic procedures",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "20th of each month",
+          "acceptedPaymentMethods": ["Debit card", "PayPal"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Partial refunds available for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@pawguard.com",
+            "phone": "1-800-987-6543",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Notifying changes in pet details",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "PawGuard Assure",
+        "customerService": {
+          "email": "support@pawguard.com",
+          "phone": "1-888-555-1234",
+        },
+        "claimsDepartment": {
+          "email": "claims@pawguard.com",
+          "phone": "1-800-987-6543",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Pet Protection",
+        "coverage": "Basic coverage for common pet expenses",
+        "cost": "15",
+        "benefits": ["Veterinary Expenses Coverage", "Illness Coverage"],
+        "fees": "8",
+        "duration": "12 months",
+        "insuranceType": "Pet Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Guardian",
+        "coverage": "Enhanced coverage for comprehensive pet protection",
+        "cost": "30",
+        "benefits": ["Veterinary Expenses Coverage", "Illness Coverage", "Lost Pet Recovery Assistance"],
+        "fees": "12",
+        "duration": "12 months",
+        "insuranceType": "Pet Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium PawPal",
+        "coverage": "Top-tier protection for beloved pets",
+        "cost": "50",
+        "benefits": ["Veterinary Expenses Coverage", "Illness Coverage", "Lost Pet Recovery Assistance", "Emergency Boarding Coverage"],
+        "fees": "18",
+        "duration": "12 months",
+        "insuranceType": "Pet Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  },
+  {
+    "id": "15",
+    "logo": "https://via.placeholder.com/150/9370DB/FFFFFF?text=SafeHaven+Insure",
+    "company": "SafeHaven Insurance",
+    "location": "SafeCity",
+    "insuranceType": "Home Insurance",
+    "coverage": "Property Damage, Theft Protection, Personal Liability",
+    "premium": "$35 per month",
+    "description": "Tailored home insurance plans offering comprehensive coverage for property damage, theft protection, and personal liability, ensuring a secure haven for your home and belongings.",
+    "additionalBenefits": [
+      "Temporary Accommodation Coverage",
+      "Valuable Items Protection",
+      "Legal Expenses Coverage",
+    ],
+    "exclusions": [
+      "Damage caused by intentional actions",
+      "Acts of war or terrorism",
+      "Pre-existing property damages",
+    ],
+    "policyDetail": {
+      "policyInformation": {
+        "name": "HomeGuard Shield",
+        "type": "Home Insurance",
+        "coverage": "Complete Home Protection",
+        "policyholderName": "Michael Harris",
+        "policyNumber": "H678901234",
+        "effectiveDate": "2023-06-01",
+        "expirationDate": "2024-05-31",
+        "insuredEntities": ["Michael Harris's Home", "Valuables"],
+      },
+      "coverageDetails": {
+        "propertyDamage": {
+          "description": "Coverage for damages to the insured property and its structures.",
+          "coverageLimit": 100000,
+          "deductible": 500,
+        },
+        "theftProtection": {
+          "description": "Protection against theft or burglary of personal belongings.",
+          "coverageLimit": 20000,
+          "deductible": 100,
+        },
+        "personalLiability": {
+          "description": "Liability coverage for personal injury or property damage claims.",
+          "coverageLimit": 500000,
+          "deductible": 250,
+        },
+      },
+      "benefits": ["Property Damage Coverage", "Theft Protection", "Personal Liability Coverage"],
+      "exclusions": [
+        "Acts of war or terrorism",
+        "Neglect leading to damages",
+        "Pre-existing property damages",
+      ],
+      "termsAndConditions": {
+        "premiums": {
+          "paymentFrequency": "Monthly",
+          "paymentDueDate": "25th of each month",
+          "acceptedPaymentMethods": ["Debit card", "Bank transfer"],
+        },
+        "renewal": {
+          "renewalTerms": "Policy can be renewed annually with a premium adjustment.",
+        },
+        "cancellation": {
+          "cancellationPolicy": "Policy can be canceled with a 30-day notice.",
+          "refundPolicy": "Refund applicable for cancellations within the first six months.",
+        },
+        "claims": {
+          "claimsProcess": "Submit claims through the online portal or contact the claims department.",
+          "contactInformation": {
+            "email": "claims@safehaven.com",
+            "phone": "1-800-555-7890",
+          },
+        },
+      },
+      "responsibilities": [
+        "Timely payment of premiums",
+        "Reporting changes in property details",
+        "Compliance with terms and conditions",
+      ],
+      "contactInformation": {
+        "insuranceCompanyName": "SafeHaven Insurance",
+        "customerService": {
+          "email": "support@safehaven.com",
+          "phone": "1-888-987-6543",
+        },
+        "claimsDepartment": {
+          "email": "claims@safehaven.com",
+          "phone": "1-800-555-7890",
+        },
+      },
+    },
+    "policyPlans": {
+      "basic": {
+        "plan": "Essential Home Protection",
+        "coverage": "Basic coverage for common home risks",
+        "cost": "25",
+        "benefits": ["Property Damage Coverage", "Theft Protection"],
+        "fees": "10",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "standard": {
+        "plan": "Standard Guardian",
+        "coverage": "Enhanced coverage for comprehensive home protection",
+        "cost": "45",
+        "benefits": ["Property Damage Coverage", "Theft Protection", "Personal Liability Coverage"],
+        "fees": "15",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+      "premium": {
+        "plan": "Premium Haven",
+        "coverage": "Top-tier protection for your home and valuables",
+        "cost": "75",
+        "benefits": ["Property Damage Coverage", "Theft Protection", "Personal Liability Coverage", "Temporary Accommodation Coverage"],
+        "fees": "25",
+        "duration": "12 months",
+        "insuranceType": "Home Insurance",
+        "expiration": "Annual Renewal",
+      },
+    }
+  }
+  
+  
 
   // ... (more policies)
 ];
