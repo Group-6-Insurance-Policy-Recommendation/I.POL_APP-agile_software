@@ -16,7 +16,7 @@ const companyPolicies = [
     additionalBenefits: [
       "Accidental Death Benefit",
       "Hospital Cash Benefit",
-      "Flexible Premium Payment Options",
+      "Flexible Premium Payment Option",
     ],
     exclusions: [
       "Suicide within the first year of coverage",
