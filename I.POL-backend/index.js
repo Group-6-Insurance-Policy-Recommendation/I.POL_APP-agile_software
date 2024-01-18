@@ -205,6 +205,7 @@ process.on("uncaughtException", (err) => {
 router.get("/", (req, res) => res.json({ Welcome: "Please ignore!!!" }));
 
 app.use("/api/users", userRoute);
+app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/policy", policyRoute);
 app.use("/api/notifications", notificationRoutes);
