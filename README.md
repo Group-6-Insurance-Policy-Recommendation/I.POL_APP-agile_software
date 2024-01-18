@@ -46,7 +46,7 @@ The Insurance Policy Recommendation App is a software application designed to as
 
 ## 🚀 Getting Started
 
-To get started with the Insurance Policy Recommendation App, follow these steps:
+To get started with the Insurance Policy Recommendation App, follow these steps below as listed carefully;
 
 1. Clone the repository.
 2. Install dependencies using `npm install` (or your preferred package manager).
