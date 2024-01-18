@@ -84,7 +84,7 @@ const Layout = () => {
 
     getUserData();
 
-    schedulePushNotification(notifications);
+    schedulePushNotification(notifications, user?._id);
   }, [notifications]);
 
   useEffect(() => {
@@ -607,13 +607,13 @@ const Layout = () => {
                 },
                 headerShadowVisible: false,
                 headerTitle: "",
-                headerRight: () => (
-                  <ProfileHeaderBtn
-                    iconUrl={images.profile}
-                    dimension="100%"
-                    handlePress={() => router.push(`/_sitemap`)}
-                  />
-                ),
+                // headerRight: () => (
+                //   <ProfileHeaderBtn
+                //     iconUrl={images.profile}
+                //     dimension="100%"
+                //     handlePress={() => router.push(`/_sitemap`)}
+                //   />
+                // ),
               }}
             />
 
@@ -699,7 +699,7 @@ const handleNotificationResponse = async (response) => {
 
 const triggeredNotifications = []; // Array to track triggered notifications
 
-const schedulePushNotification = async (notificationArray) => {
+const schedulePushNotification = async (notificationArray, userId) => {
   const updatedNotifications = notificationArray.map((notification) => {
     if (
       !triggeredNotifications.includes(notification._id) &&
@@ -717,6 +717,18 @@ const schedulePushNotification = async (notificationArray) => {
           },
           trigger: { seconds: 3 },
         });
+
+        axios
+          .put(
+            `https://ipol-server.onrender.com/api/notifications/user/${userId}/mark-all-triggered`
+          )
+          .then((response) => {
+            console.log("Notification marked as triggered:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error marking notification as triggered:", error);
+            // Handle errors gracefully, informing the user
+          });
 
         console.log("Notification scheduled:", notification.title);
         return { ...notification, triggered: true };

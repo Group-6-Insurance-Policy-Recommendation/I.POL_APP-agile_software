@@ -79,16 +79,9 @@ const EditInformation = () => {
   // Function to pick image and store in AsyncStorage
   const pickAndStoreImage = async () => {
     if (Platform.OS === "android") {
-      // await ImagePicker.requestCameraPermissionsAsync();
-      // let result = await ImagePicker.launchCameraAsync({
-      //   cameraType: ImagePicker.CameraType.front,
-      //   allowsEditing: true,
-      //   aspect: [4, 3],
-      //   quality: 1,
-      // });
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      await ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.front,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,

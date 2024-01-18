@@ -37,20 +37,6 @@ router.get("/user/:userId", async (req, res) => {
     const userId = req.params.userId;
     const notifications = await Notification.find({ userId });
 
-    // Update triggered to false for emitted notifications
-    const updatedNotifications = notifications.map((notification) => ({
-      ...notification,
-      triggered: true,
-    }));
-
-    await Promise.all(
-      updatedNotifications.map((notification) =>
-        Notification.findByIdAndUpdate(notification._id, notification, {
-          new: true,
-        })
-      )
-    );
-
     res.json(notifications);
   } catch (err) {
     console.error(err);
@@ -94,6 +80,24 @@ router.put("/user/:userId/mark-all-seen", async (req, res) => {
     console.error(err);
     res.status(500).json({
       error: "Failed to mark notifications as seen",
+      details: err.message,
+    });
+  }
+});
+
+// PUT /notifications/user/:userId/mark-all-triggered
+router.put("/user/:userId/mark-all-triggered", async (req, res) => {
+  try {
+    await Notification.updateMany(
+      { userId: req.params.userId },
+      { triggered: true }
+    );
+
+    res.json({ message: "All notifications marked as triggered" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to mark notifications as triggered",
       details: err.message,
     });
   }
